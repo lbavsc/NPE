@@ -4,7 +4,7 @@ import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.LocalDataSource;
 import com.experiment.npe.data.source.http.HttpDataSourceImpl;
-import com.experiment.npe.data.source.http.service.DemoApiService;
+import com.experiment.npe.data.source.http.service.NpeApiService;
 import com.experiment.npe.data.source.local.LocalDataSourceImpl;
 import com.experiment.npe.utils.RetrofitClient;
 
@@ -16,7 +16,7 @@ import com.experiment.npe.utils.RetrofitClient;
 public class Injection {
     public static NpeRepository provideDemoRepository() {
         //网络API服务
-        DemoApiService apiService = RetrofitClient.getInstance().create(DemoApiService.class);
+        NpeApiService apiService = RetrofitClient.getInstance().create(NpeApiService.class);
         //网络数据源
         HttpDataSource httpDataSource = HttpDataSourceImpl.getInstance(apiService);
         //本地数据源

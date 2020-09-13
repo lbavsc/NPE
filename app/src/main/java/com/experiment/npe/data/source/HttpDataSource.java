@@ -1,5 +1,6 @@
 package com.experiment.npe.data.source;
 
+import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
@@ -15,6 +16,7 @@ public interface HttpDataSource {
     //登录
     Observable<ResultEntity<UserEntity>> login(String phone, String password, boolean status);
 
+    Observable<JokeAssortEntity> assort();
     //注册
     Observable<ResultEntity<UserEntity>> registered(@Body UserEntity body);
 

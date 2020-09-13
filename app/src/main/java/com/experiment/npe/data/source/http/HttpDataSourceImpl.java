@@ -1,22 +1,22 @@
 package com.experiment.npe.data.source.http;
 
 import com.experiment.npe.data.source.HttpDataSource;
-import com.experiment.npe.data.source.http.service.DemoApiService;
+import com.experiment.npe.data.source.http.service.NpeApiService;
+import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
-import okhttp3.RequestBody;
 
 /**
  * Created by goldze on 2019/3/26.
  */
 public class HttpDataSourceImpl implements HttpDataSource {
-    private DemoApiService apiService;
+    private NpeApiService apiService;
     private volatile static HttpDataSourceImpl INSTANCE = null;
 
-    public static HttpDataSourceImpl getInstance(DemoApiService apiService) {
+    public static HttpDataSourceImpl getInstance(NpeApiService apiService) {
         if (INSTANCE == null) {
             synchronized (HttpDataSourceImpl.class) {
                 if (INSTANCE == null) {
@@ -31,7 +31,7 @@ public class HttpDataSourceImpl implements HttpDataSource {
         INSTANCE = null;
     }
 
-    private HttpDataSourceImpl(DemoApiService apiService) {
+    private HttpDataSourceImpl(NpeApiService apiService) {
         this.apiService = apiService;
     }
 
@@ -44,6 +44,11 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<ResultEntity<UserEntity>> login(String phone, String password, boolean status) {
         return apiService.login(phone, password, true);
+    }
+
+    @Override
+    public Observable<JokeAssortEntity> assort() {
+        return apiService.assort();
     }
 
     @Override

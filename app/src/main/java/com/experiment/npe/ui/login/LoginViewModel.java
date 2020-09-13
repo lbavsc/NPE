@@ -9,17 +9,21 @@ import android.util.Log;
 import android.view.View;
 
 import com.experiment.npe.data.NpeRepository;
+import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
+import com.experiment.npe.ui.main.activity.MainActivity;
 import com.experiment.npe.ui.regist.RegistActivity;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
+import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
@@ -104,6 +108,7 @@ public class LoginViewModel extends BaseViewModel<NpeRepository> {
             ToastUtils.showShort("请输入密码！");
             return;
         }
+
         //RaJava模拟登录
         addSubscribe(model.login(userPhone.get(), password.get(), true)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
@@ -135,7 +140,8 @@ public class LoginViewModel extends BaseViewModel<NpeRepository> {
 //                            Log.e("TAG", "\ntype:"+model.getUserType());
 //                            Log.e("TAG", "\nstatus:"+model.getUserStatus());
                             ToastUtils.showShort(result.getMsg());
-                            startActivity(LoginActivity.class);
+                            startActivity(MainActivity.class);
+//                            startActivity(ViewPagerActivity.class);
                             //关闭页面
                             finish();
                         } else {

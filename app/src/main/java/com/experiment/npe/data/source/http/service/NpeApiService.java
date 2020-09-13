@@ -1,5 +1,6 @@
 package com.experiment.npe.data.source.http.service;
 
+import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
@@ -11,12 +12,13 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by goldze on 2017/6/15.
  */
 
-public interface DemoApiService {
+public interface NpeApiService {
     @GET("action/apiv2/banner?catalog=1")
     Observable<BaseResponse<UserEntity>> demoGet();
 
@@ -30,4 +32,7 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("user/login")
     Observable<ResultEntity<UserEntity>> login(@Field("phone") String phone, @Field("pwd") String pwd, @Field("status") boolean status);
+
+    @GET("joke/assort")
+    Observable<JokeAssortEntity> assort();
 }

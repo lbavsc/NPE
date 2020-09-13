@@ -5,6 +5,7 @@ import android.support.annotation.VisibleForTesting;
 
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.LocalDataSource;
+import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
@@ -47,19 +48,14 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
 
-//    @Override
-//    public Observable<Object> login() {
-//        return mHttpDataSource.login();
-//    }
-
-//    @Override
-//    public Observable<UserEntity> loadMore() {
-//        return mHttpDataSource.loadMore();
-//    }
-
     @Override
     public Observable<ResultEntity<UserEntity>> login(String phone, String password, boolean status) {
         return mHttpDataSource.login(phone, password, true);
+    }
+
+    @Override
+    public Observable<JokeAssortEntity> assort() {
+        return mHttpDataSource.assort();
     }
 
     @Override
