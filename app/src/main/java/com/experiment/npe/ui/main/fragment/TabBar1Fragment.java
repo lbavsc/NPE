@@ -7,10 +7,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.experiment.npe.BR;
@@ -50,6 +56,17 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, ViewPa
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
         //给ViewPager设置adapter
         binding.setAdapter(new ViewPagerBindingAdapter());
+        binding.searchText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER){
+                    viewModel.onSearchCommand.execute();
+                    viewModel.searchText.set("");
+                    return true;
+                }
+                return false;
+            }
+        });
         viewModel.getAssort();
     }
 

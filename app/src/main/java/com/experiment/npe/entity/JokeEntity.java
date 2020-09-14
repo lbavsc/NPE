@@ -1,5 +1,7 @@
 package com.experiment.npe.entity;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 /**
@@ -105,5 +107,26 @@ public class JokeEntity {
         public void setAssortId(int assortId) {
             this.assortId = assortId;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "jokeId='" + jokeId + '\'' +
+                    ", userId='" + userId + '\'' +
+                    ", title='" + title + '\'' +
+                    ", postTime='" + postTime + '\'' +
+                    ", source='" + source + '\'' +
+                    ", assortId=" + assortId +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "JokeEntity{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data.toString() +
+                '}';
     }
 }

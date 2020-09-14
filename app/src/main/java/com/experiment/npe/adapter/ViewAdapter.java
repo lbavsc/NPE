@@ -1,4 +1,4 @@
-package com.experiment.npe.binding.twinklingrefreshlayout;
+package com.experiment.npe.adapter;
 
 
 import android.databinding.BindingAdapter;

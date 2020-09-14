@@ -11,6 +11,7 @@ import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.login.LoginViewModel;
 import com.experiment.npe.ui.main.vm.ViewPagerViewModel;
 import com.experiment.npe.ui.regist.RegistViewModel;
+import com.experiment.npe.ui.search.SearchViewModel;
 
 
 /**
@@ -52,7 +53,11 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new LoginViewModel(mApplication, mRepository);
         } else if (modelClass.isAssignableFrom(ViewPagerViewModel.class)) {
             return (T) new ViewPagerViewModel(mApplication, mRepository);
+        } else if (modelClass.isAssignableFrom(SearchViewModel.class)) {
+            return (T) new SearchViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }
+
+

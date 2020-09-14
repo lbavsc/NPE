@@ -21,15 +21,15 @@
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/user_edit"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            >
             <EditText
                 android:id="@+id/searchText"
                 android:layout_width="match_parent"
@@ -58,11 +58,6 @@
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#F0F0F0" />
-
         <android.support.design.widget.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
@@ -71,12 +66,14 @@
             app:tabMode="scrollable"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@android:color/black" />
+            app:tabTextColor="@android:color/black"
+            android:elevation="1dp"
+            android:outlineProvider="bounds" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#F0F0F0" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:background="#F0F0F0" />-->
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"

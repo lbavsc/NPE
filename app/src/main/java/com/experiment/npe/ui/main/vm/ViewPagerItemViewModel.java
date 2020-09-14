@@ -9,6 +9,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 /**
  * Created by lbavsc on 20-9-11
  */
+
 public class ViewPagerItemViewModel extends ItemViewModel<ViewPagerViewModel> {
     public String text;
 
@@ -24,4 +25,6 @@ public class ViewPagerItemViewModel extends ItemViewModel<ViewPagerViewModel> {
             viewModel.itemClickEvent.setValue(text);
         }
     });
+
+
 }

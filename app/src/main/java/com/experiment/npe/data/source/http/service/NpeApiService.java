@@ -7,7 +7,6 @@ import com.experiment.npe.entity.UserEntity;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
-import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
