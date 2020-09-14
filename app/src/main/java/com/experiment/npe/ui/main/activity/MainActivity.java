@@ -21,6 +21,9 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
+/**
+ * Created by lbavsc on 20-9-11
+ */
 public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewModel> {
     private List<Fragment> mFragments;
 
@@ -71,6 +74,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
             }
         });
     }
+
     private void commitAllowingStateLoss(int position) {
         hideAllFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

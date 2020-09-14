@@ -2,11 +2,15 @@ package com.experiment.npe.ui.main.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 import com.experiment.npe.BR;
@@ -24,10 +28,10 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
- * Created by goldze on 2018/7/18.
+ * Created by lbavsc on 20-9-11
  */
-
 public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, ViewPagerViewModel> {
+
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return R.layout.fragment_tab_bar_1;
@@ -38,6 +42,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, ViewPa
         return BR.viewModel;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void initData() {
         // 使用 TabLayout 和 ViewPager 相关联
@@ -63,5 +68,6 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, ViewPa
             }
         });
     }
+
 
 }

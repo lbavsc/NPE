@@ -5,8 +5,8 @@ import com.experiment.npe.data.source.LocalDataSource;
 import me.goldze.mvvmhabit.utils.SPUtils;
 
 /**
- * 本地数据源，可配合Room框架使用
- * Created by goldze on 2019/3/26.
+ * 本地数据源
+ * Created by lbavsc on 20-9-14
  */
 public class LocalDataSourceImpl implements LocalDataSource {
     private volatile static LocalDataSourceImpl INSTANCE = null;

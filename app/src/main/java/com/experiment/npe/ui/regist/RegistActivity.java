@@ -12,6 +12,9 @@ import com.experiment.npe.ui.login.LoginViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 
+/**
+ * Created by lbavsc on 20-9-11
+ */
 public class RegistActivity extends BaseActivity<ActivityLoginBinding, RegistViewModel> {
 
 

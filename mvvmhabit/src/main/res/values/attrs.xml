@@ -1,4 +1,4 @@
-<resources>
+<resources>Session 'app': Installation did not succeed. // The application could not be installed. // Retry (51 minutes ago)
 
     <!-- require boolean value to decide whether requestFocus for view. -->
     <attr name="requestFocus" format="boolean" />
@@ -16,6 +16,7 @@
 
     <!-- require BindingCommand {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view click event. -->
     <attr name="onClickCommand" format="reference" />
+    <array name="onSearchCommand" format="reference" />
     <attr name="onLongClickCommand" format="reference" />
     <!-- require BindingCommand<Boolean> {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view focus change event.
      BindingCommand would has params which means if view hasFocus.-->

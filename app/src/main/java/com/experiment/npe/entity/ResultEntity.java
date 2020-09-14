@@ -1,5 +1,8 @@
 package com.experiment.npe.entity;
 
+/**
+ * Created by lbavsc on 20-9-14
+ */
 public class ResultEntity<T> {
     public int code;
     public String msg;

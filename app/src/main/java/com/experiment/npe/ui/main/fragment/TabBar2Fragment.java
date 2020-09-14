@@ -12,9 +12,8 @@ import com.experiment.npe.R;
 import me.goldze.mvvmhabit.base.BaseFragment;
 
 /**
- * Created by goldze on 2018/7/18.
+ * Created by lbavsc on 20-9-11
  */
-
 public class TabBar2Fragment extends BaseFragment {
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

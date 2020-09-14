@@ -6,6 +6,7 @@ import android.support.annotation.VisibleForTesting;
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.LocalDataSource;
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
@@ -15,8 +16,8 @@ import me.goldze.mvvmhabit.http.BaseResponse;
 import okhttp3.RequestBody;
 
 /**
- * MVVM的Model层，统一模块的数据仓库，包含网络数据和本地数据（一个应用可以有多个Repositor）
- * Created by goldze on 2019/3/26.
+ * Model层，统一模块的数据仓库，包含网络数据和本地数据
+ * Created by lbavsc on 20-9-14
  */
 public class NpeRepository extends BaseModel implements HttpDataSource, LocalDataSource {
     private volatile static NpeRepository INSTANCE = null;
@@ -71,6 +72,11 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     @Override
     public Observable<BaseResponse<UserEntity>> demoPost(String catalog) {
         return mHttpDataSource.demoPost(catalog);
+    }
+
+    @Override
+    public Observable<JokeEntity> search(String searchString) {
+        return mHttpDataSource.search(searchString);
     }
 
     @Override

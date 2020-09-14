@@ -1,7 +1,7 @@
 package com.experiment.npe.data.source;
 
 /**
- * Created by goldze on 2019/3/26.
+ * Created by lbavsc on 20-9-14
  */
 public interface LocalDataSource {
     /**

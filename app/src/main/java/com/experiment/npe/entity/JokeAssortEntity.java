@@ -2,6 +2,9 @@ package com.experiment.npe.entity;
 
 import java.util.List;
 
+/**
+ * Created by lbavsc on 20-9-14
+ */
 public class JokeAssortEntity {
 
 

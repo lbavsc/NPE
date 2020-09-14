@@ -1,6 +1,7 @@
 package com.experiment.npe.data.source.http.service;
 
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
@@ -15,9 +16,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
- * Created by goldze on 2017/6/15.
+ * Created by lbavsc on 20-9-14
  */
-
 public interface NpeApiService {
     @GET("action/apiv2/banner?catalog=1")
     Observable<BaseResponse<UserEntity>> demoGet();
@@ -35,4 +35,7 @@ public interface NpeApiService {
 
     @GET("joke/assort")
     Observable<JokeAssortEntity> assort();
+
+    @GET("joke/search")
+    Observable<JokeEntity>search(@Query("searchString") String searchString);
 }

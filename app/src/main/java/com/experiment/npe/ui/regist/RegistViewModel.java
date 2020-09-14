@@ -5,16 +5,12 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 import com.experiment.npe.ui.login.LoginActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -26,9 +22,8 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
- * Created by goldze on 2017/7/17.
+ * Created by lbavsc on 20-9-11
  */
-
 public class RegistViewModel extends BaseViewModel<NpeRepository> {
     //手机号的绑定
     public ObservableField<String> userPhone = new ObservableField<>("");
@@ -62,12 +57,13 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
     //用户名输入框焦点改变的回调事件
     public BindingCommand<Boolean> onFocusChangeCommand = new BindingCommand<>(new BindingConsumer<Boolean>() {
         @Override
-        public void call(Boolean hasFocus) {
+        public String call(Boolean hasFocus) {
             if (hasFocus) {
                 clearBtnVisibility.set(View.VISIBLE);
             } else {
                 clearBtnVisibility.set(View.INVISIBLE);
             }
+            return null;
         }
     });
 

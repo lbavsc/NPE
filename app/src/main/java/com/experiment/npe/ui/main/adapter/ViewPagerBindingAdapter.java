@@ -10,9 +10,8 @@ import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 
 
 /**
- * Created by goldze on 2018/6/21.
+ * Created by lbavsc on 20-9-11
  */
-
 public class ViewPagerBindingAdapter extends BindingViewPagerAdapter<ViewPagerItemViewModel> {
 
     @Override

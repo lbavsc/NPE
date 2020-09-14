@@ -3,6 +3,7 @@ package com.experiment.npe.data.source.http;
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.http.service.NpeApiService;
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
@@ -10,7 +11,7 @@ import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
 
 /**
- * Created by goldze on 2019/3/26.
+ * Created by lbavsc on 20-9-14
  */
 public class HttpDataSourceImpl implements HttpDataSource {
     private NpeApiService apiService;
@@ -65,6 +66,11 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<BaseResponse<UserEntity>> demoPost(String catalog) {
         return apiService.demoPost(catalog);
+    }
+
+    @Override
+    public Observable<JokeEntity> search(String searchString) {
+        return apiService.search(searchString);
     }
 
 
