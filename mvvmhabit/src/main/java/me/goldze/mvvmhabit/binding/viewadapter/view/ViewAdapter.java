@@ -1,6 +1,7 @@
 package me.goldze.mvvmhabit.binding.viewadapter.view;
 
 import android.databinding.BindingAdapter;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.binding.command.ResponseCommand;
 
 /**
  * Created by goldze on 2017/6/16.
@@ -118,16 +120,20 @@ public class ViewAdapter {
             view.setVisibility(View.GONE);
         }
     }
-//    @BindingAdapter({"onTouchCommand"})
-//    public static void onTouchCommand(View view, final ResponseCommand<MotionEvent, Boolean> onTouchCommand) {
-//        view.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (onTouchCommand != null) {
-//                    return onTouchCommand.execute(event);
-//                }
-//                return false;
-//            }
-//        });
-//    }
+    @BindingAdapter({"onTouchCommand"})
+    public static void onTouchCommand(View view, final ResponseCommand<MotionEvent, Boolean> onTouchCommand) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (onTouchCommand != null) {
+                    try {
+                        return onTouchCommand.execute(event);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+        });
+    }
 }

@@ -98,7 +98,6 @@ public class ViewPagerViewModel extends BaseViewModel<NpeRepository> {
                 });
     }
 
-
     //给ViewPager添加ObservableList
     public ObservableList<ViewPagerItemViewModel> items = new ObservableArrayList<>();
     //给ViewPager添加ItemBinding
@@ -118,7 +117,15 @@ public class ViewPagerViewModel extends BaseViewModel<NpeRepository> {
             return null;
         }
     });
-
+    /**
+     * 获取条目下标
+     *
+     * @param viewPagerViewModel
+     * @return
+     */
+    public int getItemPosition(ViewPagerViewModel viewPagerViewModel) {
+        return observableList.indexOf(viewPagerViewModel);
+    }
     public BindingCommand onSearchCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
