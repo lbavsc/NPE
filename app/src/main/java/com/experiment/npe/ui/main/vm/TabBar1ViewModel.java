@@ -1,34 +1,18 @@
 package com.experiment.npe.ui.main.vm;
 
 import android.app.Application;
-import android.databinding.Observable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
-import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SearchView;
 
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeAssortEntity;
-import com.experiment.npe.entity.JokeEntity;
-import com.experiment.npe.ui.main.activity.MainActivity;
 import com.experiment.npe.ui.search.SearchActivity;
-import com.experiment.npe.ui.search.SearchViewModel;
-
-import org.w3c.dom.Entity;
-
-import java.security.spec.EncodedKeySpec;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -47,13 +31,13 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 /**
  * Created by lbavsc on 20-9-11
  */
-public class ViewPagerViewModel extends BaseViewModel<NpeRepository> {
+public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent<>();
     public ObservableField<String> searchText = new ObservableField<>("");
 
     public static ObservableList<JokeAssortEntity.DataBean> observableList = new ObservableArrayList<>();
 
-    public ViewPagerViewModel(@NonNull Application application, NpeRepository repository) {
+    public TabBar1ViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
     }
 
@@ -72,7 +56,7 @@ public class ViewPagerViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onNext(final JokeAssortEntity response) {
                         for (int i = 0; i < response.getData().size(); i++) {
-                            ViewPagerItemViewModel itemViewModel = new ViewPagerItemViewModel(ViewPagerViewModel.this, response.getData().get(i).getAssortName());
+                            TabBar1temViewModel itemViewModel = new TabBar1temViewModel(TabBar1ViewModel.this, response.getData().get(i).getAssortName());
                             observableList.add(response.getData().get(i));
                             items.add(itemViewModel);
                         }
@@ -99,13 +83,13 @@ public class ViewPagerViewModel extends BaseViewModel<NpeRepository> {
     }
 
     //给ViewPager添加ObservableList
-    public ObservableList<ViewPagerItemViewModel> items = new ObservableArrayList<>();
+    public ObservableList<TabBar1temViewModel> items = new ObservableArrayList<>();
     //给ViewPager添加ItemBinding
-    public ItemBinding<ViewPagerItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_viewpager);
+    public ItemBinding<TabBar1temViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_1);
     //给ViewPager添加PageTitle
-    public final BindingViewPagerAdapter.PageTitles<ViewPagerItemViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<ViewPagerItemViewModel>() {
+    public final BindingViewPagerAdapter.PageTitles<TabBar1temViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<TabBar1temViewModel>() {
         @Override
-        public CharSequence getPageTitle(int position, ViewPagerItemViewModel item) {
+        public CharSequence getPageTitle(int position, TabBar1temViewModel item) {
             return observableList.get(position).getAssortName();
         }
     };

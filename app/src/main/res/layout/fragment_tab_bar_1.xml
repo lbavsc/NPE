@@ -4,13 +4,13 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.vm.ViewPagerViewModel" />
+        <import type="com.experiment.npe.ui.main.vm.TabBar1ViewModel" />
 
         <import type="com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter" />
 
         <variable
             name="viewModel"
-            type="ViewPagerViewModel" />
+            type="com.experiment.npe.ui.main.vm.TabBar1ViewModel" />
 
         <variable
             name="adapter"

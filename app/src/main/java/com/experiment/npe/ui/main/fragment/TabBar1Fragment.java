@@ -7,36 +7,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.TextView;
 
 
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
-import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.FragmentTabBar1Binding;
-import com.experiment.npe.ui.login.LoginViewModel;
 import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter;
-import com.experiment.npe.ui.main.vm.ViewPagerViewModel;
+import com.experiment.npe.ui.main.vm.TabBar1ViewModel;
 
 
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
  * Created by lbavsc on 20-9-11
  */
-public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, ViewPagerViewModel> {
+public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar1ViewModel> {
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,9 +62,9 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, ViewPa
     }
 
     @Override
-    public ViewPagerViewModel initViewModel() {
+    public TabBar1ViewModel initViewModel() {
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
-        return ViewModelProviders.of(this, factory).get(ViewPagerViewModel.class);
+        return ViewModelProviders.of(this, factory).get(TabBar1ViewModel.class);
     }
 
     @Override

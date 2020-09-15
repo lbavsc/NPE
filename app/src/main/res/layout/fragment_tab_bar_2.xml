@@ -3,24 +3,26 @@
 
     <data>
 
-        <import type="me.goldze.mvvmhabit.base.BaseViewModel" />
+        <import type="com.experiment.npe.ui.main.vm.TabBar2ViewModel" />
 
         <variable
             name="viewModel"
-            type="BaseViewModel" />
+            type="TabBar2ViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|right"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TabBar_2" />
+            android:src="@{viewModel.drawableImg}"
+            binding:url="@{viewModel.entity.icon}"/>
 
     </LinearLayout>
 </layout>
