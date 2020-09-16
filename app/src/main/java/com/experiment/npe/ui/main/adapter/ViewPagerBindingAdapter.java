@@ -4,7 +4,7 @@ import android.databinding.ViewDataBinding;
 import android.view.ViewGroup;
 
 import com.experiment.npe.databinding.ItemTabBar1Binding;
-import com.experiment.npe.ui.main.vm.TabBar1temViewModel;
+import com.experiment.npe.ui.main.viewmodel.TabBar1temViewModel;
 
 import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 

@@ -18,7 +18,7 @@ import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.FragmentTabBar1Binding;
 import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter;
-import com.experiment.npe.ui.main.vm.TabBar1ViewModel;
+import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
 
 
 import me.goldze.mvvmhabit.base.BaseFragment;

@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.vm.TabBar2ViewModel" />
+        <import type="com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel" />
 
         <variable
             name="viewModel"
@@ -47,7 +47,8 @@
                     android:layout_gravity="bottom"
                     android:layout_toRightOf="@id/img"
                     android:text=" 设置"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    binding:onClickCommand="@{viewModel.onSettingClickCommand}"/>
 
             </RelativeLayout>
 
@@ -79,7 +80,7 @@
                     android:layout_toRightOf="@id/img1"
                     android:text=" 登出"
                     android:textSize="14dp"
-                    binding:onClickCommand="@{viewModel.loginOutOnClickCommand}"/>
+                    binding:onClickCommand="@{viewModel.loginOutOnClickCommand}" />
 
             </RelativeLayout>
         </RelativeLayout>
@@ -105,12 +106,13 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:id="@+id/userIcon"
                 android:layout_gravity="center_horizontal"
                 android:elevation="1dp"
                 android:gravity="center"
-
                 android:src="@{viewModel.drawableImg}"
-                binding:urls="@{viewModel.userIcon}" />
+                binding:urls="@{viewModel.userIcon}"
+                binding:onClickCommand="@{viewModel.userIconOnClickCommand}"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,6 +130,5 @@
                 android:text="@{viewModel.userId}"
                 android:textSize="12dp" />
         </LinearLayout>
-
     </LinearLayout>
 </layout>

@@ -1,18 +1,21 @@
 package com.experiment.npe.app;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.app.Fragment;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.login.LoginViewModel;
-import com.experiment.npe.ui.main.vm.TabBar1ViewModel;
-import com.experiment.npe.ui.main.vm.TabBar2ViewModel;
+import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
+import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
 import com.experiment.npe.ui.regist.RegistViewModel;
 import com.experiment.npe.ui.search.SearchViewModel;
+import com.experiment.npe.ui.setting.SettingViewModel;
 
 
 /**

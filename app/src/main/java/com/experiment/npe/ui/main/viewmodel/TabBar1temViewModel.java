@@ -1,4 +1,4 @@
-package com.experiment.npe.ui.main.vm;
+package com.experiment.npe.ui.main.viewmodel;
 
 import android.support.annotation.NonNull;
 
