@@ -101,15 +101,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
             return null;
         }
     });
-    /**
-     * 获取条目下标
-     *
-     * @param viewPagerViewModel
-     * @return
-     */
-    public int getItemPosition(ViewPagerViewModel viewPagerViewModel) {
-        return observableList.indexOf(viewPagerViewModel);
-    }
+
     public BindingCommand onSearchCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,19 +11,123 @@
             type="TabBar2ViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:binding="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="top|right"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:background="#FFFBFCFE"
+        android:orientation="vertical">
 
-        <ImageView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity=""
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/rounded"
+                android:elevation="1dp"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="7dp"
+                    android:background="@mipmap/seting" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="bottom"
+                    android:layout_toRightOf="@id/img"
+                    android:text=" 设置"
+                    android:textSize="14dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity=""
+                android:layout_marginRight="15dp"
+                android:background="@drawable/rounded"
+                android:elevation="1dp"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="7dp"
+                    android:background="@mipmap/notice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="bottom"
+                    android:layout_toRightOf="@id/img1"
+                    android:text=" 登出"
+                    android:textSize="14dp"
+                    binding:onClickCommand="@{viewModel.loginOutOnClickCommand}"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded"
+            android:backgroundTint="#4287E8"
+            android:text="登录"
+            android:visibility="@{viewModel.loginVisibility}"
+            binding:onClickCommand="@{viewModel.loginOnClickCommand}" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@{viewModel.drawableImg}"
-            binding:url="@{viewModel.entity.icon}"/>
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.visibility}">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:elevation="1dp"
+                android:gravity="center"
+
+                android:src="@{viewModel.drawableImg}"
+                binding:urls="@{viewModel.userIcon}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@{viewModel.userName}"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@{viewModel.userId}"
+                android:textSize="12dp" />
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

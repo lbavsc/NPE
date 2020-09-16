@@ -1,6 +1,7 @@
 package com.experiment.npe.ui.main.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.FragmentTabBar2Binding;
-import com.experiment.npe.ui.login.LoginViewModel;
 import com.experiment.npe.ui.main.vm.TabBar2ViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
@@ -36,4 +36,7 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
         return ViewModelProviders.of(this, factory).get(TabBar2ViewModel.class);
     }
+
+
+
 }
