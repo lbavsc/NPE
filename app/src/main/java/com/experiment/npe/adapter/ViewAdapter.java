@@ -1,7 +1,7 @@
 package com.experiment.npe.adapter;
 
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;

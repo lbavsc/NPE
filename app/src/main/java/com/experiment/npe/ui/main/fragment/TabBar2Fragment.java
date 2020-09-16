@@ -1,69 +1,50 @@
 package com.experiment.npe.ui.main.fragment;
 
 import android.Manifest;
-import android.app.Activity;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.databinding.ObservableField;
+
+import android.app.PictureInPictureParams;
 import android.content.Intent;
-import android.databinding.ObservableField;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.FileProvider;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.FragmentTabBar2Binding;
-import com.experiment.npe.ui.main.activity.MainActivity;
 import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
-import com.experiment.npe.ui.window.PhotoPopupWindow;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.wildma.pictureselector.PictureBean;
+import com.wildma.pictureselector.PictureSelector;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.binding.command.BindingAction;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 import static android.app.Activity.RESULT_OK;
-import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 /**
  * Created by lbavsc on 20-9-11
  */
 public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar2ViewModel> {
-    private static final int REQUEST_IMAGE_GET = 0;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int REQUEST_SMALL_IMAGE_CUTTING = 2;
-    private static final int REQUEST_BIG_IMAGE_CUTTING = 3;
-    private static final String IMAGE_FILE_NAME = "icon.jpg";
-    private PhotoPopupWindow mPhotoPopupWindow;
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -131,8 +112,9 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
-                            ToastUtils.showShort("相机权限已经打开");
-                            photoMenu();
+                            PictureSelector
+                                    .create(TabBar2Fragment.this, PictureSelector.SELECT_REQUEST_CODE)
+                                    .selectPicture(true);
                         } else {
                             ToastUtils.showShort("权限被拒绝");
                         }
@@ -140,30 +122,21 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
                 });
     }
 
-
-    public void photoMenu() {
-        binding.userIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPhotoPopupWindow = new PhotoPopupWindow(TabBar2Fragment.this.getActivity(), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // 进入相册选择
-
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // 拍照
-
-                    }
-                });
-                View rootView = LayoutInflater.from(TabBar2Fragment.this.getActivity()).inflate(R.layout.activity_main, null);
-                mPhotoPopupWindow.showAtLocation(rootView,
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        NpeRepository model = viewModel.getmodle();
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                PictureBean pictureBean = data.getParcelableExtra(PictureSelector.PICTURE_RESULT);
+                if (pictureBean.isCut()) {
+                    model.saveUserIcon(pictureBean.getPath());
+                    viewModel.userIcon.set(pictureBean.getPath());
+                } else {
+                    model.saveUserIcon(pictureBean.getUri().getPath());
+                    viewModel.userIcon.set(pictureBean.getUri().getPath());
+                }
             }
-        });
+        }
     }
-
-
 }

@@ -1,15 +1,10 @@
 package com.experiment.npe.ui.search;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.SearchView;
+import androidx.annotation.NonNull;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeEntity;
-import com.experiment.npe.ui.base.viewmodel.ToolbarViewModel;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;

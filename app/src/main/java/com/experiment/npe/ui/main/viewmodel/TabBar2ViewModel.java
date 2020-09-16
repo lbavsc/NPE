@@ -1,41 +1,30 @@
 package com.experiment.npe.ui.main.viewmodel;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
-import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
+
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.login.LoginActivity;
-import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
-import com.experiment.npe.ui.search.SearchActivity;
 import com.experiment.npe.ui.setting.SettingActivity;
-import com.experiment.npe.ui.setting.SettingViewModel;
-import com.experiment.npe.ui.window.PhotoPopupWindow;
 import com.experiment.npe.utils.RetrofitClient;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
-import me.goldze.mvvmhabit.utils.ToastUtils;
 
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
+import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 /**
  * Created by lbavsc on 20-9-15

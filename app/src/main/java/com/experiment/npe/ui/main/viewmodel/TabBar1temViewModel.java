@@ -1,6 +1,6 @@
 package com.experiment.npe.ui.main.viewmodel;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import me.goldze.mvvmhabit.base.ItemViewModel;
 

@@ -1,14 +1,13 @@
 package com.experiment.npe.ui.regist;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.support.v7.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.ActivityLoginBinding;
-import com.experiment.npe.ui.login.LoginViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 

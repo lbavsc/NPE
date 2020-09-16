@@ -1,6 +1,6 @@
 package com.experiment.npe.ui.main.adapter;
 
-import android.databinding.ViewDataBinding;
+import androidx.databinding.ViewDataBinding;
 import android.view.ViewGroup;
 
 import com.experiment.npe.databinding.ItemTabBar1Binding;

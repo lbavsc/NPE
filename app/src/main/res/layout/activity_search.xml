@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -69,7 +69,7 @@
                     style="@style/ViewLineStyle"
                     android:layout_alignParentBottom="true" />
             </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
     </LinearLayout>
 </layout>

@@ -1,9 +1,7 @@
 package com.experiment.npe.ui.setting;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
-
-import com.experiment.npe.data.NpeRepository;
+import androidx.annotation.NonNull;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;

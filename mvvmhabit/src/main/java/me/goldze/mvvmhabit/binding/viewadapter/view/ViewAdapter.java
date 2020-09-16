@@ -1,6 +1,6 @@
 package me.goldze.mvvmhabit.binding.viewadapter.view;
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 import android.view.MotionEvent;
 import android.view.View;
 

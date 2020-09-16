@@ -1,7 +1,7 @@
 package com.experiment.npe.data;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.LocalDataSource;
@@ -13,7 +13,6 @@ import com.experiment.npe.entity.UserEntity;
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.base.BaseModel;
 import me.goldze.mvvmhabit.http.BaseResponse;
-import okhttp3.RequestBody;
 
 /**
  * Model层，统一模块的数据仓库，包含网络数据和本地数据
