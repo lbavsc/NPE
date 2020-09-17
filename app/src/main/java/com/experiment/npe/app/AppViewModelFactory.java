@@ -14,6 +14,7 @@ import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
 import com.experiment.npe.ui.regist.RegistViewModel;
 import com.experiment.npe.ui.search.SearchViewModel;
 import com.experiment.npe.ui.setting.SettingViewModel;
+import com.experiment.npe.ui.setting.edit.EditInformationViewModel;
 
 
 /**
@@ -61,6 +62,8 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new TabBar2ViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(SettingViewModel.class)) {
             return (T) new SettingViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(EditInformationViewModel.class)) {
+            return (T) new EditInformationViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

@@ -8,6 +8,8 @@ import androidx.databinding.ObservableInt;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.login.LoginActivity;
+import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
+import com.experiment.npe.ui.setting.edit.EditInformationActivity;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
@@ -52,6 +54,8 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand accountInformationOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
+            startContainerActivity(TabBar2Fragment.class.getCanonicalName());
+            finish();
 
         }
     });
@@ -59,7 +63,7 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand editInformationOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-
+            startActivity(EditInformationActivity.class);
         }
     });
 

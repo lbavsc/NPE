@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.experiment.npe.ui.setting.edit.EditInformationViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/white"
+            binding:contentInsetStart="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:padding="12dp"
+                    android:src="@mipmap/back"
+                    binding:onClickCommand="@{viewModel.backOnClick}" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxEms="12"
+                    android:singleLine="true"
+                    android:text="资料编辑"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp" />
+
+
+                <ImageView
+                    android:id="@+id/iv_right_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:src="@mipmap/toolbar_more"
+                    binding:onClickCommand="@{viewModel.rightIconOnClick}" />
+
+                <View
+                    style="@style/ViewLineStyle"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+
+    </LinearLayout>
+</layout>
