@@ -9,6 +9,7 @@ import com.experiment.npe.entity.UserEntity;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
+import okhttp3.RequestBody;
 
 /**
  * Created by lbavsc on 20-9-14
@@ -71,6 +72,11 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<JokeEntity> search(String searchString) {
         return apiService.search(searchString);
+    }
+
+    @Override
+    public Observable<BaseResponse> updateUserIcon(String description, RequestBody imgs) {
+        return apiService.updateUserIcon(description,imgs);
     }
 
 

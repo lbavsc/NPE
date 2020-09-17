@@ -93,6 +93,7 @@
             android:background="@drawable/rounded"
             android:backgroundTint="#4287E8"
             android:text="登录"
+            android:textColor="@color/white"
             android:visibility="@{viewModel.loginVisibility}"
             binding:onClickCommand="@{viewModel.loginOnClickCommand}" />
 

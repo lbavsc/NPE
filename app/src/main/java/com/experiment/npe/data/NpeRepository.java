@@ -13,6 +13,7 @@ import com.experiment.npe.entity.UserEntity;
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.base.BaseModel;
 import me.goldze.mvvmhabit.http.BaseResponse;
+import okhttp3.RequestBody;
 
 /**
  * Model层，统一模块的数据仓库，包含网络数据和本地数据
@@ -76,6 +77,11 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     @Override
     public Observable<JokeEntity> search(String searchString) {
         return mHttpDataSource.search(searchString);
+    }
+
+    @Override
+    public Observable<BaseResponse> updateUserIcon(String description, RequestBody imgs) {
+        return mHttpDataSource.updateUserIcon(description,imgs);
     }
 
     @Override

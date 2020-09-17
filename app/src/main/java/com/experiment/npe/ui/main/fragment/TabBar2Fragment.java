@@ -101,6 +101,18 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
         });
     }
 
+    @Override
+    public void initData() {
+        NpeRepository model = viewModel.getmodle();
+        if (model.getUserStatus()) {
+            viewModel.loginVisibility.set(View.GONE);
+            viewModel.visibility.set(View.VISIBLE);
+        } else {
+            viewModel.loginVisibility.set(View.VISIBLE);
+            viewModel.visibility.set(View.GONE);
+        }
+    }
+
     /**
      * 请求相机权限
      */

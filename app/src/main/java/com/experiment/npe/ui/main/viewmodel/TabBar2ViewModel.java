@@ -4,8 +4,8 @@ import android.app.Application;
 
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
+
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -15,16 +15,26 @@ import android.view.View;
 
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
+import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.setting.SettingActivity;
 import com.experiment.npe.utils.RetrofitClient;
 
+import java.io.File;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
+import me.goldze.mvvmhabit.http.ResponseThrowable;
+import me.goldze.mvvmhabit.utils.RxUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Created by lbavsc on 20-9-15
@@ -37,15 +47,21 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
     public ObservableField<String> userId = new ObservableField<>("");
     public ObservableInt loginVisibility = new ObservableInt();
     public ObservableInt visibility = new ObservableInt();
+    public String TAG = "TabBar2ViewModel";
     public Drawable drawableImg;
-    private Uri imageUri;
+
 
     public TabBar2ViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
         //ImageView的占位图片，可以解决RecyclerView中图片错误问题
         drawableImg = ContextCompat.getDrawable(application, R.mipmap.ic_launcher);
         userName.set(model.getUserName());
-        userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
+
+        if (model.getUserIcon().startsWith("img")){
+            userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
+        }else {
+            userIcon.set(model.getUserIcon());
+        }
         userId.set("ID:" + model.getUserId());
         if (model.getUserStatus()) {
             loginVisibility.set(View.GONE);
@@ -87,12 +103,42 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         @Override
         public void call() {
             requestCameraPermissions.call();
+            upUserIcon();
+
         }
     });
 
+    public void upUserIcon() {
+        String descriptionString = model.getUserId();
+        File file = new File(model.getUserIcon());
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        model.updateUserIcon(descriptionString, requestBody)
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<ResultEntity>() {
+                    @Override
+                    public void onNext(final ResultEntity response) {
+                        Log.e(TAG, "onNext: " + response.getCode());
+                    }
 
-    public void replaceUserIcon() {
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        //请求刷新完成收回
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
 
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showShort("头像更换完成");
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
     }
 
 }

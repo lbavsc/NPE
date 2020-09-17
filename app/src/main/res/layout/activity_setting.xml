@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,8 +10,7 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:binding="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -69,6 +69,105 @@
                     android:layout_alignParentBottom="true" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_55"
+                android:elevation="@dimen/dp_0_1"
+                android:outlineProvider="bounds"
+                binding:onClickCommand="@{viewModel.accountInformationOnClickCommand}">
+
+
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:elevation="@dimen/dp_1"
+                    android:text="帐号信息"
+                    android:textSize="@dimen/dp_18" />
+
+                <View
+                    style="@style/ViewLineStyle"
+                    android:layout_alignParentBottom="true" />
+
+
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_width="@dimen/dp_22"
+                    android:layout_height="@dimen/dp_22"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@mipmap/next_step" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_55"
+                android:elevation="@dimen/dp_0_1"
+                android:outlineProvider="bounds"
+                binding:onClickCommand="@{viewModel.editInformationOnClickCommand}">
+
+
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:elevation="@dimen/dp_1"
+                    android:text="编辑资料"
+                    android:textSize="@dimen/dp_18" />
+
+                <View
+                    style="@style/ViewLineStyle"
+                    android:layout_alignParentBottom="true" />
+
+
+                <ImageView
+                    android:id="@+id/img2"
+                    android:layout_width="@dimen/dp_22"
+                    android:layout_height="@dimen/dp_22"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@mipmap/next_step" />
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#4287E8"
+                android:text="退出登录"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dp_400"
+                android:visibility="@{viewModel.logOutinVisibility}"
+                binding:onClickCommand="@{viewModel.loginOutOnClickCommand}" />
+            <Button
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/rounded"
+                android:backgroundTint="#4287E8"
+                android:text="登录"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dp_400"
+                android:visibility="@{viewModel.loginVisibility}"
+                binding:onClickCommand="@{viewModel.loginOnClickCommand}" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>
