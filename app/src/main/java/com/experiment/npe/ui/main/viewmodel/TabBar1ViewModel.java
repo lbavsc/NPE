@@ -1,11 +1,15 @@
 package com.experiment.npe.ui.main.viewmodel;
 
 import android.app.Application;
+
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 
 import com.experiment.npe.BR;

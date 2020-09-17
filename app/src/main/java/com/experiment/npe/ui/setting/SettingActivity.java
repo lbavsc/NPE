@@ -63,8 +63,9 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding, Settin
                             viewModel.logOutinVisibility.set(View.GONE);
                             NpeRepository model = viewModel.getmodle();
                             model.saveUserStatus(false);
-                            startActivity(MainActivity.class);
-                            startContainerActivity(TabBar2Fragment.class.getCanonicalName());
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("num", 1);
+                            startActivity(MainActivity.class, bundle);
                             finish();
                         }
                     }).show();

@@ -36,9 +36,10 @@ public interface HttpDataSource {
 
     Observable<JokeEntity> search(@Query("searchString") String searchString);
 
-    //    @FormUrlEncoded
-//    @Multipart
-    @POST("user/update/cover")
     Observable<ResultEntity> updateUserIcon(@Body RequestBody body);
 
+    Observable<ResultEntity<UserEntity>> updatePassword(@Query("userId")String userId,@Query("oldPassword")String oldPassword,
+                                                        @Query("newPassword")String newPassword);
+
+    Observable<ResultEntity<UserEntity>> updateUserName(@Query("userId")String userId,@Query("name")String newUserName);
 }

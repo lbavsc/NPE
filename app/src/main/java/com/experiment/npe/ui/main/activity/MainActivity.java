@@ -1,14 +1,25 @@
 package com.experiment.npe.ui.main.activity;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
+import com.experiment.npe.app.AppApplication;
+import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.ActivityMainBinding;
 import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
 import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
@@ -16,8 +27,11 @@ import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.goldze.mvvmhabit.base.AppManager;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
@@ -26,6 +40,7 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
  */
 public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewModel> {
     private List<Fragment> mFragments;
+
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -42,8 +57,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
         //初始化Fragment
         initFragment();
         //初始化底部Button
-        initBottomTab();
+        initBottomTab(0);
+
     }
+
 
     private void initFragment() {
         mFragments = new ArrayList<>();
@@ -53,26 +70,29 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
         commitAllowingStateLoss(0);
     }
 
-    private void initBottomTab() {
-        NavigationController navigationController = binding.pagerBottomTab.material()
-                .addItem(R.mipmap.yingyong, "应用")
+    private void initBottomTab(final int sub) {
+        final NavigationController navigationController = binding.pagerBottomTab.material()
+                .addItem(R.mipmap.news, "新闻")
                 .addItem(R.mipmap.wode_select, "我的")
                 .setDefaultColor(ContextCompat.getColor(this, R.color.textColorVice))
                 .build();
         //底部按钮的点击事件监听
+        if (sub==1){
+            navigationController.setSelect(1);
+        }
         navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frameLayout, mFragments.get(index));
-//                transaction.commitAllowingStateLoss();
                 commitAllowingStateLoss(index);
             }
+
 
             @Override
             public void onRepeat(int index) {
             }
+
         });
+
     }
 
     private void commitAllowingStateLoss(int position) {
@@ -98,5 +118,41 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
             }
         }
         transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 创建退出对话框
+            MaterialDialogUtils.showBasicDialog(MainActivity.this, "确定要退出吗")
+                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            ToastUtils.showLong("取消");
+                        }
+                    }).onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    AppManager.getAppManager().AppExit();
+                }
+            }).show();
+        }
+
+        return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null) {
+            int num = bundle.getInt("num");
+            if (num == 1){
+                commitAllowingStateLoss(1);
+                initBottomTab(1);
+            }
+
+
+        }
     }
 }

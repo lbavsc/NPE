@@ -88,6 +88,16 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
+    public Observable<ResultEntity<UserEntity>> updatePassword(String userId, String oldPassword, String newPassword) {
+        return mHttpDataSource.updatePassword(userId,oldPassword,newPassword);
+    }
+
+    @Override
+    public Observable<ResultEntity<UserEntity>> updateUserName(String userId, String newUserName) {
+        return mHttpDataSource.updateUserName(userId,newUserName);
+    }
+
+    @Override
     public void saveUserId(String userId) {
         mLocalDataSource.saveUserId(userId);
     }

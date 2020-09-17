@@ -1,4 +1,4 @@
-package com.experiment.npe.ui.setting.edit;
+package com.experiment.npe.ui.setting.change;
 
 import android.app.Application;
 import android.text.TextUtils;
@@ -11,9 +11,8 @@ import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
-import java.security.PublicKey;
-
 import io.reactivex.observers.DisposableObserver;
+import me.goldze.mvvmhabit.base.BaseModel;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
@@ -21,17 +20,14 @@ import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
-/**
- * Created by lbavsc on 20-9-17
- */
-public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
-    public ObservableField<String> oldUserName = new ObservableField<>("");
-    public ObservableField<String> newUserName = new ObservableField<>("");
-    public String TAG = "EditInformationViewModel";
+public class ChangePasswordViewModel extends BaseViewModel<NpeRepository> {
+    public ObservableField<String> oldpassword = new ObservableField<>("");
+    public ObservableField<String> newpassword = new ObservableField<>("");
+    public ObservableField<String> newpassword2 = new ObservableField<>("");
+    private String TAG = "ChangePasswordViewModel";
 
-    public EditInformationViewModel(@NonNull Application application, NpeRepository model) {
+    public ChangePasswordViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
-        oldUserName.set(model.getUserName());
     }
 
     public BindingCommand backOnClick = new BindingCommand(new BindingAction() {
@@ -47,24 +43,36 @@ public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
-    public BindingCommand eiitOnClickCommand = new BindingCommand(new BindingAction() {
+    public BindingCommand loginOutOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             if (!model.getUserStatus()) {
                 ToastUtils.showShort("您当前是未登录状态");
                 return;
             }
-            if (TextUtils.isEmpty(newUserName.get())) {
-                ToastUtils.showShort("请输入新用户名");
+            if (TextUtils.isEmpty(oldpassword.get())) {
+                ToastUtils.showShort("旧密码输入为空");
                 return;
             }
-            updateUserName(newUserName.get());
-            model.saveUserName(newUserName.get());
+            if (TextUtils.isEmpty(newpassword.get())) {
+                ToastUtils.showShort("新密码输入为空");
+                return;
+            }
+            if (!newpassword.get().equals(newpassword2.get())) {
+                ToastUtils.showShort("俩次输入的新密码不一致，请重新输入");
+                return;
+            }
+            if (!oldpassword.get().equals(model.getPassword())) {
+                ToastUtils.showShort("旧密码输入错误");
+                return;
+            }
+            changepwd(oldpassword.get(), newpassword.get());
+            model.savePassword(newpassword.get());
         }
     });
 
-    public void updateUserName(String newUserName) {
-        model.updateUserName(model.getUserId(), newUserName)
+    public void changepwd(String oldpwd, String newpwd) {
+        model.updatePassword(model.getUserId(), oldpwd, newpwd)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
@@ -77,7 +85,7 @@ public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onError(Throwable throwable) {
                         //关闭对话框
-                        ToastUtils.showShort("用户名更新失败");
+                        ToastUtils.showShort("密码更新失败");
                         dismissDialog();
                         //请求刷新完成收回
                         if (throwable instanceof ResponseThrowable) {
@@ -87,7 +95,7 @@ public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
 
                     @Override
                     public void onComplete() {
-                        ToastUtils.showShort("用户名更新成功");
+                        ToastUtils.showShort("密码更新成功");
                         //关闭对话框
                         dismissDialog();
                     }

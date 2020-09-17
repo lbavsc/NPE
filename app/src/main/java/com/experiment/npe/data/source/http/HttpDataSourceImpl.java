@@ -82,5 +82,15 @@ public class HttpDataSourceImpl implements HttpDataSource {
         return apiService.updateUserIcon(body);
     }
 
+    @Override
+    public Observable<ResultEntity<UserEntity>> updatePassword(String userId, String oldPassword, String newPassword) {
+        return apiService.updatePassword(userId,oldPassword,newPassword);
+    }
+
+    @Override
+    public Observable<ResultEntity<UserEntity>> updateUserName(String userId, String newUserName) {
+        return apiService.updateUserName(userId,newUserName);
+    }
+
 
 }

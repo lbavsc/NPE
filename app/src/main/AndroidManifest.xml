@@ -27,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.setting.edit.EditInformationActivity"></activity>
+        <activity android:name=".ui.setting.change.ChangePasswordActivity"></activity>
+        <activity android:name=".ui.setting.edit.EditInformationActivity" />
         <activity android:name=".ui.setting.SettingActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.main.activity.MainActivity">

@@ -1,6 +1,7 @@
 package com.experiment.npe.ui.setting;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,10 @@ import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.main.activity.MainActivity;
 import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
+import com.experiment.npe.ui.setting.change.ChangePasswordActivity;
 import com.experiment.npe.ui.setting.edit.EditInformationActivity;
 
+import me.goldze.mvvmhabit.base.AppManager;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
@@ -55,8 +58,9 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand accountInformationOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            startActivity(MainActivity.class);
-            startContainerActivity(TabBar2Fragment.class.getCanonicalName());
+            Bundle bundle = new Bundle();
+            bundle.putInt("num", 1);
+            startActivity(MainActivity.class, bundle);
             finish();
 
         }
@@ -84,6 +88,13 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
         @Override
         public void call() {
             entityJsonLiveData.setValue(model.getUserStatus());
+        }
+    });
+
+    public BindingCommand changePasswordOnClickCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            startActivity(ChangePasswordActivity.class);
         }
     });
 }

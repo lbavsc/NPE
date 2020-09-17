@@ -152,4 +152,11 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
             }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        NpeRepository model = viewModel.getmodle();
+        viewModel.userName.set(model.getUserName());
+    }
 }

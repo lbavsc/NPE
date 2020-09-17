@@ -44,8 +44,13 @@ public interface NpeApiService {
     @GET("joke/search")
     Observable<JokeEntity> search(@Query("searchString") String searchString);
 
-    //    @FormUrlEncoded
-//    @Multipart
     @POST("user/update/cover")
     Observable<ResultEntity> updateUserIcon(@Body RequestBody body);
+
+    @GET("user/update/pwd")
+    Observable<ResultEntity<UserEntity>> updatePassword(@Query("userId")String userId,@Query("oldPassword")String oldPassword,
+                                                        @Query("newPassword")String newPassword);
+
+    @GET("user/update/name")
+    Observable<ResultEntity<UserEntity>> updateUserName(@Query("userId")String userId,@Query("name")String oldPassword);
 }
