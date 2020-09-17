@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
 
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
                 .setDefaultColor(ContextCompat.getColor(this, R.color.textColorVice))
                 .build();
         //底部按钮的点击事件监听
-        if (sub==1){
+        if (sub == 1) {
             navigationController.setSelect(1);
         }
         navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
@@ -147,11 +148,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
             int num = bundle.getInt("num");
-            if (num == 1){
+            if (num == 1) {
                 commitAllowingStateLoss(1);
                 initBottomTab(1);
             }
-
 
         }
     }

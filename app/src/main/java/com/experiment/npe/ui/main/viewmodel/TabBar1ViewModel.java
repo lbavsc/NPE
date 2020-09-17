@@ -6,11 +6,13 @@ import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
 
+import android.database.Observable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
 import android.text.TextUtils;
+import android.view.View;
 
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
@@ -36,9 +38,9 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  * Created by lbavsc on 20-9-11
  */
 public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
-    public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent<>();
+//    public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent<>();
     public ObservableField<String> searchText = new ObservableField<>("");
-
+    public SingleLiveEvent<Boolean> onFocusChangeCommand = new SingleLiveEvent<>();
     public static ObservableList<JokeAssortEntity.DataBean> observableList = new ObservableArrayList<>();
 
     public TabBar1ViewModel(@NonNull Application application, NpeRepository repository) {
@@ -79,7 +81,6 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
 
                     @Override
                     public void onComplete() {
-
                         //关闭对话框
                         dismissDialog();
                     }
@@ -101,6 +102,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
         public String call(Integer index) {
+            onFocusChangeCommand.setValue(false);
             ToastUtils.showShort("ViewPager切换：" + index);
             return null;
         }
@@ -116,7 +118,10 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
                 bundle.putString("SearchString", searchText.get());
                 startActivity(SearchActivity.class, bundle);
                 searchText.set("");
+                onFocusChangeCommand.setValue(false);
             }
         }
     });
+
+
 }
