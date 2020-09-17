@@ -8,6 +8,7 @@ import androidx.databinding.ObservableInt;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.login.LoginActivity;
+import com.experiment.npe.ui.main.activity.MainActivity;
 import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
 import com.experiment.npe.ui.setting.edit.EditInformationActivity;
 
