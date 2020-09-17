@@ -9,8 +9,10 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -24,6 +26,7 @@ public interface HttpDataSource {
     Observable<ResultEntity<UserEntity>> login(String phone, String password, boolean status);
 
     Observable<JokeAssortEntity> assort();
+
     //注册
     Observable<ResultEntity<UserEntity>> registered(@Body UserEntity body);
 
@@ -31,11 +34,11 @@ public interface HttpDataSource {
 
     Observable<BaseResponse<UserEntity>> demoPost(String catalog);
 
-    Observable<JokeEntity>search(@Query("searchString") String searchString);
+    Observable<JokeEntity> search(@Query("searchString") String searchString);
 
-    @Multipart
-    @POST("update/img")
-    Observable<BaseResponse> updateUserIcon(@Part("coverFileName") String description,
-                                            @Part("file\"; coverFileName=\"image.png\"") RequestBody imgs);
+    //    @FormUrlEncoded
+//    @Multipart
+    @POST("user/update/cover")
+    Observable<ResultEntity> updateUserIcon(@Body RequestBody body);
 
 }

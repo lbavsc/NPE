@@ -7,8 +7,11 @@ import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
+import java.io.File;
+
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -75,8 +78,8 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<BaseResponse> updateUserIcon(String description, RequestBody imgs) {
-        return apiService.updateUserIcon(description,imgs);
+    public Observable<ResultEntity> updateUserIcon(RequestBody body) {
+        return apiService.updateUserIcon(body);
     }
 
 

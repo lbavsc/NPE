@@ -2,6 +2,7 @@ package com.experiment.npe.ui.regist;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 import com.experiment.npe.BR;

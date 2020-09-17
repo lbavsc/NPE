@@ -144,6 +144,7 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
                 if (pictureBean.isCut()) {
                     model.saveUserIcon(pictureBean.getPath());
                     viewModel.userIcon.set(pictureBean.getPath());
+                    viewModel.upUserIcon();
                 } else {
                     model.saveUserIcon(pictureBean.getUri().getPath());
                     viewModel.userIcon.set(pictureBean.getUri().getPath());

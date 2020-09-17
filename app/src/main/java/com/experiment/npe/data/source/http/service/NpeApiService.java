@@ -9,6 +9,7 @@ import java.io.File;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -43,8 +44,8 @@ public interface NpeApiService {
     @GET("joke/search")
     Observable<JokeEntity> search(@Query("searchString") String searchString);
 
-    @Multipart
-    @POST("update/img")
-    Observable<BaseResponse> updateUserIcon(@Part("fileName") String description,
-            @Part("file\"; filename=\"image.png\"")RequestBody imgs);
+    //    @FormUrlEncoded
+//    @Multipart
+    @POST("user/update/cover")
+    Observable<ResultEntity> updateUserIcon(@Body RequestBody body);
 }

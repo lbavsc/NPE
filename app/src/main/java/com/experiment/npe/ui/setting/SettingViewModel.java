@@ -55,6 +55,7 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand accountInformationOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
+            startActivity(MainActivity.class);
             startContainerActivity(TabBar2Fragment.class.getCanonicalName());
             finish();
 

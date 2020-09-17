@@ -22,6 +22,7 @@ import com.experiment.npe.ui.setting.SettingActivity;
 import com.experiment.npe.utils.RetrofitClient;
 
 import java.io.File;
+import java.io.IOException;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -34,7 +35,9 @@ import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okio.BufferedSink;
 
 /**
  * Created by lbavsc on 20-9-15
@@ -57,9 +60,9 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         drawableImg = ContextCompat.getDrawable(application, R.mipmap.ic_launcher);
         userName.set(model.getUserName());
 
-        if (model.getUserIcon().startsWith("img")){
+        if (model.getUserIcon().startsWith("img")) {
             userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
-        }else {
+        } else {
             userIcon.set(model.getUserIcon());
         }
         userId.set("ID:" + model.getUserId());
@@ -103,16 +106,22 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         @Override
         public void call() {
             requestCameraPermissions.call();
-            upUserIcon();
+//            upUserIcon();
 
         }
     });
 
     public void upUserIcon() {
-        String descriptionString = model.getUserId();
-        File file = new File(model.getUserIcon());
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        model.updateUserIcon(descriptionString, requestBody)
+        String userId = model.getUserId();
+        String path = model.getUserIcon();
+        File file = new File(path);
+        Log.e("TAG", path);
+        RequestBody fileRQ = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        RequestBody body = new MultipartBody.Builder()
+                .addFormDataPart("userId", userId)
+                .addFormDataPart("cover", file.getName(), fileRQ)
+                .build();
+        model.updateUserIcon(body)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
