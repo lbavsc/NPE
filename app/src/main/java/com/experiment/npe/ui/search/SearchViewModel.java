@@ -1,8 +1,13 @@
 package com.experiment.npe.ui.search;
 
 import android.app.Application;
-import androidx.annotation.NonNull;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
+
+import com.experiment.npe.BR;
+import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeEntity;
 
@@ -15,6 +20,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class SearchViewModel extends BaseViewModel<NpeRepository> {
 
@@ -52,8 +58,10 @@ public class SearchViewModel extends BaseViewModel<NpeRepository> {
                         if (response.getData() == null || response.getData().size() == 0) {
                             ToastUtils.showShort("查询不到您所需的新闻，请返回重新搜索");
                             return;
-                        } else {
-                            ToastUtils.showLong(response.getData().toString());
+                        }
+                        for (JokeEntity.DataBean itemsEntity : response.getData()) {
+                            SearchItemViewMode searchItemViewMode = new SearchItemViewMode(SearchViewModel.this, itemsEntity);
+                            observableList.add(searchItemViewMode);
                         }
 
                     }
@@ -75,5 +83,11 @@ public class SearchViewModel extends BaseViewModel<NpeRepository> {
                     }
                 });
     }
+
+    //给RecyclerView添加ObservableList
+    public ObservableList<SearchItemViewMode> observableList = new ObservableArrayList<>();
+    //给RecyclerView添加ItemBinding
+    public ItemBinding<SearchItemViewMode> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_search_activity);
+
 
 }

@@ -1,7 +1,5 @@
 package com.experiment.npe.entity;
 
-import androidx.annotation.NonNull;
-
 import java.util.List;
 
 /**
@@ -9,10 +7,11 @@ import java.util.List;
  */
 public class JokeEntity {
 
+
     /**
      * code : 1001
      * msg : 获取成功
-     * data : [{"jokeId":"1000001","userId":"000001","title":"意大利时装界直面种族主义问题","postTime":"Sep 11, 2020 11:26:11 AM","source":"BBC","assortId":10}]
+     * data : [{"jokeId":"1000001","userId":"000001","title":"意大利时装界直面种族主义问题","coverImg":"img/user/ic_default.jpg","postTime":"Sep 15, 2020 10:12:38 AM","content":"意大利加勒比裔时装设计师斯泰拉·让（Stella Jean）主动退出米兰时装周，为的是推动业界打击种族主义，接纳有色人种就业。","source":"BBC","assortId":1}]
      */
 
     private int code;
@@ -48,15 +47,19 @@ public class JokeEntity {
          * jokeId : 1000001
          * userId : 000001
          * title : 意大利时装界直面种族主义问题
-         * postTime : Sep 11, 2020 11:26:11 AM
+         * coverImg : img/user/ic_default.jpg
+         * postTime : Sep 15, 2020 10:12:38 AM
+         * content : 意大利加勒比裔时装设计师斯泰拉·让（Stella Jean）主动退出米兰时装周，为的是推动业界打击种族主义，接纳有色人种就业。
          * source : BBC
-         * assortId : 10
+         * assortId : 1
          */
 
         private String jokeId;
         private String userId;
         private String title;
+        private String coverImg;
         private String postTime;
+        private String content;
         private String source;
         private int assortId;
 
@@ -84,12 +87,28 @@ public class JokeEntity {
             this.title = title;
         }
 
+        public String getCoverImg() {
+            return coverImg;
+        }
+
+        public void setCoverImg(String coverImg) {
+            this.coverImg = coverImg;
+        }
+
         public String getPostTime() {
             return postTime;
         }
 
         public void setPostTime(String postTime) {
             this.postTime = postTime;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
         }
 
         public String getSource() {
@@ -114,7 +133,9 @@ public class JokeEntity {
                     "jokeId='" + jokeId + '\'' +
                     ", userId='" + userId + '\'' +
                     ", title='" + title + '\'' +
+                    ", coverImg='" + coverImg + '\'' +
                     ", postTime='" + postTime + '\'' +
+                    ", content='" + content + '\'' +
                     ", source='" + source + '\'' +
                     ", assortId=" + assortId +
                     '}';
@@ -126,7 +147,7 @@ public class JokeEntity {
         return "JokeEntity{" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
-                ", data=" + data.toString() +
+                ", data=" + data +
                 '}';
     }
 }

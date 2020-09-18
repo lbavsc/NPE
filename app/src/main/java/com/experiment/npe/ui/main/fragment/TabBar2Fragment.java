@@ -29,6 +29,7 @@ import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.FragmentTabBar2Binding;
 import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.wildma.pictureselector.FileUtils;
 import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
 
@@ -158,5 +159,11 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
         super.onResume();
         NpeRepository model = viewModel.getmodle();
         viewModel.userName.set(model.getUserName());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        FileUtils.deleteAllCacheImage(this.getContext());
     }
 }
