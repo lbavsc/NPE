@@ -157,6 +157,7 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
     @Override
     public void onResume() {
         super.onResume();
+        Log.e("TAG", "进入页面2");
         NpeRepository model = viewModel.getmodle();
         viewModel.userName.set(model.getUserName());
     }

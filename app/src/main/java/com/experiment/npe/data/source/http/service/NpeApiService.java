@@ -56,4 +56,7 @@ public interface NpeApiService {
 
     @GET("joke/select")
     Observable<JokeEntity> showJoke(@Query("assort")int assortId);
+
+    @POST("joke/upload")
+    Observable<JokeEntity> uploadJoke(@Body RequestBody body);
 }

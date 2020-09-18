@@ -75,4 +75,5 @@ public interface LocalDataSource {
      * 获取用户登录状态
      */
     boolean getUserStatus();
+
 }

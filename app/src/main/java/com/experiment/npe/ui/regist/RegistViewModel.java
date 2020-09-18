@@ -87,10 +87,6 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
             ToastUtils.showShort("请输入手机号！");
             return;
         }
-        if (userPhone.get().length()!=11||userPhone.get().startsWith("1")){
-            ToastUtils.showShort("请输入正确的手机号！");
-            return;
-        }
         if (TextUtils.isEmpty(password.get())) {
             ToastUtils.showShort("请输入密码！");
             return;

@@ -3,15 +3,18 @@ package com.experiment.npe.ui.main.fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.experiment.npe.data.NpeRepository;
 import com.google.android.material.tabs.TabLayout;
 
 import android.os.IBinder;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,5 +95,14 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
         });
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        NpeRepository model=viewModel.getmodel();
+        if (model.getUserStatus()&&model.getUserType()){
+            viewModel.uploadVisibility.set(View.VISIBLE);
+        }else {
+            viewModel.uploadVisibility.set(View.GONE);
+        }
+    }
 }

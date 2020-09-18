@@ -46,13 +46,7 @@ public class TabBar1temViewModel extends ItemViewModel<TabBar1ViewModel> {
     }
 
 
-    public BindingCommand onRefreshCommand = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            ToastUtils.showShort("下拉刷新");
-            showJoke(index);
-        }
-    });
+
 
 
 
@@ -71,8 +65,8 @@ public class TabBar1temViewModel extends ItemViewModel<TabBar1ViewModel> {
                 .subscribe(new DisposableObserver<JokeEntity>() {
                     @Override
                     public void onNext(final JokeEntity response) {
-                        for (int i = (response.getData().size()) - 1; i >= 0; i--) {
-                            JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(viewModel, response.getData().get(i));
+                        for (JokeEntity.DataBean dataBean:response.getData()){
+                            JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(viewModel, dataBean);
                             observableList.add(jokeItemViewModel);
                         }
 

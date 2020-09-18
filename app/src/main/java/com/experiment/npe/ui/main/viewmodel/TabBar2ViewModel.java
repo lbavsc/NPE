@@ -115,7 +115,6 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         String userId = model.getUserId();
         String path = model.getUserIcon();
         File file = new File(path);
-        Log.e("TAG", path);
         RequestBody fileRQ = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         RequestBody body = new MultipartBody.Builder()
                 .addFormDataPart("userId", userId)

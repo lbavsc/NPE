@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
 
 import android.database.Observable;
@@ -19,6 +20,7 @@ import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.ui.search.SearchActivity;
+import com.experiment.npe.ui.uploadjoke.UploadJokeActivity;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -38,14 +40,20 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  * Created by lbavsc on 20-9-11
  */
 public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
-//    public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent<>();
+    //    public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent<>();
     public ObservableField<String> searchText = new ObservableField<>("");
     public SingleLiveEvent<Boolean> onFocusChangeCommand = new SingleLiveEvent<>();
     public static ObservableList<JokeAssortEntity.DataBean> observableList = new ObservableArrayList<>();
     //封装一个界面发生改变的观察者
+    public ObservableInt uploadVisibility = new ObservableInt();
 
     public TabBar1ViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
+        if (model.getUserStatus() && model.getUserType()) {
+            uploadVisibility.set(View.VISIBLE);
+        } else {
+            uploadVisibility.set(View.GONE);
+        }
     }
 
     public void getAssort() {
@@ -125,7 +133,22 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
-    public NpeRepository getmodel(){
+    public BindingCommand onUploadCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            if (!model.getUserStatus()) {
+                ToastUtils.showShort("您当前未登录");
+                return;
+            }
+            if (!model.getUserType()) {
+                ToastUtils.showShort("您不是管理员");
+                return;
+            }
+            startActivity(UploadJokeActivity.class);
+        }
+    });
+
+    public NpeRepository getmodel() {
         return model;
     }
 

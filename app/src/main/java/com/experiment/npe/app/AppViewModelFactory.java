@@ -16,6 +16,7 @@ import com.experiment.npe.ui.search.SearchViewModel;
 import com.experiment.npe.ui.setting.SettingViewModel;
 import com.experiment.npe.ui.setting.change.ChangePasswordViewModel;
 import com.experiment.npe.ui.setting.edit.EditInformationViewModel;
+import com.experiment.npe.ui.uploadjoke.UploadJokeViewModel;
 
 
 /**
@@ -67,6 +68,8 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new EditInformationViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(ChangePasswordViewModel.class)) {
             return (T) new ChangePasswordViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(UploadJokeViewModel.class)) {
+            return (T) new UploadJokeViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

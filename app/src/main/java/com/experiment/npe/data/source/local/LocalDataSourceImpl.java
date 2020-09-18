@@ -65,6 +65,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
         SPUtils.getInstance().put("UserStatus", userStatus);
     }
 
+
     @Override
     public String getUserPhone() {
         return SPUtils.getInstance().getString("UserPhone");
@@ -99,4 +100,5 @@ public class LocalDataSourceImpl implements LocalDataSource {
     public boolean getUserStatus() {
         return SPUtils.getInstance().getBoolean("UserStatus");
     }
+
 }
