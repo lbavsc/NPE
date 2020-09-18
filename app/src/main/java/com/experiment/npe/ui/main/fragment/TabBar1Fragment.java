@@ -1,5 +1,8 @@
 package com.experiment.npe.ui.main.fragment;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -11,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.experiment.npe.data.NpeRepository;
+import com.experiment.npe.ui.main.activity.MainActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import android.os.IBinder;
@@ -27,6 +31,7 @@ import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.FragmentTabBar1Binding;
 import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter;
 import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
+
 import me.goldze.mvvmhabit.base.BaseFragment;
 
 /**
@@ -83,8 +88,6 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
 //                ToastUtils.showShort("position：" + text);
 //            }
 //        });
-
-
         viewModel.onFocusChangeCommand.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -98,11 +101,13 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
     @Override
     public void onResume() {
         super.onResume();
-        NpeRepository model=viewModel.getmodel();
-        if (model.getUserStatus()&&model.getUserType()){
+        NpeRepository model = viewModel.getmodel();
+        if (model.getUserStatus() && model.getUserType()) {
             viewModel.uploadVisibility.set(View.VISIBLE);
-        }else {
+        } else {
             viewModel.uploadVisibility.set(View.GONE);
         }
     }
+
+
 }

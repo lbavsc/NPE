@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import java.util.List;
 import me.goldze.mvvmhabit.base.AppManager;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
@@ -40,9 +42,13 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
  * Created by lbavsc on 20-9-11
  */
 public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewModel> {
-    private List<Fragment> mFragments;
+    private static List<Fragment> mFragments;
 
+    public UIChangeObservable uc = new UIChangeObservable();
 
+    public class UIChangeObservable {
+
+    }
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_main;
@@ -84,6 +90,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
         navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
+                mFragments.get(0).onResume();
                 commitAllowingStateLoss(index);
             }
 
@@ -153,6 +160,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
                 initBottomTab(1);
             }
 
+        }
+    }
+
+    @Override
+    public void initViewObservable() {
+        super.initViewObservable();
+        Log.e("TAG", String.valueOf(mFragments.get(0).isVisible()));
+        if (mFragments.get(0).isVisible()){
+            mFragments.get(0).onResume();
         }
     }
 }

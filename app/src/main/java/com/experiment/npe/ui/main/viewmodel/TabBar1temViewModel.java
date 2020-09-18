@@ -46,10 +46,6 @@ public class TabBar1temViewModel extends ItemViewModel<TabBar1ViewModel> {
     }
 
 
-
-
-
-
     public void showJoke(int index) {
         NpeRepository model = viewModel.getmodel();
         model.showJoke(index)
@@ -65,7 +61,7 @@ public class TabBar1temViewModel extends ItemViewModel<TabBar1ViewModel> {
                 .subscribe(new DisposableObserver<JokeEntity>() {
                     @Override
                     public void onNext(final JokeEntity response) {
-                        for (JokeEntity.DataBean dataBean:response.getData()){
+                        for (JokeEntity.DataBean dataBean : response.getData()) {
                             JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(viewModel, dataBean);
                             observableList.add(jokeItemViewModel);
                         }
