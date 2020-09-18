@@ -36,17 +36,53 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/JokeCoverImg">
+
+                    <TextView
+                        android:id="@+id/JokeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:layout_marginRight="@dimen/dp_3"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@{viewModel.entity.title}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dp_18" />
+
+
+                    <TextView
+
+                        android:id="@+id/JokeContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_95"
+                        android:layout_below="@+id/JokeTitle"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:layout_marginRight="@dimen/dp_3"
+                        android:ellipsize="end"
+                        android:lines="4"
+                        android:padding="@dimen/dp_3"
+                        android:text="@{viewModel.entity.content}"
+                        android:textSize="14dp" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="测试" />
+                        android:layout_below="@+id/JokeContent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_3"
+                        android:text="@{viewModel.entity.postTime}" />
                 </RelativeLayout>
 
 
                 <ImageView
-                    android:layout_width="@dimen/dp_100"
+                    android:id="@+id/JokeCoverImg"
+                    android:layout_width="@dimen/dp_110"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     binding:urlsphoto="@{viewModel.entity.coverImg}" />
@@ -54,12 +90,7 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@{viewModel.entity.content}"
-                android:textSize="16sp" />
+
         </androidx.cardview.widget.CardView>
 
 

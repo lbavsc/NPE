@@ -5,7 +5,7 @@
     <data>
 
         <import type="com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel" />
-
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
         <import type="com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter" />
 
         <variable
@@ -15,20 +15,29 @@
         <variable
             name="adapter"
             type="ViewPagerBindingAdapter" />
+
+        <variable
+            name="adapter2"
+            type="BindingRecyclerViewAdapter" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFBFCFE"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/user_edit"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/searchText"
                 android:layout_width="match_parent"
@@ -37,11 +46,11 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="75dp"
                 android:background="@null"
+                android:imeOptions="actionSearch"
                 android:maxLength="16"
                 android:singleLine="true"
-                android:textSize="16dp"
                 android:text="@={viewModel.searchText}"
-                android:imeOptions="actionSearch" />
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/imageButton"
@@ -61,18 +70,18 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="scrollable"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@android:color/black"
             android:elevation="1dp"
-            android:outlineProvider="bounds" />
+            android:outlineProvider="bounds"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@android:color/black" />
 
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:background="#F0F0F0" />-->
+        <!--        <View-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:background="#F0F0F0" />-->
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
@@ -83,6 +92,8 @@
             binding:itemBinding="@{viewModel.itemBinding}"
             binding:items="@{viewModel.items}"
             binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"
-            binding:pageTitles="@{viewModel.pageTitles}" />
+            binding:pageTitles="@{viewModel.pageTitles}">
+
+        </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 </layout>

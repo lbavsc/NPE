@@ -48,7 +48,7 @@ public final class ViewAdapter extends AppGlideModule{
             GlideApp.with(imageView.getContext())
                     .load(url)
                     .apply(new RequestOptions().placeholder(placeholderRes))
-                    .override(100,200)
+                    .centerCrop()
                     .into(imageView);
         }
     }
