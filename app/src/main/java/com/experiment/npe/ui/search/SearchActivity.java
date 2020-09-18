@@ -22,7 +22,7 @@ public class SearchActivity extends BaseActivity<ActivitySearchBinding, SearchVi
 
     @Override
     public int initVariableId() {
-        return BR.viewModel;
+        return BR.viewMode;
     }
 
     @Override

@@ -5,8 +5,18 @@
 
         <import type="com.experiment.npe.ui.main.viewmodel.TabBar1temViewModel" />
 
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
         <variable
-            name="viewModel"
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
+
+        <variable
+            name="viewMode"
             type="com.experiment.npe.ui.main.viewmodel.TabBar1temViewModel" />
     </data>
 
@@ -18,9 +28,13 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            binding:adapter="@{adapter}"
+            binding:itemBinding="@{viewMode.itemBinding}"
+            binding:items="@{viewMode.observableList}"
+            binding:layoutManager="@{LayoutManagers.linear()}" />
 
     </LinearLayout>
 </layout>

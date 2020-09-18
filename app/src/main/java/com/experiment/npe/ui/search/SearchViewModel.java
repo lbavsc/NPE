@@ -87,7 +87,7 @@ public class SearchViewModel extends BaseViewModel<NpeRepository> {
     //给RecyclerView添加ObservableList
     public ObservableList<SearchItemViewMode> observableList = new ObservableArrayList<>();
     //给RecyclerView添加ItemBinding
-    public ItemBinding<SearchItemViewMode> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_search_activity);
+    public ItemBinding<SearchItemViewMode> itemBinding = ItemBinding.of(BR.viewMode, R.layout.item_search_activity);
 
 
 }

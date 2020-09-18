@@ -62,7 +62,8 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onNext(final JokeAssortEntity response) {
                         for (int i = 0; i < response.getData().size(); i++) {
-                            TabBar1temViewModel itemViewModel = new TabBar1temViewModel(TabBar1ViewModel.this, response.getData().get(i).getAssortName());
+                            TabBar1temViewModel itemViewModel = new TabBar1temViewModel(TabBar1ViewModel.this, response.getData().get(i).getAssortName(),
+                                    response.getData().get(i).getAssortId());
                             observableList.add(response.getData().get(i));
                             items.add(itemViewModel);
                         }
@@ -90,7 +91,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     //给ViewPager添加ObservableList
     public ObservableList<TabBar1temViewModel> items = new ObservableArrayList<>();
     //给ViewPager添加ItemBinding
-    public ItemBinding<TabBar1temViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_1);
+    public ItemBinding<TabBar1temViewModel> itemBinding = ItemBinding.of(BR.viewMode, R.layout.item_tab_bar_1);
     //给ViewPager添加PageTitle
     public final BindingViewPagerAdapter.PageTitles<TabBar1temViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<TabBar1temViewModel>() {
         @Override

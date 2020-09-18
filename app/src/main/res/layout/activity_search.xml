@@ -7,7 +7,7 @@
         <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
 
         <variable
-            name="viewModel"
+            name="viewMode"
             type="com.experiment.npe.ui.search.SearchViewModel" />
 
         <variable
@@ -48,7 +48,7 @@
                     android:background="?selectableItemBackground"
                     android:padding="12dp"
                     android:src="@mipmap/back"
-                    binding:onClickCommand="@{viewModel.backOnClick}" />
+                    binding:onClickCommand="@{viewMode.backOnClick}" />
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -75,7 +75,7 @@
                     android:gravity="center"
                     android:padding="12dp"
                     android:src="@mipmap/toolbar_more"
-                    binding:onClickCommand="@{viewModel.rightIconOnClick}" />
+                    binding:onClickCommand="@{viewMode.rightIconOnClick}" />
 
                 <View
                     style="@style/ViewLineStyle"
@@ -87,8 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             binding:adapter="@{adapter}"
-            binding:itemBinding="@{viewModel.itemBinding}"
-            binding:items="@{viewModel.observableList}"
+            binding:itemBinding="@{viewMode.itemBinding}"
+            binding:items="@{viewMode.observableList}"
             binding:layoutManager="@{LayoutManagers.linear()}"/>
     </LinearLayout>
 </layout>

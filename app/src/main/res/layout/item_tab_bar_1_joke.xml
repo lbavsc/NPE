@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.search.SearchItemViewMode" />
+        <import type="com.experiment.npe.ui.main.viewmodel.JokeItemViewModel" />
 
         <variable
-            name="viewMode"
-            type="com.experiment.npe.ui.search.SearchItemViewMode" />
+            name="viewModel"
+            type="com.experiment.npe.ui.main.viewmodel.JokeItemViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,7 +48,7 @@
                         android:layout_marginRight="@dimen/dp_3"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="@{viewMode.entity.title}"
+                        android:text="@{viewModel.entity.title}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dp_18" />
 
@@ -65,7 +65,7 @@
                         android:ellipsize="end"
                         android:lines="4"
                         android:padding="@dimen/dp_3"
-                        android:text="@{viewMode.entity.content}"
+                        android:text="@{viewModel.entity.content}"
                         android:textSize="14dp" />
 
 
@@ -76,7 +76,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginBottom="@dimen/dp_3"
-                        android:text="@{viewMode.entity.postTime}" />
+                        android:text="@{viewModel.entity.postTime}" />
                 </RelativeLayout>
 
 
@@ -85,7 +85,7 @@
                     android:layout_width="@dimen/dp_110"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    binding:urlsphoto="@{viewMode.entity.coverImg}" />
+                    binding:urlsphoto="@{viewModel.entity.coverImg}" />
 
 
             </RelativeLayout>

@@ -48,14 +48,14 @@ public class JokeAssortEntity {
          * assortName : 全部
          */
 
-        private String assortId;
+        private int assortId;
         private String assortName;
 
-        public String getAssortId() {
+        public int getAssortId() {
             return assortId;
         }
 
-        public void setAssortId(String assortId) {
+        public void setAssortId(int assortId) {
             this.assortId = assortId;
         }
 
