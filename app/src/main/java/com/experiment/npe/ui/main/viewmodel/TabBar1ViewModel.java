@@ -42,6 +42,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     public ObservableField<String> searchText = new ObservableField<>("");
     public SingleLiveEvent<Boolean> onFocusChangeCommand = new SingleLiveEvent<>();
     public static ObservableList<JokeAssortEntity.DataBean> observableList = new ObservableArrayList<>();
+    //封装一个界面发生改变的观察者
 
     public TabBar1ViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
@@ -91,7 +92,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     //给ViewPager添加ObservableList
     public ObservableList<TabBar1temViewModel> items = new ObservableArrayList<>();
     //给ViewPager添加ItemBinding
-    public ItemBinding<TabBar1temViewModel> itemBinding = ItemBinding.of(BR.viewMode, R.layout.item_tab_bar_1);
+    public ItemBinding<TabBar1temViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_1);
     //给ViewPager添加PageTitle
     public final BindingViewPagerAdapter.PageTitles<TabBar1temViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<TabBar1temViewModel>() {
         @Override
@@ -123,6 +124,10 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
             }
         }
     });
+
+    public NpeRepository getmodel(){
+        return model;
+    }
 
 
 }

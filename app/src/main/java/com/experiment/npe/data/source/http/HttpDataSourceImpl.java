@@ -92,5 +92,10 @@ public class HttpDataSourceImpl implements HttpDataSource {
         return apiService.updateUserName(userId,newUserName);
     }
 
+    @Override
+    public Observable<JokeEntity> showJoke(int assortId) {
+        return apiService.showJoke(assortId);
+    }
+
 
 }

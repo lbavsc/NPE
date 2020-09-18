@@ -42,4 +42,6 @@ public interface HttpDataSource {
                                                         @Query("newPassword")String newPassword);
 
     Observable<ResultEntity<UserEntity>> updateUserName(@Query("userId")String userId,@Query("name")String newUserName);
+
+    Observable<JokeEntity> showJoke(@Query("assort")int assortId);
 }

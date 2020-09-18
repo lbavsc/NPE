@@ -98,6 +98,11 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
+    public Observable<JokeEntity> showJoke(int assortId) {
+        return mHttpDataSource.showJoke(assortId);
+    }
+
+    @Override
     public void saveUserId(String userId) {
         mLocalDataSource.saveUserId(userId);
     }

@@ -16,7 +16,7 @@
         <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
 
         <variable
-            name="viewMode"
+            name="viewModel"
             type="com.experiment.npe.ui.main.viewmodel.TabBar1temViewModel" />
     </data>
 
@@ -32,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             binding:adapter="@{adapter}"
-            binding:itemBinding="@{viewMode.itemBinding}"
-            binding:items="@{viewMode.observableList}"
+            binding:itemBinding="@{viewModel.itemBinding}"
+            binding:items="@{viewModel.observableList}"
             binding:layoutManager="@{LayoutManagers.linear()}" />
 
     </LinearLayout>

@@ -1,30 +1,21 @@
 package com.experiment.npe.ui.main.fragment;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.experiment.npe.ui.main.activity.MainActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 
 import com.experiment.npe.BR;
@@ -33,17 +24,7 @@ import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.FragmentTabBar1Binding;
 import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter;
 import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
-import com.google.android.material.textfield.TextInputEditText;
-
-
-import me.goldze.mvvmhabit.base.AppManager;
-import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
-import me.goldze.mvvmhabit.utils.ToastUtils;
-
-import static android.content.Context.INPUT_METHOD_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 /**
  * Created by lbavsc on 20-9-11
@@ -99,6 +80,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
 //                ToastUtils.showShort("position：" + text);
 //            }
 //        });
+
 
         viewModel.onFocusChangeCommand.observe(this, new Observer<Boolean>() {
             @Override

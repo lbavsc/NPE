@@ -94,9 +94,7 @@
             binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"
             binding:pageTitles="@{viewModel.pageTitles}">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+
 
         </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
