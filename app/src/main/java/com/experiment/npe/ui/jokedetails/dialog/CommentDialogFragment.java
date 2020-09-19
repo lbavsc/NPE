@@ -149,7 +149,10 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
                 ToastUtils.showShort("暂不支持");
                 break;
             case R.id.image_btn_comment_send:
-                Toast.makeText(getActivity(), commentEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+                if (commentEditText.getText().toString().length()>50){
+                    ToastUtils.showShort("评论最多50字哦~");
+                    return;
+                }
                 Messenger.getDefault().send(commentEditText.getText().toString(),JokeDetailsActivity.TOKEN_LOGINVIEWMODEL_REFRESH);
                 commentEditText.setText("");
                 dismiss();

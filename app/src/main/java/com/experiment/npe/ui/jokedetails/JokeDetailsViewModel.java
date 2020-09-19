@@ -36,21 +36,20 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
-    public ObservableField<String> userIcon = new ObservableField<>("");
-    public ObservableField<String> userName = new ObservableField<>("");
+
+    public Drawable commentDrawableImg;
     public ObservableField<String> userId = new ObservableField<>("");
     public ObservableField<String> jokeImg = new ObservableField<>("");
-    public ObservableField<String> jokeContent = new ObservableField<>("");
     public ObservableField<String> jokeTime = new ObservableField<>("");
-    public ObservableField<String> jokeSource = new ObservableField<>("");
-    public Drawable commentDrawableImg;
-    public ObservableList<JokeDetailsEntity> entity = new ObservableArrayList<>();
-    public ObservableList<JokeDetailsEntity.DataBean.RemarksBean> remark = new ObservableArrayList<>();
+    public ObservableField<String> userIcon = new ObservableField<>("");
+    public ObservableField<String> userName = new ObservableField<>("");
     public ObservableField<String> jokeTitle = new ObservableField<>("");
     public SingleLiveEvent<Boolean> entityJsonLiveData = new SingleLiveEvent<>();
-    //给ViewPager添加ObservableList
+    public ObservableField<String> jokeSource = new ObservableField<>("");
+    public ObservableList<JokeDetailsEntity> entity = new ObservableArrayList<>();
+    public ObservableField<String> jokeContent = new ObservableField<>("");
     public ObservableList<JokeDetailsItemViewModel> observableList = new ObservableArrayList<>();
-    //给ViewPager添加ItemBinding
+    public ObservableList<JokeDetailsEntity.DataBean.RemarksBean> remark = new ObservableArrayList<>();
     public ItemBinding<JokeDetailsItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_joke_details_remark);
 
     public JokeDetailsViewModel(@NonNull Application application, NpeRepository model) {
@@ -149,6 +148,10 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                         dismissDialog();
                     }
                 });
+    }
+
+    public NpeRepository getmodel() {
+        return model;
     }
 
 }

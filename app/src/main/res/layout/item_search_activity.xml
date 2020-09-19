@@ -27,7 +27,8 @@
             card_view:cardBackgroundColor="#FFFFFF"
             card_view:cardCornerRadius="12dp"
             card_view:cardElevation="5dp"
-            card_view:cardMaxElevation="5dp">
+            card_view:cardMaxElevation="5dp"
+            binding:onClickCommand="@{viewMode.onClickCommand}">
 
             <RelativeLayout
                 android:layout_width="match_parent"

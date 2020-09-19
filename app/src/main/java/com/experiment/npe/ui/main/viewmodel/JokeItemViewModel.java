@@ -44,9 +44,7 @@ public class JokeItemViewModel extends ItemViewModel<TabBar1ViewModel> {
         public void call() {
             Bundle mBundle = new Bundle();
             mBundle.putString("jokeId", entity.get().getJokeId());
-
             viewModel.startActivity(JokeDetailsActivity.class, mBundle);
-
         }
     });
     //条目的长按事件
