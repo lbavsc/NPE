@@ -114,9 +114,11 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<JokeDetailsEntity> remarkUpload(String userId, String jokeId, String content) {
-        return apiService.remarkUpload(userId,jokeId,content);
+    public Observable<JokeEntity.DataBean> remarkUpload(JokeEntity.DataBean body) {
+        return apiService.remarkUpload(body);
     }
+
+
 
 
 }

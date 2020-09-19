@@ -116,9 +116,11 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
-    public Observable<JokeDetailsEntity> remarkUpload(String userId, String jokeId, String content) {
-        return mHttpDataSource.remarkUpload(userId, jokeId, content);
+    public Observable<JokeEntity.DataBean> remarkUpload(JokeEntity.DataBean body) {
+        return mHttpDataSource.remarkUpload(body);
     }
+
+
 
     @Override
     public void saveUserId(String userId) {

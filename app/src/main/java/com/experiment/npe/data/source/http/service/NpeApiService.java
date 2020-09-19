@@ -67,6 +67,6 @@ public interface NpeApiService {
     @GET("joke/select/id")
     Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId);
 
-    @GET("remark/upload")
-    Observable<JokeDetailsEntity> remarkUpload(@Query("userId")String userId,@Query("jokeId")String jokeId,@Query("content")String content);
+    @POST("remark/upload")
+    Observable<JokeEntity.DataBean> remarkUpload(@Body JokeEntity.DataBean body);
 }

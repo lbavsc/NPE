@@ -1,5 +1,6 @@
 package com.experiment.npe.ui.jokedetails;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -48,11 +49,6 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
             }
         });
 
-    }
-
-    @Override
-    public void initViewObservable() {
-
         //接收输入的字符串
         Messenger.getDefault().register(this, JokeDetailsActivity.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new BindingConsumer<String>() {
             @Override
@@ -61,6 +57,18 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
                 return null;
             }
         });
+
+    }
+
+    @Override
+    public void initViewObservable() {
+        viewModel.entityJsonLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                refreshLayout();
+            }
+        });
+
     }
 
     @Override

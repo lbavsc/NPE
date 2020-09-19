@@ -62,7 +62,26 @@ public class JokeEntity {
         private String content;
         private String source;
         private int assortId;
+        private String remarks;
+        public DataBean() {
+        }
 
+
+
+        public DataBean(String userId,String jokeId,  String content) {
+            this.jokeId = jokeId;
+            this.userId = userId;
+            this.content = content;
+        }
+
+
+        public String getRemarks() {
+            return remarks;
+        }
+
+        public void setRemarks(String remarks) {
+            this.remarks = remarks;
+        }
         public String getJokeId() {
             return jokeId;
         }
