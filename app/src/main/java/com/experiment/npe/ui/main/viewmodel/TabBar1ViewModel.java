@@ -13,12 +13,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.ui.search.SearchActivity;
 import com.experiment.npe.ui.uploadjoke.UploadJokeActivity;
 
@@ -70,11 +72,16 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
                 .subscribe(new DisposableObserver<JokeAssortEntity>() {
                     @Override
                     public void onNext(final JokeAssortEntity response) {
-                        for (int i = 0; i < response.getData().size(); i++) {
+                        for (int i = 0; i < 6; i++) {
                             TabBar1temViewModel itemViewModel = new TabBar1temViewModel(TabBar1ViewModel.this, response.getData().get(i).getAssortName(),
                                     response.getData().get(i).getAssortId());
                             observableList.add(response.getData().get(i));
                             items.add(itemViewModel);
+                            if (i == 0) {
+                                showJoke(itemViewModel);
+                            }
+
+
                         }
                         observableList.addAll(response.getData());
                     }
@@ -112,8 +119,19 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
         public String call(Integer index) {
+            //取消ExitText焦点
             onFocusChangeCommand.setValue(false);
-            ToastUtils.showShort("ViewPager切换：" + index);
+
+            //清除页面
+            if (index == 5) {
+                items.get(4).observableList1.clear();
+            } else if (index == 0) {
+                items.get(1).observableList1.clear();
+            } else {
+                items.get(index - 1).observableList1.clear();
+                items.get(index + 1).observableList1.clear();
+            }
+            showJoke(items.get(index));
             return null;
         }
     });
@@ -153,4 +171,37 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     }
 
 
+    public void showJoke(final TabBar1temViewModel tabBar1temViewModel) {
+        int index = tabBar1temViewModel.index;
+        model.showJoke(index)
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<JokeEntity>() {
+                    @Override
+                    public void onNext(final JokeEntity response) {
+                        for (JokeEntity.DataBean dataBean : response.getData()) {
+                            JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(TabBar1ViewModel.this, dataBean);
+                            tabBar1temViewModel.observableList1.add(jokeItemViewModel);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        //请求刷新完成收回
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
 }

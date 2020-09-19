@@ -32,59 +32,20 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 public class TabBar1temViewModel extends ItemViewModel<TabBar1ViewModel> {
     public String text;
     public int index;
-    //给ViewPager添加ObservableList
-    public ObservableList<JokeItemViewModel> observableList = new ObservableArrayList<>();
-    //给ViewPager添加ItemBinding
-    public ItemBinding<JokeItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_1_joke);
 
+    //给ViewPager添加ObservableList
+    public ObservableList<JokeItemViewModel> observableList1 = new ObservableArrayList<>();
+    //给ViewPager添加ItemBinding
+    public ItemBinding<JokeItemViewModel> itemBinding1 = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_1_joke);
     public TabBar1temViewModel(@NonNull TabBar1ViewModel viewModel, String text, int index) {
         super(viewModel);
         this.text = text;
         this.index = index;
-        showJoke(index);
-
+//       viewModel.showJoke(index);
     }
 
 
-    public void showJoke(int index) {
-        NpeRepository model = viewModel.getmodel();
-        model.showJoke(index)
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
-                .doOnSubscribe(viewModel)//请求与ViewModel周期同步
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        viewModel.showDialog("正在请求...");
-                    }
-                })
-                .subscribe(new DisposableObserver<JokeEntity>() {
-                    @Override
-                    public void onNext(final JokeEntity response) {
-                        for (JokeEntity.DataBean dataBean : response.getData()) {
-                            JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(viewModel, dataBean);
-                            observableList.add(jokeItemViewModel);
-                        }
 
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        //关闭对话框
-                        viewModel.dismissDialog();
-                        //请求刷新完成收回
-                        if (throwable instanceof ResponseThrowable) {
-                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //关闭对话框
-                        viewModel.dismissDialog();
-                    }
-                });
-    }
 
 
 }

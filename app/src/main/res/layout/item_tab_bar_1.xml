@@ -32,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             binding:adapter="@{adapter}"
-            binding:itemBinding="@{viewModel.itemBinding}"
-            binding:items="@{viewModel.observableList}"
+            binding:itemBinding="@{viewModel.itemBinding1}"
+            binding:items="@{viewModel.observableList1}"
             binding:layoutManager="@{LayoutManagers.linear()}" />
 
     </LinearLayout>

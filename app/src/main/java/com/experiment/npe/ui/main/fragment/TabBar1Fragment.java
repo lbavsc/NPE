@@ -1,5 +1,6 @@
 package com.experiment.npe.ui.main.fragment;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.main.activity.MainActivity;
@@ -96,6 +99,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
                 }
             }
         });
+
     }
 
     @Override
