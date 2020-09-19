@@ -224,6 +224,41 @@ public class JokeDetailsEntity {
             public void setPostTime(String postTime) {
                 this.postTime = postTime;
             }
+
+            @Override
+            public String toString() {
+                return "RemarksBean{" +
+                        "remarkId='" + remarkId + '\'' +
+                        ", userId='" + userId + '\'' +
+                        ", jokeId='" + jokeId + '\'' +
+                        ", content='" + content + '\'' +
+                        ", postTime='" + postTime + '\'' +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "jokeId='" + jokeId + '\'' +
+                    ", userId='" + userId + '\'' +
+                    ", title='" + title + '\'' +
+                    ", coverImg='" + coverImg + '\'' +
+                    ", postTime='" + postTime + '\'' +
+                    ", content='" + content + '\'' +
+                    ", source='" + source + '\'' +
+                    ", assortId=" + assortId +
+                    ", remarks=" + remarks +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "JokeDetailsEntity{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

@@ -12,9 +12,12 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
 
+import com.experiment.npe.BR;
+import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
+import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
 import com.experiment.npe.utils.RetrofitClient;
 
 import java.util.Collections;
@@ -30,8 +33,7 @@ import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public ObservableField<String> userIcon = new ObservableField<>("");
@@ -43,13 +45,19 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public ObservableField<String> jokeSource = new ObservableField<>("");
     public Drawable commentDrawableImg;
     public ObservableList<JokeDetailsEntity> entity = new ObservableArrayList<>();
+    public ObservableList<JokeDetailsEntity.DataBean.RemarksBean> remark = new ObservableArrayList<>();
     public ObservableField<String> jokeTitle = new ObservableField<>("");
     public SingleLiveEvent<Boolean> entityJsonLiveData = new SingleLiveEvent<>();
+    //给ViewPager添加ObservableList
+    public ObservableList<JokeDetailsItemViewModel> observableList = new ObservableArrayList<>();
+    //给ViewPager添加ItemBinding
+    public ItemBinding<JokeDetailsItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_joke_details_remark);
+
     public JokeDetailsViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
         Log.e("TAG", model.getUserIcon());
         userName.set(model.getUserName());
-        userId.set("ID:"+model.getUserId());
+        userId.set("ID:" + model.getUserId());
         if (model.getUserIcon().startsWith("img")) {
             userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
         } else {
@@ -81,10 +89,15 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     public void onNext(JokeDetailsEntity response) {
                         entity.add(response);
                         jokeTitle.set(response.getData().getTitle());
-                        jokeImg.set(RetrofitClient.baseUrl+response.getData().getCoverImg());
+                        jokeImg.set(RetrofitClient.baseUrl + response.getData().getCoverImg());
                         jokeContent.set(response.getData().getContent());
                         jokeTime.set(response.getData().getPostTime());
-                        jokeSource.set("\t\t来源："+response.getData().getSource());
+                        jokeSource.set("\t\t来源：" + response.getData().getSource());
+                        remark.addAll(response.getData().getRemarks());
+                        for (JokeDetailsEntity.DataBean.RemarksBean remarksBean : remark) {
+                            JokeDetailsItemViewModel jokeDetailsItemViewModel = new JokeDetailsItemViewModel(JokeDetailsViewModel.this, remarksBean);
+                            observableList.add(jokeDetailsItemViewModel);
+                        }
                     }
 
                     @Override
