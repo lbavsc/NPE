@@ -3,6 +3,7 @@ package com.experiment.npe.data.source.http;
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.http.service.NpeApiService;
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
@@ -105,6 +106,16 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<JokeEntity> deleteJoke(String jokeId, String userId) {
         return apiService.deleteJoke(jokeId,userId);
+    }
+
+    @Override
+    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId) {
+        return apiService.showJokeDetails(jokeId);
+    }
+
+    @Override
+    public Observable<JokeDetailsEntity> remarkUpload(String userId, String jokeId, String content) {
+        return apiService.remarkUpload(userId,jokeId,content);
     }
 
 

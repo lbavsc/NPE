@@ -1,6 +1,7 @@
 package com.experiment.npe.data.source;
 
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
@@ -48,4 +49,8 @@ public interface HttpDataSource {
     Observable<JokeEntity> uploadJoke(@Body RequestBody body);
 
     Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);
+
+    Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId);
+
+    Observable<JokeDetailsEntity> remarkUpload(@Query("userId")String userId,@Query("jokeId")String jokeId,@Query("content")String content);
 }

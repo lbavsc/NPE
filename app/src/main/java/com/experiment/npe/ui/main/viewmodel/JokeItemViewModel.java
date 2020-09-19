@@ -1,6 +1,8 @@
 package com.experiment.npe.ui.main.viewmodel;
 
 
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.databinding.ObservableField;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeEntity;
+import com.experiment.npe.ui.jokedetails.JokeDetailsActivity;
 import com.experiment.npe.utils.RetrofitClient;
 
 import io.reactivex.observers.DisposableObserver;
@@ -39,8 +42,10 @@ public class JokeItemViewModel extends ItemViewModel<TabBar1ViewModel> {
     public BindingCommand itemClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            int index = getPosition();
-            Log.e("TAG", "size:\t"+viewModel.items.get(model.getAssortIndex()).observableList1.size());
+            Bundle mBundle = new Bundle();
+            mBundle.putString("jokeId", entity.get().getJokeId());
+
+            viewModel.startActivity(JokeDetailsActivity.class, mBundle);
 
         }
     });

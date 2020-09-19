@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.experiment.npe.data.NpeRepository;
+import com.experiment.npe.ui.jokedetails.JokeDetailsViewModel;
 import com.experiment.npe.ui.login.LoginViewModel;
 import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
 import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
@@ -70,6 +71,8 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new ChangePasswordViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(UploadJokeViewModel.class)) {
             return (T) new UploadJokeViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(JokeDetailsViewModel.class)) {
+            return (T) new JokeDetailsViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

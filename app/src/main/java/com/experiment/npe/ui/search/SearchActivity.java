@@ -2,6 +2,7 @@ package com.experiment.npe.ui.search;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 import com.experiment.npe.BR;
@@ -27,9 +28,16 @@ public class SearchActivity extends BaseActivity<ActivitySearchBinding, SearchVi
 
     @Override
     public void initData() {
-        Bundle bundle = this.getIntent().getExtras();
-        SearchString = bundle.getString("SearchString");
         viewModel.searchMain(SearchString);
+
+    }
+
+    @Override
+    public void initParam() {
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null) {
+            SearchString = bundle.getString("SearchString");
+        }
 
     }
 

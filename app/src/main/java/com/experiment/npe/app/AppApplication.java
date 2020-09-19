@@ -3,6 +3,7 @@ package com.experiment.npe.app;
 import com.experiment.npe.BuildConfig;
 import com.experiment.npe.R;
 import com.experiment.npe.ui.login.LoginActivity;
+import com.experiment.npe.ui.main.activity.MainActivity;
 import com.squareup.leakcanary.LeakCanary;
 
 import me.goldze.mvvmhabit.base.BaseApplication;
@@ -36,7 +37,7 @@ public class AppApplication extends BaseApplication {
                 .trackActivities(true) //是否跟踪Activity
                 .minTimeBetweenCrashesMs(2000) //崩溃的间隔时间(毫秒)
                 .errorDrawable(R.mipmap.ic_launcher) //错误图标
-                .restartActivity(LoginActivity.class) //重新启动后的activity
+                .restartActivity(MainActivity.class) //重新启动后的activity
 //                .errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
 //                .eventListener(new YourCustomEventListener()) //崩溃后的错误监听
                 .apply();

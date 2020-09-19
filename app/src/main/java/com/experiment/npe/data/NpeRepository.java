@@ -6,6 +6,7 @@ import androidx.annotation.VisibleForTesting;
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.LocalDataSource;
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
@@ -107,6 +108,16 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     @Override
     public Observable<JokeEntity> deleteJoke(String jokeId, String userId) {
         return mHttpDataSource.deleteJoke(jokeId,userId);
+    }
+
+    @Override
+    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId) {
+        return mHttpDataSource.showJokeDetails(jokeId);
+    }
+
+    @Override
+    public Observable<JokeDetailsEntity> remarkUpload(String userId, String jokeId, String content) {
+        return mHttpDataSource.remarkUpload(userId, jokeId, content);
     }
 
     @Override

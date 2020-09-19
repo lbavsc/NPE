@@ -13,6 +13,9 @@
         <!--colorAccent 对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色。-->
         <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/white</item>
+
+
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="ViewLineStyle">
@@ -25,4 +28,16 @@
         <item name="android:windowEnterAnimation">@anim/popup_show</item>
         <item name="android:windowExitAnimation">@anim/popup_gone</item>
     </style>
+
+
+    <style name="BottomDialog" parent="@style/AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+
+        <style name="AppTheme1" parent="Theme.AppCompat.Light.DarkActionBar">
+        </style>
+
 </resources>

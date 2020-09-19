@@ -2,11 +2,7 @@ package com.experiment.npe.entity;
 
 import java.util.List;
 
-/**
- * Created by lbavsc on 20-9-14
- */
-public class JokeEntity {
-
+public class JokeDetailsEntity {
 
     /**
      * code : 1001
@@ -16,7 +12,7 @@ public class JokeEntity {
 
     private int code;
     private String msg;
-    private List<DataBean> data;
+    private DataBean data;
 
     public int getCode() {
         return code;
@@ -34,11 +30,11 @@ public class JokeEntity {
         this.msg = msg;
     }
 
-    public List<DataBean> getData() {
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 
@@ -52,6 +48,7 @@ public class JokeEntity {
          * content : 测试
          * source : NPE
          * assortId : 1
+         * remarks : []
          */
 
         private String jokeId;
@@ -62,6 +59,7 @@ public class JokeEntity {
         private String content;
         private String source;
         private int assortId;
+        private List<?> remarks;
 
         public String getJokeId() {
             return jokeId;
@@ -127,5 +125,36 @@ public class JokeEntity {
             this.assortId = assortId;
         }
 
+        public List<?> getRemarks() {
+            return remarks;
+        }
+
+        public void setRemarks(List<?> remarks) {
+            this.remarks = remarks;
+        }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "jokeId='" + jokeId + '\'' +
+                    ", userId='" + userId + '\'' +
+                    ", title='" + title + '\'' +
+                    ", coverImg='" + coverImg + '\'' +
+                    ", postTime='" + postTime + '\'' +
+                    ", content='" + content + '\'' +
+                    ", source='" + source + '\'' +
+                    ", assortId=" + assortId +
+                    ", remarks=" + remarks +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "JokeDetailsEntity{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

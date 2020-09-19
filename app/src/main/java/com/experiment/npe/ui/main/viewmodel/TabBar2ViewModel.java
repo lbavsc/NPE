@@ -62,6 +62,7 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
 
         if (model.getUserIcon().startsWith("img")) {
             userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
+            model.saveUserIcon(RetrofitClient.baseUrl+model.getUserIcon());
         } else {
             userIcon.set(model.getUserIcon());
         }

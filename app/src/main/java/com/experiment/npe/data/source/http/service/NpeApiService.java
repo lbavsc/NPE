@@ -1,6 +1,7 @@
 package com.experiment.npe.data.source.http.service;
 
 import com.experiment.npe.entity.JokeAssortEntity;
+import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
@@ -62,4 +63,10 @@ public interface NpeApiService {
 
     @GET("joke/delete")
     Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);
+
+    @GET("joke/select/id")
+    Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId);
+
+    @GET("remark/upload")
+    Observable<JokeDetailsEntity> remarkUpload(@Query("userId")String userId,@Query("jokeId")String jokeId,@Query("content")String content);
 }
