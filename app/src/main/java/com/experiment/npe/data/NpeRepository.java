@@ -10,12 +10,9 @@ import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
 
-import java.io.File;
-
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.base.BaseModel;
 import me.goldze.mvvmhabit.http.BaseResponse;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -108,6 +105,11 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
+    public Observable<JokeEntity> deleteJoke(String jokeId, String userId) {
+        return mHttpDataSource.deleteJoke(jokeId,userId);
+    }
+
+    @Override
     public void saveUserId(String userId) {
         mLocalDataSource.saveUserId(userId);
     }
@@ -143,6 +145,16 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
+    public void saveJokeIndex(int index) {
+        mLocalDataSource.saveJokeIndex(index);
+    }
+
+    @Override
+    public void saveAssortIndex(int index) {
+        mLocalDataSource.saveAssortIndex(index);
+    }
+
+    @Override
     public String getUserPhone() {
         return mLocalDataSource.getUserPhone();
     }
@@ -175,6 +187,16 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     @Override
     public boolean getUserStatus() {
         return mLocalDataSource.getUserStatus();
+    }
+
+    @Override
+    public int getJokeIndex() {
+        return mLocalDataSource.getJokeIndex();
+    }
+
+    @Override
+    public int getAssortIndex() {
+        return mLocalDataSource.getAssortIndex();
     }
 
 }

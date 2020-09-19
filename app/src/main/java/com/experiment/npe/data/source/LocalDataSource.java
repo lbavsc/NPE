@@ -42,6 +42,16 @@ public interface LocalDataSource {
     void saveUserStatus(boolean userStatus);
 
     /**
+     * 保存新闻下标
+     */
+    void saveJokeIndex(int index);
+
+    /**
+     * 保存分类下标
+     */
+    void saveAssortIndex(int index);
+
+    /**
      * 获取用户手机号
      */
     String getUserPhone();
@@ -76,4 +86,14 @@ public interface LocalDataSource {
      */
     boolean getUserStatus();
 
+    /**
+     * 获取新闻下标
+     */
+    int getJokeIndex();
+
+    /**
+     * 获取分类下标
+     * @return
+     */
+    int getAssortIndex();
 }

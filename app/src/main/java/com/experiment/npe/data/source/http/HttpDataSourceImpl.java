@@ -102,5 +102,10 @@ public class HttpDataSourceImpl implements HttpDataSource {
         return apiService.uploadJoke(body);
     }
 
+    @Override
+    public Observable<JokeEntity> deleteJoke(String jokeId, String userId) {
+        return apiService.deleteJoke(jokeId,userId);
+    }
+
 
 }

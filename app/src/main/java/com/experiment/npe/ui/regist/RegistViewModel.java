@@ -57,7 +57,7 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
     //用户名输入框焦点改变的回调事件
     public BindingCommand<Boolean> onFocusChangeCommand = new BindingCommand<>(new BindingConsumer<Boolean>() {
         @Override
-        public String call(Boolean hasFocus) {
+        public Integer call(Boolean hasFocus) {
             if (hasFocus) {
                 clearBtnVisibility.set(View.VISIBLE);
             } else {

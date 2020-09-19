@@ -54,9 +54,12 @@ public interface NpeApiService {
     @GET("user/update/name")
     Observable<ResultEntity<UserEntity>> updateUserName(@Query("userId")String userId,@Query("name")String oldPassword);
 
-    @GET("joke/select")
+    @GET("joke/select/all")
     Observable<JokeEntity> showJoke(@Query("assort")int assortId);
 
     @POST("joke/upload")
     Observable<JokeEntity> uploadJoke(@Body RequestBody body);
+
+    @GET("joke/delete")
+    Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);
 }

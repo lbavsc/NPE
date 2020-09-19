@@ -65,6 +65,16 @@ public class LocalDataSourceImpl implements LocalDataSource {
         SPUtils.getInstance().put("UserStatus", userStatus);
     }
 
+    @Override
+    public void saveJokeIndex(int index) {
+        SPUtils.getInstance().put("JokeIndex", index);
+    }
+
+    @Override
+    public void saveAssortIndex(int index) {
+        SPUtils.getInstance().put("AssortIndex", index);
+    }
+
 
     @Override
     public String getUserPhone() {
@@ -99,6 +109,16 @@ public class LocalDataSourceImpl implements LocalDataSource {
     @Override
     public boolean getUserStatus() {
         return SPUtils.getInstance().getBoolean("UserStatus");
+    }
+
+    @Override
+    public int getJokeIndex() {
+        return SPUtils.getInstance().getInt("JokeIndex");
+    }
+
+    @Override
+    public int getAssortIndex() {
+        return SPUtils.getInstance().getInt("AssortIndex");
     }
 
 }

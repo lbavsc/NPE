@@ -6,5 +6,5 @@ package me.goldze.mvvmhabit.binding.command;
  * @param <T> the first argument type
  */
 public interface BindingConsumer<T> {
-    String call(T t);
+    Integer call(T t);
 }

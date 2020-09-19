@@ -37,15 +37,26 @@ public class TabBar1temViewModel extends ItemViewModel<TabBar1ViewModel> {
     public ObservableList<JokeItemViewModel> observableList1 = new ObservableArrayList<>();
     //给ViewPager添加ItemBinding
     public ItemBinding<JokeItemViewModel> itemBinding1 = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_1_joke);
+
     public TabBar1temViewModel(@NonNull TabBar1ViewModel viewModel, String text, int index) {
         super(viewModel);
         this.text = text;
         this.index = index;
-//       viewModel.showJoke(index);
     }
 
 
+    public int getItemPosition(JokeItemViewModel jokeItemViewModel) {
+        return observableList1.indexOf(jokeItemViewModel);
+    }
 
-
+    /**
+     * 删除条目
+     *
+     * @param
+     */
+    public void deleteItem(JokeItemViewModel jokeItemViewModel) {
+        //点击确定，在 observableList 绑定中删除，界面立即刷新
+        observableList1.remove(jokeItemViewModel);
+    }
 
 }

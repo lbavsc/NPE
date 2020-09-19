@@ -1,6 +1,7 @@
 package com.experiment.npe.ui.uploadjoke;
 
 import android.app.Application;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -10,11 +11,9 @@ import androidx.databinding.ObservableInt;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeEntity;
-import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.utils.SpinnerItemData;
 
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +39,9 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
     public ObservableInt uploadImgButtonVisibility = new ObservableInt();
     public ObservableInt uploadImgVisibility = new ObservableInt();
     public ObservableField<String> jokeTitle = new ObservableField<>("");
-    public ObservableField<String> jokeCenter = new ObservableField<>("");
+    public ObservableField<String> jokeContent = new ObservableField<>("");
     public ObservableField<String> jokeSource = new ObservableField<>("");
-    public String TAG="UploadJokeViewModel";
+    public String TAG = "UploadJokeViewModel";
 
     public UploadJokeViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
@@ -74,7 +73,7 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
     //分类选择的监听
     public BindingCommand<IKeyAndValue> onAssortCommand = new BindingCommand<>(new BindingConsumer<IKeyAndValue>() {
         @Override
-        public String call(IKeyAndValue iKeyAndValue) {
+        public Integer call(IKeyAndValue iKeyAndValue) {
             entity.setAssortId(iKeyAndValue.getValue());
             return null;
         }
@@ -102,33 +101,52 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand uploadJokeOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-//            Log.e("TAG", "tltle:\t" + jokeTitle.get());
-//            Log.e("TAG", "conter:\t" + jokeCenter.get());
-//            Log.e("TAG", "source:\t" + jokeSource.get());
-//            Log.e("TAG", "assort:\t" + entity.getAssortId());
-//            Log.e("TAG", "IMG" + entity.getCoverImg());
             uploadJoke();
         }
     });
 
-    public void uploadJoke(){
+    public void uploadJoke() {
+        if (!model.getUserStatus()) {
+            ToastUtils.showShort("您当前未登录");
+            return;
+        }
+        if (!model.getUserType()) {
+            ToastUtils.showShort("您没有此权限");
+            return;
+        }
+        if (TextUtils.isEmpty(jokeTitle.get())) {
+            ToastUtils.showShort("请输入标题");
+            return;
+        }
+        if (TextUtils.isEmpty(jokeContent.get())) {
+            ToastUtils.showShort("请输入新闻内容");
+            return;
+        }
+        if (entity.getCoverImg()==null){
+            ToastUtils.showShort("请选择图片");
+            return;
+        }
+        if (TextUtils.isEmpty(jokeSource.get())) {
+            jokeSource.set(model.getUserName());
+        }
+        if (jokeTitle.get().length() > 50) {
+            ToastUtils.showShort("标题最多为50字");
+        }
+        if (jokeContent.get().length() > 2000) {
+            ToastUtils.showShort("内容最多为2000字");
+        }
+
         Long timeStamp = System.currentTimeMillis();
         String userId = model.getUserId();
-        Log.e("TAG", "userId:\t"+userId);
-        Log.e("TAG", "tltle:\t" + jokeTitle.get());
-        Log.e("TAG", "conter:\t" + jokeCenter.get());
-        Log.e("TAG", "source:\t" + jokeSource.get());
-        Log.e("TAG", "assort:\t" + entity.getAssortId());
-        Log.e("TAG", "IMG\t" + entity.getCoverImg());
-        String path=entity.getCoverImg();
+        String path = entity.getCoverImg();
         File file = new File(path);
         RequestBody fileRQ = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         RequestBody body = new MultipartBody.Builder()
                 .addFormDataPart("userId", userId)
                 .addFormDataPart("assortId", String.valueOf(entity.getAssortId()))
-                .addFormDataPart("title",jokeTitle.get())
-                .addFormDataPart("content",jokeCenter.get())
-                .addFormDataPart("source",jokeSource.get())
+                .addFormDataPart("title", jokeTitle.get())
+                .addFormDataPart("content", jokeContent.get())
+                .addFormDataPart("source", jokeSource.get())
                 .addFormDataPart("postTime", String.valueOf(timeStamp))
                 .addFormDataPart("cover", file.getName(), fileRQ)
                 .build();
@@ -140,7 +158,7 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
                 .subscribe(new DisposableObserver<JokeEntity>() {
                     @Override
                     public void onNext(final JokeEntity response) {
-                        Log.e(TAG, "onNext: " + response.getCode());
+
                     }
 
                     @Override
@@ -155,7 +173,13 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
 
                     @Override
                     public void onComplete() {
-                        ToastUtils.showShort("头像更换完成");
+                        ToastUtils.showShort("新闻上传完成");
+                        jokeTitle.set("");
+                        jokeContent.set("");
+                        jokeSource.set("");
+                        entity.setCoverImg(null);
+                        uploadImgButtonVisibility.set(View.VISIBLE);
+                        uploadImgVisibility.set(View.GONE);
                         //关闭对话框
                         dismissDialog();
                     }

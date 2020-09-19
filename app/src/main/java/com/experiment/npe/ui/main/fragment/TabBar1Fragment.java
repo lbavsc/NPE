@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Observable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,8 +18,11 @@ import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.main.activity.MainActivity;
+import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import android.os.IBinder;
@@ -36,6 +41,8 @@ import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter;
 import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
  * Created by lbavsc on 20-9-11
@@ -54,6 +61,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void initData() {
+        final NpeRepository model = viewModel.getmodel();
         // 使用 TabLayout 和 ViewPager 相关联
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
@@ -73,6 +81,24 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
                 return false;
             }
         });
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                model.saveAssortIndex(position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+
+        });
         viewModel.getAssort();
     }
 
@@ -84,13 +110,6 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
 
     @Override
     public void initViewObservable() {
-//        viewModel.itemClickEvent.observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String text) {
-//                binding.searchText.clearFocus();
-//                ToastUtils.showShort("position：" + text);
-//            }
-//        });
         viewModel.onFocusChangeCommand.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -100,6 +119,28 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
             }
         });
 
+        final NpeRepository model = viewModel.getmodel();
+
+        viewModel.entityJsonLiveData.observe(this, new Observer<JokeItemViewModel>() {
+            @Override
+            public void onChanged(final JokeItemViewModel jokeItemViewModel) {
+                MaterialDialogUtils.showBasicDialog(getContext(), "确认删除此条新闻")
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                ToastUtils.showLong("取消");
+                            }
+                        }).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        viewModel.items.get(model.getAssortIndex()).observableList1.get(model.getJokeIndex()).deteleJoke();
+                        viewModel.items.get(model.getAssortIndex()).deleteItem(jokeItemViewModel);
+
+                    }
+                }).show();
+
+            }
+        });
     }
 
     @Override
@@ -112,6 +153,4 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
             viewModel.uploadVisibility.set(View.GONE);
         }
     }
-
-
 }

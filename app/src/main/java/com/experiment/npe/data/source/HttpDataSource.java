@@ -46,4 +46,6 @@ public interface HttpDataSource {
     Observable<JokeEntity> showJoke(@Query("assort")int assortId);
 
     Observable<JokeEntity> uploadJoke(@Body RequestBody body);
+
+    Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);
 }

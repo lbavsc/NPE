@@ -25,6 +25,7 @@ import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.ActivityMainBinding;
 import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
 import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
+import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,14 +162,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
             }
 
         }
-    }
 
-    @Override
-    public void initViewObservable() {
-        super.initViewObservable();
-        Log.e("TAG", String.valueOf(mFragments.get(0).isVisible()));
-        if (mFragments.get(0).isVisible()){
-            mFragments.get(0).onResume();
-        }
     }
 }

@@ -7,7 +7,6 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
 
-import android.database.Observable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,7 +47,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     public static ObservableList<JokeAssortEntity.DataBean> observableList = new ObservableArrayList<>();
     //封装一个界面发生改变的观察者
     public ObservableInt uploadVisibility = new ObservableInt();
-
+    public SingleLiveEvent<JokeItemViewModel> entityJsonLiveData = new SingleLiveEvent<>();
     public TabBar1ViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
         if (model.getUserStatus() && model.getUserType()) {
@@ -118,7 +117,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     //ViewPager切换监听
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
-        public String call(Integer index) {
+        public Integer call(Integer index) {
             //取消ExitText焦点
             onFocusChangeCommand.setValue(false);
 
@@ -132,9 +131,10 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
                 items.get(index + 1).observableList1.clear();
             }
             showJoke(items.get(index));
-            return null;
+            return index;
         }
     });
+
 
     public BindingCommand onSearchCommand = new BindingCommand(new BindingAction() {
         @Override
@@ -173,6 +173,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
 
     public void showJoke(final TabBar1temViewModel tabBar1temViewModel) {
         int index = tabBar1temViewModel.index;
+
         model.showJoke(index)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
@@ -183,6 +184,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
                         for (JokeEntity.DataBean dataBean : response.getData()) {
                             JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(TabBar1ViewModel.this, dataBean);
                             tabBar1temViewModel.observableList1.add(jokeItemViewModel);
+
                         }
 
                     }
@@ -204,4 +206,9 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
                     }
                 });
     }
+
+
+
+
+
 }
