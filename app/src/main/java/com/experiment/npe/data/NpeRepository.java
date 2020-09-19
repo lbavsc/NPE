@@ -120,6 +120,10 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
         return mHttpDataSource.remarkUpload(body);
     }
 
+    @Override
+    public Observable<ResultEntity> deleteRemark(String userId, String remarkId) {
+        return mHttpDataSource.deleteRemark(userId,remarkId);
+    }
 
 
     @Override

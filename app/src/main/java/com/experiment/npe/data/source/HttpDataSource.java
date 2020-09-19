@@ -53,4 +53,6 @@ public interface HttpDataSource {
     Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId);
 
     Observable<JokeEntity.DataBean> remarkUpload(@Body JokeEntity.DataBean body);
+
+    Observable<ResultEntity>deleteRemark(@Query("userId")String userId,@Query("remarkId")String remarkId);
 }

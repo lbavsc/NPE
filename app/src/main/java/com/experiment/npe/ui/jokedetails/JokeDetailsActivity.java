@@ -1,5 +1,7 @@
 package com.experiment.npe.ui.jokedetails;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -7,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.ActivityJokeDetailsBinding;
@@ -16,6 +20,8 @@ import com.experiment.npe.ui.jokedetails.dialog.DialogFragmentDataCallback;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.Messenger;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BR;
 
 public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding, JokeDetailsViewModel> implements DialogFragmentDataCallback {
@@ -66,6 +72,29 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
             @Override
             public void onChanged(Boolean aBoolean) {
                 refreshLayout();
+            }
+        });
+
+        viewModel.deleteItemLiveData.observe(this, new Observer<JokeDetailsItemViewModel>() {
+
+            @Override
+            public void onChanged(@Nullable final JokeDetailsItemViewModel jokeDetailsItemViewModel) {
+                final int index = viewModel.getItemPosition(jokeDetailsItemViewModel);
+                //删除选择对话框
+                MaterialDialogUtils.showBasicDialog(JokeDetailsActivity.this, "确认删除此条评论")
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                ToastUtils.showLong("取消");
+                            }
+                        }).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        viewModel.deleteItem(jokeDetailsItemViewModel);
+                        viewModel.deleteRemark(index);
+
+                    }
+                }).show();
             }
         });
 

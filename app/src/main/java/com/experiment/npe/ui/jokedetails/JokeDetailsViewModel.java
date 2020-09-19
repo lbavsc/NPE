@@ -17,6 +17,7 @@ import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
+import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
 import com.experiment.npe.utils.RetrofitClient;
 
@@ -49,6 +50,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public ObservableList<JokeDetailsEntity> entity = new ObservableArrayList<>();
     public ObservableField<String> jokeContent = new ObservableField<>("");
     public ObservableList<JokeDetailsItemViewModel> observableList = new ObservableArrayList<>();
+    public SingleLiveEvent<JokeDetailsItemViewModel> deleteItemLiveData = new SingleLiveEvent<>();
     public ObservableList<JokeDetailsEntity.DataBean.RemarksBean> remark = new ObservableArrayList<>();
     public ItemBinding<JokeDetailsItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_joke_details_remark);
 
@@ -152,6 +154,53 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
 
     public NpeRepository getmodel() {
         return model;
+    }
+
+    public void deleteRemark(int index) {
+        Log.e("TAG", remark.get(index).getRemarkId());
+        model.deleteRemark(model.getUserId(), remark.get(index).getRemarkId())
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<ResultEntity>() {
+                    @Override
+                    public void onNext(final ResultEntity response) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        ToastUtils.showShort("删除完成");
+                    }
+                });
+    }
+
+    /**
+     * 删除条目
+     *
+     * @param
+     */
+    public void deleteItem(JokeDetailsItemViewModel jokeDetailsItemViewModel) {
+        //点击确定，在 observableList 绑定中删除，界面立即刷新
+        observableList.remove(jokeDetailsItemViewModel);
+    }
+
+    /**
+     * 获取条目下标
+     *
+     * @param jokeDetailsItemViewModel
+     * @return
+     */
+    public int getItemPosition(JokeDetailsItemViewModel jokeDetailsItemViewModel) {
+        return observableList.indexOf(jokeDetailsItemViewModel);
     }
 
 }

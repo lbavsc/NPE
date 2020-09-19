@@ -118,7 +118,10 @@ public class HttpDataSourceImpl implements HttpDataSource {
         return apiService.remarkUpload(body);
     }
 
-
+    @Override
+    public Observable<ResultEntity> deleteRemark(String userId, String remarkId) {
+        return apiService.deleteRemark(userId,remarkId);
+    }
 
 
 }

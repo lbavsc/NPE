@@ -69,4 +69,7 @@ public interface NpeApiService {
 
     @POST("remark/upload")
     Observable<JokeEntity.DataBean> remarkUpload(@Body JokeEntity.DataBean body);
+
+    @GET("remark/delete")
+    Observable<ResultEntity>deleteRemark(@Query("userId")String userId,@Query("remarkId")String remarkId);
 }
