@@ -8,7 +8,7 @@ public class JokeDetailsEntity {
     /**
      * code : 1001
      * msg : 获取成功
-     * data : {"jokeId":"2048345","userId":"000002","title":"测试","coverImg":"img/joke/000002_1600582443704.jpg","postTime":"Sep 20, 2020 2:14:07 PM","content":"测试","source":"NPE","assortId":1,"collete":true,"remarks":[{"remarkId":"204834500","userId":"000002","jokeId":"2048345","content":"hhhh","postTime":"Sep 20, 2020 3:03:33 PM","user":{"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600532085928.jpg","type":true,"status":true}}]}
+     * data : {"jokeId":"2095385","userId":"000002","title":"test","coverImg":"img/joke/000002_1600618149501.jpg","postTime":"Sep 21, 2020 12:09:16 AM","content":"test","source":"NPE","assortId":1,"collete":true,"remarks":[{"remarkId":"209538501","userId":"000002","jokeId":"2095385","content":"提交","postTime":"Sep 21, 2020 12:17:53 AM","user":{"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600617942247.jpg","type":true,"status":true}},{"remarkId":"209538500","userId":"000002","jokeId":"2095385","content":"测试","postTime":"Sep 21, 2020 12:17:49 AM","user":{"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600617942247.jpg","type":true,"status":true}}],"user":{"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600617942247.jpg","type":true,"status":true}}
      */
 
     private int code;
@@ -41,16 +41,17 @@ public class JokeDetailsEntity {
 
     public static class DataBean {
         /**
-         * jokeId : 2048345
+         * jokeId : 2095385
          * userId : 000002
-         * title : 测试
-         * coverImg : img/joke/000002_1600582443704.jpg
-         * postTime : Sep 20, 2020 2:14:07 PM
-         * content : 测试
+         * title : test
+         * coverImg : img/joke/000002_1600618149501.jpg
+         * postTime : Sep 21, 2020 12:09:16 AM
+         * content : test
          * source : NPE
          * assortId : 1
          * collete : true
-         * remarks : [{"remarkId":"204834500","userId":"000002","jokeId":"2048345","content":"hhhh","postTime":"Sep 20, 2020 3:03:33 PM","user":{"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600532085928.jpg","type":true,"status":true}}]
+         * remarks : [{"remarkId":"209538501","userId":"000002","jokeId":"2095385","content":"提交","postTime":"Sep 21, 2020 12:17:53 AM","user":{"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600617942247.jpg","type":true,"status":true}},{"remarkId":"209538500","userId":"000002","jokeId":"2095385","content":"测试","postTime":"Sep 21, 2020 12:17:49 AM","user":{"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600617942247.jpg","type":true,"status":true}}]
+         * user : {"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600617942247.jpg","type":true,"status":true}
          */
 
         private String jokeId;
@@ -62,6 +63,7 @@ public class JokeDetailsEntity {
         private String source;
         private int assortId;
         private boolean collete;
+        private UserBean user;
         private List<RemarksBean> remarks;
 
         public String getJokeId() {
@@ -136,6 +138,14 @@ public class JokeDetailsEntity {
             this.collete = collete;
         }
 
+        public UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(UserBean user) {
+            this.user = user;
+        }
+
         public List<RemarksBean> getRemarks() {
             return remarks;
         }
@@ -144,14 +154,90 @@ public class JokeDetailsEntity {
             this.remarks = remarks;
         }
 
+        public static class UserBean {
+            /**
+             * userId : 000002
+             * phone : 1
+             * name : NPE
+             * password : 1
+             * icon : img/user/000002_1600617942247.jpg
+             * type : true
+             * status : true
+             */
+
+            private String userId;
+            private String phone;
+            private String name;
+            private String password;
+            private String icon;
+            private boolean type;
+            private boolean status;
+
+            public String getUserId() {
+                return userId;
+            }
+
+            public void setUserId(String userId) {
+                this.userId = userId;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getPassword() {
+                return password;
+            }
+
+            public void setPassword(String password) {
+                this.password = password;
+            }
+
+            public String getIcon() {
+                return icon;
+            }
+
+            public void setIcon(String icon) {
+                this.icon = icon;
+            }
+
+            public boolean isType() {
+                return type;
+            }
+
+            public void setType(boolean type) {
+                this.type = type;
+            }
+
+            public boolean isStatus() {
+                return status;
+            }
+
+            public void setStatus(boolean status) {
+                this.status = status;
+            }
+        }
+
         public static class RemarksBean {
             /**
-             * remarkId : 204834500
+             * remarkId : 209538501
              * userId : 000002
-             * jokeId : 2048345
-             * content : hhhh
-             * postTime : Sep 20, 2020 3:03:33 PM
-             * user : {"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600532085928.jpg","type":true,"status":true}
+             * jokeId : 2095385
+             * content : 提交
+             * postTime : Sep 21, 2020 12:17:53 AM
+             * user : {"userId":"000002","phone":"1","name":"NPE","password":"1","icon":"img/user/000002_1600617942247.jpg","type":true,"status":true}
              */
 
             private String remarkId;
@@ -159,7 +245,7 @@ public class JokeDetailsEntity {
             private String jokeId;
             private String content;
             private String postTime;
-            private UserBean user;
+            private UserBeanX user;
 
             public String getRemarkId() {
                 return remarkId;
@@ -201,21 +287,21 @@ public class JokeDetailsEntity {
                 this.postTime = postTime;
             }
 
-            public UserBean getUser() {
+            public UserBeanX getUser() {
                 return user;
             }
 
-            public void setUser(UserBean user) {
+            public void setUser(UserBeanX user) {
                 this.user = user;
             }
 
-            public static class UserBean {
+            public static class UserBeanX {
                 /**
                  * userId : 000002
                  * phone : 1
                  * name : NPE
                  * password : 1
-                 * icon : img/user/000002_1600532085928.jpg
+                 * icon : img/user/000002_1600617942247.jpg
                  * type : true
                  * status : true
                  */
@@ -283,57 +369,7 @@ public class JokeDetailsEntity {
                 public void setStatus(boolean status) {
                     this.status = status;
                 }
-
-                @Override
-                public String toString() {
-                    return "UserBean{" +
-                            "userId='" + userId + '\'' +
-                            ", phone='" + phone + '\'' +
-                            ", name='" + name + '\'' +
-                            ", password='" + password + '\'' +
-                            ", icon='" + icon + '\'' +
-                            ", type=" + type +
-                            ", status=" + status +
-                            '}';
-                }
-            }
-
-            @Override
-            public String toString() {
-                return "RemarksBean{" +
-                        "remarkId='" + remarkId + '\'' +
-                        ", userId='" + userId + '\'' +
-                        ", jokeId='" + jokeId + '\'' +
-                        ", content='" + content + '\'' +
-                        ", postTime='" + postTime + '\'' +
-                        ", user=" + user +
-                        '}';
             }
         }
-
-        @Override
-        public String toString() {
-            return "DataBean{" +
-                    "jokeId='" + jokeId + '\'' +
-                    ", userId='" + userId + '\'' +
-                    ", title='" + title + '\'' +
-                    ", coverImg='" + coverImg + '\'' +
-                    ", postTime='" + postTime + '\'' +
-                    ", content='" + content + '\'' +
-                    ", source='" + source + '\'' +
-                    ", assortId=" + assortId +
-                    ", collete=" + collete +
-                    ", remarks=" + remarks +
-                    '}';
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "JokeDetailsEntity{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                '}';
     }
 }

@@ -151,7 +151,6 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
         viewModel.addItemData.observe(this, new Observer<FavoritesEntity.DataBean>() {
             @Override
             public void onChanged(FavoritesEntity.DataBean dataBean) {
-                Log.e("TAG", "开始添加");
                 FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(viewModel, dataBean);
                 viewModel.items.get(0).addItem(favoritesitemViewModel);
             }

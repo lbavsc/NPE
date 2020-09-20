@@ -64,15 +64,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public JokeDetailsViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
         Log.e("TAG", model.getUserIcon());
-        userName.set(model.getUserName());
-        userId.set("ID:" + model.getUserId());
-        if (model.getUserStatus()) {
-            if (model.getUserIcon().startsWith("img")) {
-                userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
-            } else {
-                userIcon.set(model.getUserIcon());
-            }
-        }
+
 
     }
 
@@ -110,12 +102,12 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
             }
             isFavorites(true);
             addCollection();
-            FavoritesEntity.DataBean dataBean=msg();
+            FavoritesEntity.DataBean dataBean = msg();
             Messenger.getDefault().send(dataBean, TabBar2Fragment.TOKEN_AddTabBar2Fragment_REFRESH);
         }
     });
 
-    public FavoritesEntity.DataBean msg(){
+    public FavoritesEntity.DataBean msg() {
         FavoritesEntity.DataBean dataBean = new FavoritesEntity.DataBean();
         dataBean.setTitle(jokeTitle.get());
         dataBean.setPostTime(jokeTime.get());
@@ -124,6 +116,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         return dataBean;
 
     }
+
     /**
      * 删除收藏按钮
      */
@@ -136,7 +129,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
             }
             isFavorites(false);
             deleteCollection();
-            FavoritesEntity.DataBean dataBean=msg();
+            FavoritesEntity.DataBean dataBean = msg();
             Messenger.getDefault().send(dataBean, TabBar2Fragment.TOKEN_DeleteTabBar2Fragment_REFRESH);
         }
     });
@@ -151,18 +144,28 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     });
 
     /**
+     * 关注按钮
+     */
+    public BindingCommand attentionBackOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            ToastUtils.showShort("啥也没有~");
+        }
+    });
+
+    /**
      * 获得新闻数据
      *
      * @param jokeId
      */
     public void JokeDetails(final String jokeId) {
-        String userId;
+        final String userIds;
         if (!model.getUserStatus()) {
-            userId = "0";
+            userIds = "0";
         } else {
-            userId = model.getUserId();
+            userIds = model.getUserId();
         }
-        model.showJokeDetails(jokeId, userId)
+        model.showJokeDetails(jokeId, userIds)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
@@ -176,6 +179,10 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onNext(JokeDetailsEntity response) {
                         entity.add(response);
+                        Log.e("TAG", entity.toString());
+                        userIcon.set(RetrofitClient.baseUrl + entity.get(0).getData().getUser().getIcon());
+                        userName.set(entity.get(0).getData().getUser().getName());
+                        userId.set("ID" + entity.get(0).getData().getUser().getUserId());
                         jokeTitle.set(response.getData().getTitle());
                         jokeImg.set(RetrofitClient.baseUrl + response.getData().getCoverImg());
                         jokeContent.set(response.getData().getContent());
@@ -226,7 +233,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onNext(final JokeEntity.DataBean response) {
                         JokeDetailsEntity.DataBean.RemarksBean remarksBean = new JokeDetailsEntity.DataBean.RemarksBean();
-                        JokeDetailsEntity.DataBean.RemarksBean.UserBean userBean = new JokeDetailsEntity.DataBean.RemarksBean.UserBean();
+                        JokeDetailsEntity.DataBean.RemarksBean.UserBeanX userBean = new JokeDetailsEntity.DataBean.RemarksBean.UserBeanX();
                         remarksBean.setContent(content);
                         remarksBean.setUserId(model.getUserId());
                         remarksBean.setJokeId(entity.get(0).getData().getJokeId());
@@ -285,7 +292,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onComplete() {
                         //关闭对话框
-                        ToastUtils.showShort("删除完成");
+                        ToastUtils.showShort("删除收藏成功");
                     }
                 });
     }
