@@ -109,9 +109,10 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId) {
-        return apiService.showJokeDetails(jokeId);
+    public Observable<JokeDetailsEntity.DataBean> showJokeDetails(String jokeId, String userId) {
+        return apiService.showJokeDetails(jokeId,userId);
     }
+
 
     @Override
     public Observable<JokeEntity.DataBean> remarkUpload(JokeEntity.DataBean body) {
@@ -121,6 +122,16 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<ResultEntity> deleteRemark(String userId, String remarkId) {
         return apiService.deleteRemark(userId,remarkId);
+    }
+
+    @Override
+    public Observable<ResultEntity> addFavorites(String userId, String jokeId) {
+        return apiService.addFavorites(userId,jokeId);
+    }
+
+    @Override
+    public Observable<ResultEntity> deleteFavorites(String userId, String jokeId) {
+        return apiService.deleteFavorites(userId,jokeId);
     }
 
 

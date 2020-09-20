@@ -30,6 +30,7 @@ import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
@@ -67,6 +68,23 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         }
     }
 
+    }
+
+    //收藏按钮显示
+    public void isFavorites(boolean isfavorites) {
+        if (isfavorites) {
+            favoritesVisibility.set(View.GONE);
+            collectedVisibility.set(View.VISIBLE);
+        } else {
+            favoritesVisibility.set(View.VISIBLE);
+            collectedVisibility.set(View.GONE);
+        }
+    }
+
+    public NpeRepository getmodel() {
+        return model;
+    }
+
     public BindingCommand backOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -74,9 +92,102 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    //收藏点击按钮
+    public BindingCommand rightIconOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            if (!model.getUserStatus()) {
+                ToastUtils.showShort("您当前未登录");
+                return;
+            }
+            addFavorites();
+            isFavorites(true);
+        }
+    });
+
+    //取消收藏点击按钮
+    public BindingCommand rightCollectedIconOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            if (!model.getUserStatus()) {
+                ToastUtils.showShort("您当前未登录");
+                return;
+            }
+            deleteFavoriter();
+            isFavorites(false);
+        }
+    });
+
+    //添加收藏
+    public void addFavorites() {
+        model.addFavorites(model.getUserId(), entity.get(0).getJokeId())
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<ResultEntity>() {
+                    @Override
+                    public void onNext(final ResultEntity response) {
+                        if (response.getCode() == 1002) {
+                            isFavorites(true);
+                            ToastUtils.showShort("已在收藏列表中");
+                        } else if (response.getCode() == 1001) {
+                            ToastUtils.showShort("收藏成功");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        //请求刷新完成收回
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
+
+    //删除收藏
+    public void deleteFavoriter() {
+        model.deleteFavorites(model.getUserId(), entity.get(0).getJokeId())
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<ResultEntity>() {
+                    @Override
+                    public void onNext(final ResultEntity response) {
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        //请求刷新完成收回
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showShort("取消收藏成功");
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
+
     //获得新闻数据
     public void JokeDetails(final String jokeId) {
-        model.showJokeDetails(jokeId)
+        model.showJokeDetails(jokeId, model.getUserId())
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
@@ -99,7 +210,6 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                         for (JokeDetailsEntity.DataBean.RemarksBean remarksBean : remark) {
                             JokeDetailsItemViewModel jokeDetailsItemViewModel = new JokeDetailsItemViewModel(JokeDetailsViewModel.this, remarksBean);
                             observableList.add(jokeDetailsItemViewModel);
-
                         }
                     }
 
@@ -116,7 +226,6 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onComplete() {
                         //关闭对话框
-//                        entityJsonLiveData.call();
                         dismissDialog();
                     }
                 });
@@ -132,12 +241,12 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                 .subscribe(new DisposableObserver<JokeEntity.DataBean>() {
                     @Override
                     public void onNext(final JokeEntity.DataBean response) {
-                        JokeDetailsEntity.DataBean.RemarksBean remarksBean=new JokeDetailsEntity.DataBean.RemarksBean();
+                        JokeDetailsEntity.DataBean.RemarksBean remarksBean = new JokeDetailsEntity.DataBean.RemarksBean();
                         remarksBean.setContent(content);
                         remarksBean.setUserId(model.getUserId());
                         remarksBean.setJokeId( entity.get(0).getData().getJokeId());
                         remarksBean.setPostTime("刚刚");
-                        JokeDetailsItemViewModel jokeDetailsItemViewModel=new JokeDetailsItemViewModel(JokeDetailsViewModel.this,remarksBean);
+                        JokeDetailsItemViewModel jokeDetailsItemViewModel = new JokeDetailsItemViewModel(JokeDetailsViewModel.this, remarksBean);
                         addItemLiveData.setValue(jokeDetailsItemViewModel);
                     }
 
@@ -160,9 +269,6 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                 });
     }
 
-    public NpeRepository getmodel() {
-        return model;
-    }
 
     public void deleteRemark(int index) {
         Log.e("TAG", remark.get(index).getRemarkId());
@@ -200,6 +306,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         //点击确定，在 observableList 绑定中删除，界面立即刷新
         observableList.remove(jokeDetailsItemViewModel);
     }
+
     /**
      * 增加条目
      *

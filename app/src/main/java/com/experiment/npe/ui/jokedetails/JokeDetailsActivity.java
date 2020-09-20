@@ -2,6 +2,8 @@ package com.experiment.npe.ui.jokedetails;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,7 +15,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
+import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.ActivityJokeDetailsBinding;
+import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.ui.jokedetails.dialog.CommentDialogFragment;
 import com.experiment.npe.ui.jokedetails.dialog.DialogFragmentDataCallback;
 
@@ -27,6 +31,7 @@ import me.tatarka.bindingcollectionadapter2.BR;
 public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding, JokeDetailsViewModel> implements DialogFragmentDataCallback {
     private String jokeId;
     public static final String TOKEN_JokeDetailsActivity_REFRESH = "token_jokedetailsactivity_refresh";
+    public ObservableList<JokeDetailsEntity.DataBean> entity = new ObservableArrayList<>();
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_joke_details;
@@ -59,7 +64,13 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
         Messenger.getDefault().register(this, JokeDetailsActivity.TOKEN_JokeDetailsActivity_REFRESH, String.class, new BindingConsumer<String>() {
             @Override
             public Integer call(String s) {
-                viewModel.remarkLoad(s);
+                NpeRepository model = viewModel.getmodel();
+                if (model.getUserStatus()) {
+                    viewModel.remarkLoad(s);
+                } else {
+                    ToastUtils.showShort("您当前未登录");
+                }
+
                 return null;
             }
         });
@@ -68,12 +79,6 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
 
     @Override
     public void initViewObservable() {
-        viewModel.entityJsonLiveData.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                refreshLayout();
-            }
-        });
 
         viewModel.deleteItemLiveData.observe(this, new Observer<JokeDetailsItemViewModel>() {
 

@@ -65,11 +65,20 @@ public interface NpeApiService {
     Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);
 
     @GET("joke/select/id")
-    Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId);
+    Observable<JokeDetailsEntity.DataBean> showJokeDetails(@Query("jokeId")String jokeId,@Query("userId")String userId);
 
     @POST("remark/upload")
     Observable<JokeEntity.DataBean> remarkUpload(@Body JokeEntity.DataBean body);
 
     @GET("remark/delete")
     Observable<ResultEntity>deleteRemark(@Query("userId")String userId,@Query("remarkId")String remarkId);
+
+    @GET("user/upload/collection")
+    Observable<ResultEntity>addFavorites(@Query("userId")String userId,@Query("jokeId")String jokeId);
+
+    @GET("user/delete/collection")
+    Observable<ResultEntity>deleteFavorites(@Query("userId")String userId,@Query("jokeId")String jokeId);
+
+    @GET("user/delete/collection")
+    Observable<JokeEntity> favoritesList(@Query("userId")String userId);
 }
