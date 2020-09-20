@@ -12,7 +12,7 @@ import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 /**
  * Created by lbavsc on 20-9-11
  */
-public class ViewPagerBindingAdapter extends BindingViewPagerAdapter<TabBar1temViewModel> {
+public class ViewPagerBindingAdapter1 extends BindingViewPagerAdapter<TabBar1temViewModel> {
 
     @Override
     public void onBindBinding(final ViewDataBinding binding, int variableId, int layoutRes, final int position, TabBar1temViewModel item) {

@@ -9,6 +9,11 @@
         <variable
             name="viewModel"
             type="TabBar2ViewModel" />
+        
+        <import type="com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter2"/>
+        <variable
+            name="adapter"
+            type="ViewPagerBindingAdapter2" />
     </data>
 
     <LinearLayout
@@ -228,6 +233,35 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
+        <com.google.android.material.tabs.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:outlineProvider="bounds"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@android:color/black" />
+
+        <!--        <View-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:background="#F0F0F0" />-->
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            binding:adapter="@{adapter}"
+            binding:itemBinding="@{viewModel.itemBinding}"
+            binding:items="@{viewModel.items}"
+            binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"
+            binding:pageTitles="@{viewModel.pageTitles}">
+
+        </androidx.viewpager.widget.ViewPager>
 
     </LinearLayout>
 </layout>

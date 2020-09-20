@@ -2,6 +2,7 @@ package com.experiment.npe.ui.main.viewmodel;
 
 import android.app.Application;
 
+import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
@@ -9,35 +10,35 @@ import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.ObservableList;
 
 import android.util.Log;
 import android.view.View;
 
+import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
-import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.setting.SettingActivity;
 import com.experiment.npe.utils.RetrofitClient;
 
 import java.io.File;
-import java.io.IOException;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
+import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okio.BufferedSink;
 
 /**
  * Created by lbavsc on 20-9-15
@@ -149,6 +150,26 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
                     }
                 });
     }
+
+    //给ViewPager添加ObservableList
+    public ObservableList<TabBar2ItemViewModel> items = new ObservableArrayList<>();
+    //给ViewPager添加ItemBinding
+    public ItemBinding<TabBar2ItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_2);
+    //给ViewPager添加PageTitle
+    public final BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel>() {
+        @Override
+        public CharSequence getPageTitle(int position, TabBar2ItemViewModel item) {
+            return "条目" + position;
+        }
+    };
+    //ViewPager切换监听
+    public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
+        @Override
+        public Integer call(Integer index) {
+            ToastUtils.showShort("ViewPager切换：" + index);
+            return index;
+        }
+    });
 
 
 }

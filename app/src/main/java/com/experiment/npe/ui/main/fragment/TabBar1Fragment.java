@@ -18,7 +18,6 @@ import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
 import com.google.android.material.tabs.TabLayout;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,7 @@ import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.FragmentTabBar1Binding;
-import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter;
+import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter1;
 import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
@@ -62,7 +61,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
         //给ViewPager设置adapter
-        binding.setAdapter(new ViewPagerBindingAdapter());
+        binding.setAdapter(new ViewPagerBindingAdapter1());
 
         //监听键盘回车事件
         binding.searchText.setOnKeyListener(new View.OnKeyListener() {
