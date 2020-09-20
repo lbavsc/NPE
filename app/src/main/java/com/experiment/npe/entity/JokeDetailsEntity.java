@@ -185,6 +185,7 @@ public class JokeDetailsEntity {
             private String content;
             private String postTime;
 
+
             public String getRemarkId() {
                 return remarkId;
             }

@@ -2,8 +2,6 @@ package com.experiment.npe.ui.main.viewmodel;
 
 
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
@@ -28,7 +26,12 @@ public class JokeItemViewModel extends ItemViewModel<TabBar1ViewModel> {
 
     public JokeItemViewModel(@NonNull TabBar1ViewModel viewModel, JokeEntity.DataBean entity) {
         super(viewModel);
-        entity.setCoverImg(RetrofitClient.baseUrl + entity.getCoverImg());
+        if (entity.getCoverImg().startsWith("img")){
+            entity.setCoverImg(RetrofitClient.baseUrl + entity.getCoverImg());
+        }else {
+            entity.setCoverImg(entity.getCoverImg());
+        }
+
         this.entity.set(entity);
     }
 

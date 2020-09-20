@@ -51,6 +51,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public ObservableField<String> jokeContent = new ObservableField<>("");
     public ObservableList<JokeDetailsItemViewModel> observableList = new ObservableArrayList<>();
     public SingleLiveEvent<JokeDetailsItemViewModel> deleteItemLiveData = new SingleLiveEvent<>();
+    public SingleLiveEvent<JokeDetailsItemViewModel> addItemLiveData = new SingleLiveEvent<>();
     public ObservableList<JokeDetailsEntity.DataBean.RemarksBean> remark = new ObservableArrayList<>();
     public ItemBinding<JokeDetailsItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_joke_details_remark);
 
@@ -98,6 +99,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                         for (JokeDetailsEntity.DataBean.RemarksBean remarksBean : remark) {
                             JokeDetailsItemViewModel jokeDetailsItemViewModel = new JokeDetailsItemViewModel(JokeDetailsViewModel.this, remarksBean);
                             observableList.add(jokeDetailsItemViewModel);
+
                         }
                     }
 
@@ -121,7 +123,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     }
 
     //评论接口
-    public void remarkLoad(String content) {
+    public void remarkLoad(final String content) {
         JokeEntity.DataBean body = new JokeEntity.DataBean(model.getUserId(), entity.get(0).getData().getJokeId(), content);
         model.remarkUpload(body)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
@@ -130,7 +132,13 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                 .subscribe(new DisposableObserver<JokeEntity.DataBean>() {
                     @Override
                     public void onNext(final JokeEntity.DataBean response) {
-
+                        JokeDetailsEntity.DataBean.RemarksBean remarksBean=new JokeDetailsEntity.DataBean.RemarksBean();
+                        remarksBean.setContent(content);
+                        remarksBean.setUserId(model.getUserId());
+                        remarksBean.setJokeId( entity.get(0).getData().getJokeId());
+                        remarksBean.setPostTime("刚刚");
+                        JokeDetailsItemViewModel jokeDetailsItemViewModel=new JokeDetailsItemViewModel(JokeDetailsViewModel.this,remarksBean);
+                        addItemLiveData.setValue(jokeDetailsItemViewModel);
                     }
 
                     @Override
@@ -145,7 +153,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
 
                     @Override
                     public void onComplete() {
-                        ToastUtils.showShort("新闻上传完成");
+                        ToastUtils.showShort("评论提交完成");
                         //关闭对话框
                         dismissDialog();
                     }
@@ -191,6 +199,15 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public void deleteItem(JokeDetailsItemViewModel jokeDetailsItemViewModel) {
         //点击确定，在 observableList 绑定中删除，界面立即刷新
         observableList.remove(jokeDetailsItemViewModel);
+    }
+    /**
+     * 增加条目
+     *
+     * @param
+     */
+    public void addItem(JokeDetailsItemViewModel jokeDetailsItemViewModel) {
+        //点击确定，在 observableList 绑定中删除，界面立即刷新
+        observableList.add(0, jokeDetailsItemViewModel);
     }
 
     /**

@@ -48,6 +48,7 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
     //封装一个界面发生改变的观察者
     public ObservableInt uploadVisibility = new ObservableInt();
     public SingleLiveEvent<JokeItemViewModel> entityJsonLiveData = new SingleLiveEvent<>();
+    public SingleLiveEvent<JokeEntity.DataBean> addItemData = new SingleLiveEvent<>();
     public TabBar1ViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
         if (model.getUserStatus() && model.getUserType()) {

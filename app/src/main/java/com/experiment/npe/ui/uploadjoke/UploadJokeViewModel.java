@@ -1,6 +1,8 @@
 package com.experiment.npe.ui.uploadjoke;
 
 import android.app.Application;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +13,16 @@ import androidx.databinding.ObservableInt;
 
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeEntity;
+import com.experiment.npe.ui.jokedetails.JokeDetailsActivity;
+import com.experiment.npe.ui.main.activity.MainActivity;
+import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
+import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
+import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
+import com.experiment.npe.utils.RetrofitClient;
 import com.experiment.npe.utils.SpinnerItemData;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +32,7 @@ import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.binding.viewadapter.spinner.IKeyAndValue;
+import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
@@ -122,7 +132,7 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
             ToastUtils.showShort("请输入新闻内容");
             return;
         }
-        if (entity.getCoverImg()==null){
+        if (entity.getCoverImg() == null) {
             ToastUtils.showShort("请选择图片");
             return;
         }
@@ -173,7 +183,13 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
 
                     @Override
                     public void onComplete() {
-                        ToastUtils.showShort("新闻上传完成");
+                        JokeEntity.DataBean dataBean = new JokeEntity.DataBean();
+                        dataBean.setCoverImg(entity.getCoverImg());
+
+                        dataBean.setTitle(jokeTitle.get());
+                        dataBean.setContent(jokeContent.get());
+                        dataBean.setPostTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
+                        Messenger.getDefault().send(dataBean, TabBar1Fragment.TOKEN_TabBar1Fragment_REFRESH);
                         jokeTitle.set("");
                         jokeContent.set("");
                         jokeSource.set("");
@@ -181,6 +197,7 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
                         uploadImgButtonVisibility.set(View.VISIBLE);
                         uploadImgVisibility.set(View.GONE);
                         //关闭对话框
+                        ToastUtils.showShort("新闻提交成功");
                         dismissDialog();
                     }
                 });
@@ -188,6 +205,10 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
 
     public NpeRepository getmodle() {
         return model;
+    }
+
+    public void addJoke() {
+
     }
 
     @Override

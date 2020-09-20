@@ -26,7 +26,7 @@ import me.tatarka.bindingcollectionadapter2.BR;
 
 public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding, JokeDetailsViewModel> implements DialogFragmentDataCallback {
     private String jokeId;
-    public static final String TOKEN_LOGINVIEWMODEL_REFRESH = "token_jokedetailsactivity_refresh";
+    public static final String TOKEN_JokeDetailsActivity_REFRESH = "token_jokedetailsactivity_refresh";
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_joke_details;
@@ -56,7 +56,7 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
         });
 
         //接收输入的字符串
-        Messenger.getDefault().register(this, JokeDetailsActivity.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new BindingConsumer<String>() {
+        Messenger.getDefault().register(this, JokeDetailsActivity.TOKEN_JokeDetailsActivity_REFRESH, String.class, new BindingConsumer<String>() {
             @Override
             public Integer call(String s) {
                 viewModel.remarkLoad(s);
@@ -95,6 +95,12 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
 
                     }
                 }).show();
+            }
+        });
+        viewModel.addItemLiveData.observe(this, new Observer<JokeDetailsItemViewModel>() {
+            @Override
+            public void onChanged(JokeDetailsItemViewModel jokeDetailsItemViewModel) {
+                viewModel.addItem(jokeDetailsItemViewModel);
             }
         });
 

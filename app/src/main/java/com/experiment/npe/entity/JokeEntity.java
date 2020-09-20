@@ -8,6 +8,7 @@ import java.util.List;
 public class JokeEntity {
 
 
+
     /**
      * code : 1001
      * msg : 获取成功
@@ -146,5 +147,28 @@ public class JokeEntity {
             this.assortId = assortId;
         }
 
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "jokeId='" + jokeId + '\'' +
+                    ", userId='" + userId + '\'' +
+                    ", title='" + title + '\'' +
+                    ", coverImg='" + coverImg + '\'' +
+                    ", postTime='" + postTime + '\'' +
+                    ", content='" + content + '\'' +
+                    ", source='" + source + '\'' +
+                    ", assortId=" + assortId +
+                    ", remarks='" + remarks + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "JokeEntity{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

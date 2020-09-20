@@ -153,7 +153,7 @@ public class CommentDialogFragment extends DialogFragment implements View.OnClic
                     ToastUtils.showShort("评论最多50字哦~");
                     return;
                 }
-                Messenger.getDefault().send(commentEditText.getText().toString(),JokeDetailsActivity.TOKEN_LOGINVIEWMODEL_REFRESH);
+                Messenger.getDefault().send(commentEditText.getText().toString(),JokeDetailsActivity.TOKEN_JokeDetailsActivity_REFRESH);
                 commentEditText.setText("");
                 dismiss();
                 break;

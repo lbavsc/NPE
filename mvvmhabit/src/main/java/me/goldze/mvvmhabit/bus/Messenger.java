@@ -128,18 +128,7 @@ public class Messenger {
         register(recipient, null, false, action, tClass);
     }
 
-    /**
-     * see {}
-     *
-     * @param recipient                 receiver of message
-     * @param receiveDerivedMessagesToo whether derived class of recipient can receive the message
-     * @param tClass                    class of T
-     * @param action                    this action has one params that type of tClass
-     * @param <T>                       message data type
-     */
-    public <T> void register(Object recipient, boolean receiveDerivedMessagesToo, Class<T> tClass, BindingConsumer<T> action) {
-        register(recipient, null, receiveDerivedMessagesToo, action, tClass);
-    }
+
 
     /**
      * see {}

@@ -59,4 +59,14 @@ public class TabBar1temViewModel extends ItemViewModel<TabBar1ViewModel> {
         observableList1.remove(jokeItemViewModel);
     }
 
+    /**
+     * 增加条目
+     *
+     * @param
+     */
+    public void addItem(JokeItemViewModel jokeItemViewModel) {
+        //点击确定，在 observableList 绑定中删除，界面立即刷新
+        observableList1.add(0,jokeItemViewModel);
+    }
+
 }

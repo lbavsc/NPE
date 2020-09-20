@@ -1,31 +1,23 @@
 package com.experiment.npe.ui.main.fragment;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.database.Observable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.experiment.npe.data.NpeRepository;
-import com.experiment.npe.ui.main.activity.MainActivity;
+import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
 import com.google.android.material.tabs.TabLayout;
 
-import android.os.IBinder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -41,6 +33,8 @@ import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter;
 import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
@@ -48,6 +42,8 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
  * Created by lbavsc on 20-9-11
  */
 public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar1ViewModel> {
+    public static final String TOKEN_TabBar1Fragment_REFRESH = "token_tabbar1fragment_refresh";
+
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return R.layout.fragment_tab_bar_1;
@@ -100,6 +96,13 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
 
         });
         viewModel.getAssort();
+        Messenger.getDefault().register(this, TabBar1Fragment.TOKEN_TabBar1Fragment_REFRESH, JokeEntity.DataBean.class, new BindingConsumer<JokeEntity.DataBean>() {
+            @Override
+            public Integer call(JokeEntity.DataBean s) {
+                viewModel.addItemData.setValue(s);
+                return null;
+            }
+        });
     }
 
     @Override
@@ -139,6 +142,13 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
                     }
                 }).show();
 
+            }
+        });
+        viewModel.addItemData.observe(this, new Observer<JokeEntity.DataBean>() {
+            @Override
+            public void onChanged(JokeEntity.DataBean dataBean) {
+                JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(viewModel, dataBean);
+                viewModel.items.get(model.getAssortIndex()).addItem(jokeItemViewModel);
             }
         });
     }
