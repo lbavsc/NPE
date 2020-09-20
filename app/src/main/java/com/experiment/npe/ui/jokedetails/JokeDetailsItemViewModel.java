@@ -19,17 +19,13 @@ public class JokeDetailsItemViewModel extends ItemViewModel<JokeDetailsViewModel
     public ObservableField<JokeDetailsEntity.DataBean.RemarksBean> entity = new ObservableField<>();
     public ObservableField<String> img = new ObservableField<>("");
     public ObservableField<String> text = new ObservableField<>("");
+
     public JokeDetailsItemViewModel(@NonNull JokeDetailsViewModel viewModel, JokeDetailsEntity.DataBean.RemarksBean entity) {
         super(viewModel);
         this.entity.set(entity);
         model = viewModel.getmodel();
-        if (model.getUserIcon().startsWith("img")){
-            img.set(RetrofitClient.baseUrl+model.getUserIcon());
-        }else {
-            img.set(model.getUserIcon());
-        }
-
-        text.set(model.getUserName());
+        img.set(RetrofitClient.baseUrl + entity.getUser().getIcon());
+        text.set(entity.getUser().getName());
     }
 
     public int getPosition() {

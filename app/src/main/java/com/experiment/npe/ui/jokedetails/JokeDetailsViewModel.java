@@ -61,11 +61,14 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         Log.e("TAG", model.getUserIcon());
         userName.set(model.getUserName());
         userId.set("ID:" + model.getUserId());
-        if (model.getUserIcon().startsWith("img")) {
-            userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
-        } else {
-            userIcon.set(model.getUserIcon());
+        if (model.getUserStatus()){
+            if (model.getUserIcon().startsWith("img")) {
+                userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
+            } else {
+                userIcon.set(model.getUserIcon());
+            }
         }
+
     }
 
     /**
@@ -198,9 +201,13 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onNext(final JokeEntity.DataBean response) {
                         JokeDetailsEntity.DataBean.RemarksBean remarksBean = new JokeDetailsEntity.DataBean.RemarksBean();
+                        JokeDetailsEntity.DataBean.RemarksBean.UserBean userBean=new JokeDetailsEntity.DataBean.RemarksBean.UserBean();
                         remarksBean.setContent(content);
                         remarksBean.setUserId(model.getUserId());
                         remarksBean.setJokeId(entity.get(0).getData().getJokeId());
+                        userBean.setIcon(model.getUserIcon());
+                        userBean.setName(model.getUserName());
+                        remarksBean.setUser(userBean);
                         remarksBean.setPostTime("刚刚");
                         JokeDetailsItemViewModel jokeDetailsItemViewModel = new JokeDetailsItemViewModel(JokeDetailsViewModel.this, remarksBean);
                         addItemLiveData.setValue(jokeDetailsItemViewModel);

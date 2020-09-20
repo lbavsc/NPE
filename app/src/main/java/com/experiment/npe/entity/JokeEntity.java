@@ -8,7 +8,6 @@ import java.util.List;
 public class JokeEntity {
 
 
-
     /**
      * code : 1001
      * msg : 获取成功
@@ -64,12 +63,15 @@ public class JokeEntity {
         private String source;
         private int assortId;
         private String remarks;
+        private UserBean user;
+
+
+
         public DataBean() {
         }
 
 
-
-        public DataBean(String userId,String jokeId,  String content) {
+        public DataBean(String userId, String jokeId, String content) {
             this.jokeId = jokeId;
             this.userId = userId;
             this.content = content;
@@ -83,6 +85,7 @@ public class JokeEntity {
         public void setRemarks(String remarks) {
             this.remarks = remarks;
         }
+
         public String getJokeId() {
             return jokeId;
         }
@@ -145,6 +148,90 @@ public class JokeEntity {
 
         public void setAssortId(int assortId) {
             this.assortId = assortId;
+        }
+
+        public UserBean getUser() {
+            return user;
+        }
+
+        public void setUser(UserBean user) {
+            this.user = user;
+        }
+
+        public static class UserBean {
+            /**
+             * userId : 000002
+             * phone : 1
+             * name : NPE
+             * password : 1
+             * icon : img/user/000002_1600532085928.jpg
+             * type : true
+             * status : true
+             */
+
+            private String userId;
+            private String phone;
+            private String name;
+            private String password;
+            private String icon;
+            private boolean type;
+            private boolean status;
+
+            public String getUserId() {
+                return userId;
+            }
+
+            public void setUserId(String userId) {
+                this.userId = userId;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getPassword() {
+                return password;
+            }
+
+            public void setPassword(String password) {
+                this.password = password;
+            }
+
+            public String getIcon() {
+                return icon;
+            }
+
+            public void setIcon(String icon) {
+                this.icon = icon;
+            }
+
+            public boolean isType() {
+                return type;
+            }
+
+            public void setType(boolean type) {
+                this.type = type;
+            }
+
+            public boolean isStatus() {
+                return status;
+            }
+
+            public void setStatus(boolean status) {
+                this.status = status;
+            }
         }
 
         @Override
