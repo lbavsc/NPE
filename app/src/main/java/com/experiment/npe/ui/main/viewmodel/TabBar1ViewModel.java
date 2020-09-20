@@ -63,12 +63,6 @@ public class TabBar1ViewModel extends BaseViewModel<NpeRepository> {
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showDialog("正在请求...");
-                    }
-                })
                 .subscribe(new DisposableObserver<JokeAssortEntity>() {
                     @Override
                     public void onNext(final JokeAssortEntity response) {

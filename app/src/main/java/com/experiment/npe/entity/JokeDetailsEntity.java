@@ -283,7 +283,57 @@ public class JokeDetailsEntity {
                 public void setStatus(boolean status) {
                     this.status = status;
                 }
+
+                @Override
+                public String toString() {
+                    return "UserBean{" +
+                            "userId='" + userId + '\'' +
+                            ", phone='" + phone + '\'' +
+                            ", name='" + name + '\'' +
+                            ", password='" + password + '\'' +
+                            ", icon='" + icon + '\'' +
+                            ", type=" + type +
+                            ", status=" + status +
+                            '}';
+                }
+            }
+
+            @Override
+            public String toString() {
+                return "RemarksBean{" +
+                        "remarkId='" + remarkId + '\'' +
+                        ", userId='" + userId + '\'' +
+                        ", jokeId='" + jokeId + '\'' +
+                        ", content='" + content + '\'' +
+                        ", postTime='" + postTime + '\'' +
+                        ", user=" + user +
+                        '}';
             }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "jokeId='" + jokeId + '\'' +
+                    ", userId='" + userId + '\'' +
+                    ", title='" + title + '\'' +
+                    ", coverImg='" + coverImg + '\'' +
+                    ", postTime='" + postTime + '\'' +
+                    ", content='" + content + '\'' +
+                    ", source='" + source + '\'' +
+                    ", assortId=" + assortId +
+                    ", collete=" + collete +
+                    ", remarks=" + remarks +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "JokeDetailsEntity{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

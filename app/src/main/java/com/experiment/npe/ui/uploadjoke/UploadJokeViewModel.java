@@ -12,8 +12,10 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
 import com.experiment.npe.data.NpeRepository;
+import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.ui.jokedetails.JokeDetailsActivity;
+import com.experiment.npe.ui.jokedetails.JokeDetailsViewModel;
 import com.experiment.npe.ui.main.activity.MainActivity;
 import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
@@ -65,7 +67,7 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
         //assortDatas 一般可以从本地Sqlite数据库中取出数据字典对象集合，让该对象实现IKeyAndValue接口
         assortDatas = new ArrayList<>();
         assortDatas.add(new SpinnerItemData("旅游", 1));
-        assortDatas.add(new SpinnerItemData("娱乐", 2));
+        assortDatas.add(new SpinnerItemData("军事", 2));
         assortDatas.add(new SpinnerItemData("科技", 3));
         assortDatas.add(new SpinnerItemData("财经", 4));
         assortDatas.add(new SpinnerItemData("国际", 5));
@@ -165,10 +167,10 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
-                .subscribe(new DisposableObserver<JokeEntity>() {
+                .subscribe(new DisposableObserver<JokeDetailsEntity>() {
                     @Override
-                    public void onNext(final JokeEntity response) {
-
+                    public void onNext(final JokeDetailsEntity response) {
+                        entity.setJokeId(response.getData().getJokeId());
                     }
 
                     @Override
@@ -189,6 +191,8 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
                         dataBean.setTitle(jokeTitle.get());
                         dataBean.setContent(jokeContent.get());
                         dataBean.setPostTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
+                        dataBean.setCoverImg(entity.getCoverImg());
+                        dataBean.setJokeId(entity.getJokeId());
                         Messenger.getDefault().send(dataBean, TabBar1Fragment.TOKEN_TabBar1Fragment_REFRESH);
                         jokeTitle.set("");
                         jokeContent.set("");

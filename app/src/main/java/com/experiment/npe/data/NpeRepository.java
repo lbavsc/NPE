@@ -11,6 +11,7 @@ import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
+import com.experiment.npe.ui.jokedetails.JokeDetailsViewModel;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.base.BaseModel;
@@ -102,7 +103,7 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
-    public Observable<JokeEntity> uploadJoke(RequestBody body) {
+    public Observable<JokeDetailsEntity> uploadJoke(RequestBody body) {
         return mHttpDataSource.uploadJoke(body);
     }
 

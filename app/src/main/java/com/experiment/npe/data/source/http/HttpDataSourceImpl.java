@@ -8,6 +8,7 @@ import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
+import com.experiment.npe.ui.jokedetails.JokeDetailsViewModel;
 
 import java.io.File;
 
@@ -100,7 +101,7 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<JokeEntity> uploadJoke(RequestBody body) {
+    public Observable<JokeDetailsEntity> uploadJoke(RequestBody body) {
         return apiService.uploadJoke(body);
     }
 

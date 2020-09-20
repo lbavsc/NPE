@@ -6,6 +6,7 @@ import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.entity.UserEntity;
+import com.experiment.npe.ui.jokedetails.JokeDetailsViewModel;
 
 import java.io.File;
 
@@ -60,7 +61,7 @@ public interface NpeApiService {
     Observable<JokeEntity> showJoke(@Query("assort")int assortId);
 
     @POST("joke/upload")
-    Observable<JokeEntity> uploadJoke(@Body RequestBody body);
+    Observable<JokeDetailsEntity> uploadJoke(@Body RequestBody body);
 
     @GET("joke/delete")
     Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);

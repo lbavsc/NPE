@@ -18,6 +18,7 @@ import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
 import com.google.android.material.tabs.TabLayout;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,6 +99,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
         Messenger.getDefault().register(this, TabBar1Fragment.TOKEN_TabBar1Fragment_REFRESH, JokeEntity.DataBean.class, new BindingConsumer<JokeEntity.DataBean>() {
             @Override
             public Integer call(JokeEntity.DataBean s) {
+                Log.e("TAG", s.toString());
                 viewModel.addItemData.setValue(s);
                 return null;
             }
@@ -161,5 +163,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
         } else {
             viewModel.uploadVisibility.set(View.GONE);
         }
+
+        viewModel.getAssort();
     }
 }
