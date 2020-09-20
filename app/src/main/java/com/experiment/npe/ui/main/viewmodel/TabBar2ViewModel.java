@@ -75,6 +75,11 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
             loginVisibility.set(View.VISIBLE);
             visibility.set(View.GONE);
         }
+
+        for (int i = 1; i <= 2; i++) {
+            TabBar2ItemViewModel itemViewModel = new TabBar2ItemViewModel(this);
+            items.add(itemViewModel);
+        }
     }
 
     public NpeRepository getmodle() {
@@ -159,7 +164,12 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
     public final BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel>() {
         @Override
         public CharSequence getPageTitle(int position, TabBar2ItemViewModel item) {
-            return "条目" + position;
+            if (position==0){
+                return "收藏";
+            }else if (position==1){
+                return "历史浏览";
+            }
+            return null;
         }
     };
     //ViewPager切换监听

@@ -27,7 +27,9 @@ import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.FragmentTabBar2Binding;
+import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter2;
 import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
+import com.google.android.material.tabs.TabLayout;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.wildma.pictureselector.FileUtils;
 import com.wildma.pictureselector.PictureBean;
@@ -59,6 +61,7 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
 
     @Override
     public TabBar2ViewModel initViewModel() {
+
         //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
         return ViewModelProviders.of(this, factory).get(TabBar2ViewModel.class);
@@ -104,6 +107,12 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
 
     @Override
     public void initData() {
+
+        // 使用 TabLayout 和 ViewPager 相关联
+        binding.tabs.setupWithViewPager(binding.viewPager);
+        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
+        //给ViewPager设置adapter
+        binding.setAdapter(new ViewPagerBindingAdapter2());
         NpeRepository model = viewModel.getmodle();
         if (model.getUserStatus()) {
             viewModel.loginVisibility.set(View.GONE);

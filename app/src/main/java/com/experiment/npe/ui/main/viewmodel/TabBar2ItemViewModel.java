@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 
 import me.goldze.mvvmhabit.base.ItemViewModel;
 
-public class TabBar2ItemViewModel extends ItemViewModel<TabBar1ViewModel> {
-    public TabBar2ItemViewModel(@NonNull TabBar1ViewModel viewModel) {
+public class TabBar2ItemViewModel extends ItemViewModel<TabBar2ViewModel> {
+    public TabBar2ItemViewModel(@NonNull TabBar2ViewModel viewModel) {
         super(viewModel);
     }
 }

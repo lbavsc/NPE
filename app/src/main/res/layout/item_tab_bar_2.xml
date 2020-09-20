@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.viewmodel.JokeItemViewModel" />
+        <import type="com.experiment.npe.ui.main.viewmodel.TabBar2ItemViewModel" />
 
         <variable
             name="viewModel"
-            type="com.experiment.npe.ui.main.viewmodel.JokeItemViewModel" />
+            type="com.experiment.npe.ui.main.viewmodel.TabBar2ItemViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
