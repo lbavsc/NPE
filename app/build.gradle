@@ -18,6 +18,12 @@ android {
             keyPassword = 'asdf123456'
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "NPE.apk"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true

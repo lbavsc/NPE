@@ -187,7 +187,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_25"
                         android:gravity="center"
-                        android:text="15"
+                        android:text="23"
                         android:textColor="#2F4F4F"
                         android:textSize="@dimen/dp_16" />
 
@@ -219,7 +219,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_25"
                         android:gravity="center"
-                        android:text="15"
+                        android:text="32"
                         android:textColor="#2F4F4F"
                         android:textSize="@dimen/dp_16" />
 

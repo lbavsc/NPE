@@ -110,7 +110,7 @@
                             android:id="@+id/userIcon"
                             android:layout_width="@dimen/dp_50"
                             android:layout_height="@dimen/dp_50"
-                            binding:urls="@{viewModel.userIcon}" />
+                            binding:urls="@{viewModel.JokeIcon}" />
 
                         <TextView
                             android:id="@+id/userName"

@@ -183,7 +183,6 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
         public Integer call(Integer index) {
-            ToastUtils.showShort("ViewPager切换：" + index);
             return index;
         }
     });

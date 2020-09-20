@@ -1,5 +1,7 @@
 package com.experiment.npe.ui.jokedetails;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 

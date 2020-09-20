@@ -49,6 +49,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public ObservableField<String> userId = new ObservableField<>("");
     public ObservableField<String> jokeImg = new ObservableField<>("");
     public ObservableField<String> jokeTime = new ObservableField<>("");
+    public ObservableField<String> JokeIcon = new ObservableField<>("");
     public ObservableField<String> userIcon = new ObservableField<>("");
     public ObservableField<String> userName = new ObservableField<>("");
     public ObservableField<String> jokeTitle = new ObservableField<>("");
@@ -64,7 +65,9 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public JokeDetailsViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
         Log.e("TAG", model.getUserIcon());
-
+        if (model.getUserStatus()){
+            userIcon.set(model.getUserIcon());
+        }
 
     }
 
@@ -180,7 +183,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     public void onNext(JokeDetailsEntity response) {
                         entity.add(response);
                         Log.e("TAG", entity.toString());
-                        userIcon.set(RetrofitClient.baseUrl + entity.get(0).getData().getUser().getIcon());
+                        JokeIcon.set(RetrofitClient.baseUrl + entity.get(0).getData().getUser().getIcon());
                         userName.set(entity.get(0).getData().getUser().getName());
                         userId.set("ID" + entity.get(0).getData().getUser().getUserId());
                         jokeTitle.set(response.getData().getTitle());
@@ -342,7 +345,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                 .subscribe(new DisposableObserver<ResultEntity>() {
                     @Override
                     public void onNext(final ResultEntity response) {
-                        ToastUtils.showShort("删除成功");
+                        ToastUtils.showShort("收藏移除成功");
                     }
 
                     @Override
