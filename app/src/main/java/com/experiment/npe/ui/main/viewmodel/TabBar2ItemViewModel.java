@@ -1,5 +1,6 @@
 package com.experiment.npe.ui.main.viewmodel;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -58,6 +59,10 @@ public class TabBar2ItemViewModel extends ItemViewModel<TabBar2ViewModel> {
      */
     public void deleteItem(FavoritesitemViewModel favoritesitemViewModel) {
         observableList1.remove(favoritesitemViewModel);
+    }
+
+    public void deleteItem(int index) {
+        observableList1.remove(index);
     }
 
     /**

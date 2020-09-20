@@ -27,7 +27,10 @@ import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.FragmentTabBar2Binding;
+import com.experiment.npe.entity.FavoritesEntity;
+import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter2;
+import com.experiment.npe.ui.main.viewmodel.FavoritesitemViewModel;
 import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -39,6 +42,8 @@ import java.util.List;
 
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseFragment;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
@@ -48,6 +53,8 @@ import static android.app.Activity.RESULT_OK;
  * Created by lbavsc on 20-9-11
  */
 public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar2ViewModel> {
+    public static final String TOKEN_AddTabBar2Fragment_REFRESH = "token_AddTabBar2Fragment_refresh";
+    public static final String TOKEN_DeleteTabBar2Fragment_REFRESH = "token_DeleteTabBar2Fragment_refresh";
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +73,40 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
         return ViewModelProviders.of(this, factory).get(TabBar2ViewModel.class);
     }
+
+    @Override
+    public void initData() {
+
+        // 使用 TabLayout 和 ViewPager 相关联
+        binding.tabs.setupWithViewPager(binding.viewPager);
+        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
+        //给ViewPager设置adapter
+        binding.setAdapter(new ViewPagerBindingAdapter2());
+        NpeRepository model = viewModel.getmodle();
+        if (model.getUserStatus()) {
+            viewModel.loginVisibility.set(View.GONE);
+            viewModel.visibility.set(View.VISIBLE);
+        } else {
+            viewModel.loginVisibility.set(View.VISIBLE);
+            viewModel.visibility.set(View.GONE);
+        }
+
+        Messenger.getDefault().register(this, TabBar2Fragment.TOKEN_AddTabBar2Fragment_REFRESH, FavoritesEntity.DataBean.class, new BindingConsumer<FavoritesEntity.DataBean>() {
+            @Override
+            public Integer call(FavoritesEntity.DataBean s) {
+                viewModel.addItemData.setValue(s);
+                return null;
+            }
+        });
+        Messenger.getDefault().register(this, TabBar2Fragment.TOKEN_DeleteTabBar2Fragment_REFRESH, FavoritesEntity.DataBean.class, new BindingConsumer<FavoritesEntity.DataBean>() {
+            @Override
+            public Integer call(FavoritesEntity.DataBean s) {
+                viewModel.deleteItemData.setValue(s);
+                return null;
+            }
+        });
+    }
+
 
     @Override
     public void initViewObservable() {
@@ -106,25 +147,30 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
             }
 
         });
+
+        viewModel.addItemData.observe(this, new Observer<FavoritesEntity.DataBean>() {
+            @Override
+            public void onChanged(FavoritesEntity.DataBean dataBean) {
+                Log.e("TAG", "开始添加");
+                FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(viewModel, dataBean);
+                viewModel.items.get(0).addItem(favoritesitemViewModel);
+            }
+        });
+
+        viewModel.deleteItemData.observe(this, new Observer<FavoritesEntity.DataBean>() {
+            @Override
+            public void onChanged(FavoritesEntity.DataBean dataBean) {
+                FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(viewModel, dataBean);
+                for (FavoritesitemViewModel favoritesitemViewModel1 : viewModel.items.get(0).observableList1) {
+                    if (favoritesitemViewModel.entity.get().getJokeId().equals(favoritesitemViewModel1.entity.get().getJokeId())) {
+                        viewModel.items.get(0).deleteItem(viewModel.items.get(0).getItemPosition(favoritesitemViewModel1));
+                        return;
+                    }
+                }
+            }
+        });
     }
 
-    @Override
-    public void initData() {
-
-        // 使用 TabLayout 和 ViewPager 相关联
-        binding.tabs.setupWithViewPager(binding.viewPager);
-        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
-        //给ViewPager设置adapter
-        binding.setAdapter(new ViewPagerBindingAdapter2());
-        NpeRepository model = viewModel.getmodle();
-        if (model.getUserStatus()) {
-            viewModel.loginVisibility.set(View.GONE);
-            viewModel.visibility.set(View.VISIBLE);
-        } else {
-            viewModel.loginVisibility.set(View.VISIBLE);
-            viewModel.visibility.set(View.GONE);
-        }
-    }
 
     /**
      * 请求相机权限

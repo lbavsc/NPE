@@ -66,8 +66,8 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
         super.onCreate();
         //assortDatas 一般可以从本地Sqlite数据库中取出数据字典对象集合，让该对象实现IKeyAndValue接口
         assortDatas = new ArrayList<>();
-        assortDatas.add(new SpinnerItemData("旅游", 1));
-        assortDatas.add(new SpinnerItemData("军事", 2));
+        assortDatas.add(new SpinnerItemData("军事", 1));
+        assortDatas.add(new SpinnerItemData("娱乐", 2));
         assortDatas.add(new SpinnerItemData("科技", 3));
         assortDatas.add(new SpinnerItemData("财经", 4));
         assortDatas.add(new SpinnerItemData("国际", 5));

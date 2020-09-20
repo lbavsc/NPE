@@ -15,9 +15,12 @@ import androidx.databinding.ObservableList;
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
+import com.experiment.npe.entity.FavoritesEntity;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
+import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
+import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
 import com.experiment.npe.ui.main.viewmodel.TabBar2ItemViewModel;
 import com.experiment.npe.utils.RetrofitClient;
@@ -31,6 +34,7 @@ import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
@@ -106,10 +110,20 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
             }
             isFavorites(true);
             addCollection();
-
+            FavoritesEntity.DataBean dataBean=msg();
+            Messenger.getDefault().send(dataBean, TabBar2Fragment.TOKEN_AddTabBar2Fragment_REFRESH);
         }
     });
 
+    public FavoritesEntity.DataBean msg(){
+        FavoritesEntity.DataBean dataBean = new FavoritesEntity.DataBean();
+        dataBean.setTitle(jokeTitle.get());
+        dataBean.setPostTime(jokeTime.get());
+        dataBean.setCoverImg(jokeImg.get());
+        dataBean.setJokeId(entity.get(0).getData().getJokeId());
+        return dataBean;
+
+    }
     /**
      * 删除收藏按钮
      */
@@ -122,6 +136,8 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
             }
             isFavorites(false);
             deleteCollection();
+            FavoritesEntity.DataBean dataBean=msg();
+            Messenger.getDefault().send(dataBean, TabBar2Fragment.TOKEN_DeleteTabBar2Fragment_REFRESH);
         }
     });
     /**
@@ -166,6 +182,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                         jokeTime.set(response.getData().getPostTime());
                         jokeSource.set("\t\t来源：" + response.getData().getSource());
                         isFavorites(response.getData().isCollete());
+
                         //评论
                         remark.addAll(response.getData().getRemarks());
                         for (JokeDetailsEntity.DataBean.RemarksBean remarksBean : remark) {

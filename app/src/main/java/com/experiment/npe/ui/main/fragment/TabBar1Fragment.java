@@ -163,7 +163,5 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
         } else {
             viewModel.uploadVisibility.set(View.GONE);
         }
-
-        viewModel.getAssort();
     }
 }

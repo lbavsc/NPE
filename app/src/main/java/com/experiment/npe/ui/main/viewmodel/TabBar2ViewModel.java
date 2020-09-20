@@ -19,6 +19,7 @@ import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.FavoritesEntity;
+import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.setting.SettingActivity;
@@ -47,11 +48,14 @@ import retrofit2.http.Query;
  */
 public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
     public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();
+    public SingleLiveEvent<FavoritesEntity.DataBean> addItemData = new SingleLiveEvent<>();
+    public SingleLiveEvent<FavoritesEntity.DataBean> deleteItemData = new SingleLiveEvent<>();
     public SingleLiveEvent<Boolean> entityJsonLiveData = new SingleLiveEvent<>();
     public ObservableField<String> userName = new ObservableField<>("");
     public ObservableField<String> userIcon = new ObservableField<>("");
     public ObservableField<String> userId = new ObservableField<>("");
     public ObservableInt loginVisibility = new ObservableInt();
+    public static int ITEM_POSITION=0;
     public ObservableInt visibility = new ObservableInt();
     public String TAG = "TabBar2ViewModel";
     public Drawable drawableImg;
@@ -199,9 +203,7 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
                         for (FavoritesEntity.DataBean dataBean : response.getData()) {
                             FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(TabBar2ViewModel.this, dataBean);
                             itemViewModel.observableList1.add(favoritesitemViewModel);
-                            Log.e(TAG, "onNext: " + response.getCode());
                         }
-
                     }
 
                     @Override
@@ -216,12 +218,10 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
 
                     @Override
                     public void onComplete() {
-                        ToastUtils.showShort("头像更换完成");
                         //关闭对话框
                         dismissDialog();
                     }
                 });
     }
-
 
 }
