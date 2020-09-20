@@ -4,7 +4,7 @@ import com.experiment.npe.BuildConfig;
 import com.experiment.npe.R;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.main.activity.MainActivity;
-import com.squareup.leakcanary.LeakCanary;
+//import com.squareup.leakcanary.LeakCanary;
 
 import me.goldze.mvvmhabit.base.BaseApplication;
 import me.goldze.mvvmhabit.crash.CaocConfig;
@@ -23,9 +23,9 @@ public class AppApplication extends BaseApplication {
         //初始化全局异常崩溃
         initCrash();
         //内存泄漏检测
-        if (!LeakCanary.isInAnalyzerProcess(this)) {
-            LeakCanary.install(this);
-        }
+//        if (!LeakCanary.isInAnalyzerProcess(this)) {
+//            LeakCanary.install(this);
+//        }
     }
 
     private void initCrash() {

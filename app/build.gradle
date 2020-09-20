@@ -10,10 +10,19 @@ android {
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+    signingConfigs {
+        config {
+            storeFile file('J://Android Studio project/NPE/app/lbavsc.jks')
+            storePassword 'qbzsqywes'
+            keyAlias = 'lbavsc'
+            keyPassword = 'asdf123456'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
