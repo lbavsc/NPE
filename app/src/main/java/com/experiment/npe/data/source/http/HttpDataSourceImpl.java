@@ -123,5 +123,15 @@ public class HttpDataSourceImpl implements HttpDataSource {
         return apiService.deleteRemark(userId,remarkId);
     }
 
+    @Override
+    public Observable<ResultEntity> addCollection(String userId, String jokeId) {
+        return apiService.addCollection(userId,jokeId);
+    }
+
+    @Override
+    public Observable<ResultEntity> deleteCollection(String userId, String jokeId) {
+        return apiService.deleteCollection(userId,jokeId);
+    }
+
 
 }

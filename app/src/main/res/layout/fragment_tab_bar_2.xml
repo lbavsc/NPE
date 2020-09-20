@@ -48,7 +48,7 @@
                     android:layout_toRightOf="@id/img"
                     android:text=" 设置"
                     android:textSize="14dp"
-                    binding:onClickCommand="@{viewModel.onSettingClickCommand}"/>
+                    binding:onClickCommand="@{viewModel.onSettingClickCommand}" />
 
             </RelativeLayout>
 
@@ -66,11 +66,11 @@
 
                 <ImageView
                     android:id="@+id/img1"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="7dp"
-                    android:background="@mipmap/notice" />
+                    android:background="@mipmap/signout" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,22 +98,22 @@
             binding:onClickCommand="@{viewModel.loginOnClickCommand}" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:visibility="@{viewModel.visibility}">
 
             <ImageView
+                android:id="@+id/userIcon"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:id="@+id/userIcon"
                 android:layout_gravity="center_horizontal"
                 android:elevation="1dp"
                 android:gravity="center"
                 android:src="@{viewModel.drawableImg}"
-                binding:urls="@{viewModel.userIcon}"
-                binding:onClickCommand="@{viewModel.userIconOnClickCommand}"/>
+                binding:onClickCommand="@{viewModel.userIconOnClickCommand}"
+                binding:urls="@{viewModel.userIcon}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -130,6 +130,104 @@
                 android:layout_marginTop="10dp"
                 android:text="@{viewModel.userId}"
                 android:textSize="12dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_15"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_marginLeft="@dimen/dp_50"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_25"
+                        android:gravity="center"
+                        android:text="15"
+                        android:textColor="#2F4F4F"
+                        android:textSize="@dimen/dp_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_25"
+                        android:gravity="center"
+                        android:text="关注"
+                        android:textColor="#696969"
+                        android:textSize="@dimen/dp_15" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/dp_36"
+                    android:layout_marginLeft="36dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toRightOf="@id/layout1"
+                    android:background="#DCDCDC" />
+
+                <LinearLayout
+                    android:id="@+id/layout2"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_25"
+                        android:gravity="center"
+                        android:text="15"
+                        android:textColor="#2F4F4F"
+                        android:textSize="@dimen/dp_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_25"
+                        android:gravity="center"
+                        android:text="粉丝"
+                        android:textColor="#696969"
+                        android:textSize="@dimen/dp_15" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/dp_36"
+                    android:layout_marginLeft="36dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toRightOf="@id/layout2"
+                    android:background="#DCDCDC" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_50"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_25"
+                        android:gravity="center"
+                        android:text="15"
+                        android:textColor="#2F4F4F"
+                        android:textSize="@dimen/dp_16" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_25"
+                        android:gravity="center"
+                        android:text="发表"
+                        android:textColor="#696969"
+                        android:textSize="@dimen/dp_15" />
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
+
     </LinearLayout>
 </layout>

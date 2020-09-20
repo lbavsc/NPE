@@ -55,4 +55,8 @@ public interface HttpDataSource {
     Observable<JokeEntity.DataBean> remarkUpload(@Body JokeEntity.DataBean body);
 
     Observable<ResultEntity>deleteRemark(@Query("userId")String userId,@Query("remarkId")String remarkId);
+
+    Observable<ResultEntity>addCollection(@Query("userId")String userId,@Query("jokeId")String jokeId);
+
+    Observable<ResultEntity>deleteCollection(@Query("userId")String userId,@Query("jokeId")String jokeId);
 }

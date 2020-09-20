@@ -7,6 +7,7 @@ import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
+import com.experiment.npe.utils.RetrofitClient;
 
 import me.goldze.mvvmhabit.base.ItemViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
@@ -22,7 +23,12 @@ public class JokeDetailsItemViewModel extends ItemViewModel<JokeDetailsViewModel
         super(viewModel);
         this.entity.set(entity);
         model = viewModel.getmodel();
-        img.set(model.getUserIcon());
+        if (model.getUserIcon().startsWith("img")){
+            img.set(RetrofitClient.baseUrl+model.getUserIcon());
+        }else {
+            img.set(model.getUserIcon());
+        }
+
         text.set(model.getUserName());
     }
 

@@ -39,13 +39,14 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
 
     public Drawable commentDrawableImg;
+    public ObservableInt favoritesVisibility = new ObservableInt();
+    public ObservableInt deletefavoritesVisibility = new ObservableInt();
     public ObservableField<String> userId = new ObservableField<>("");
     public ObservableField<String> jokeImg = new ObservableField<>("");
     public ObservableField<String> jokeTime = new ObservableField<>("");
     public ObservableField<String> userIcon = new ObservableField<>("");
     public ObservableField<String> userName = new ObservableField<>("");
     public ObservableField<String> jokeTitle = new ObservableField<>("");
-    public SingleLiveEvent<Boolean> entityJsonLiveData = new SingleLiveEvent<>();
     public ObservableField<String> jokeSource = new ObservableField<>("");
     public ObservableList<JokeDetailsEntity> entity = new ObservableArrayList<>();
     public ObservableField<String> jokeContent = new ObservableField<>("");
@@ -67,6 +68,60 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         }
     }
 
+    /**
+     * 获得model对象
+     *
+     * @return
+     */
+    public NpeRepository getmodel() {
+        return model;
+    }
+
+    /**
+     * 收藏按钮可见性
+     */
+    public void isFavorites(boolean favorites) {
+        if (favorites) {
+            favoritesVisibility.set(View.GONE);
+            deletefavoritesVisibility.set(View.VISIBLE);
+        } else {
+            favoritesVisibility.set(View.VISIBLE);
+            deletefavoritesVisibility.set(View.GONE);
+        }
+    }
+
+    /**
+     * 收藏按钮
+     */
+    public BindingCommand favoritesOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            if (!model.getUserStatus()) {
+                ToastUtils.showShort("您当前未登录");
+                return;
+            }
+            isFavorites(true);
+            addCollection();
+        }
+    });
+
+    /**
+     * 删除收藏按钮
+     */
+    public BindingCommand deleteFavoritesOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            if (!model.getUserStatus()) {
+                ToastUtils.showShort("您当前未登录");
+                return;
+            }
+            isFavorites(false);
+            deleteCollection();
+        }
+    });
+    /**
+     * 返回上一页
+     */
     public BindingCommand backOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -74,7 +129,11 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
-    //获得新闻数据
+    /**
+     * 获得新闻数据
+     *
+     * @param jokeId
+     */
     public void JokeDetails(final String jokeId) {
         model.showJokeDetails(jokeId)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
@@ -95,6 +154,8 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                         jokeContent.set(response.getData().getContent());
                         jokeTime.set(response.getData().getPostTime());
                         jokeSource.set("\t\t来源：" + response.getData().getSource());
+
+                        //评论
                         remark.addAll(response.getData().getRemarks());
                         for (JokeDetailsEntity.DataBean.RemarksBean remarksBean : remark) {
                             JokeDetailsItemViewModel jokeDetailsItemViewModel = new JokeDetailsItemViewModel(JokeDetailsViewModel.this, remarksBean);
@@ -122,7 +183,11 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                 });
     }
 
-    //评论接口
+    /**
+     * 添加评论接口
+     *
+     * @param content
+     */
     public void remarkLoad(final String content) {
         JokeEntity.DataBean body = new JokeEntity.DataBean(model.getUserId(), entity.get(0).getData().getJokeId(), content);
         model.remarkUpload(body)
@@ -132,12 +197,12 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                 .subscribe(new DisposableObserver<JokeEntity.DataBean>() {
                     @Override
                     public void onNext(final JokeEntity.DataBean response) {
-                        JokeDetailsEntity.DataBean.RemarksBean remarksBean=new JokeDetailsEntity.DataBean.RemarksBean();
+                        JokeDetailsEntity.DataBean.RemarksBean remarksBean = new JokeDetailsEntity.DataBean.RemarksBean();
                         remarksBean.setContent(content);
                         remarksBean.setUserId(model.getUserId());
-                        remarksBean.setJokeId( entity.get(0).getData().getJokeId());
+                        remarksBean.setJokeId(entity.get(0).getData().getJokeId());
                         remarksBean.setPostTime("刚刚");
-                        JokeDetailsItemViewModel jokeDetailsItemViewModel=new JokeDetailsItemViewModel(JokeDetailsViewModel.this,remarksBean);
+                        JokeDetailsItemViewModel jokeDetailsItemViewModel = new JokeDetailsItemViewModel(JokeDetailsViewModel.this, remarksBean);
                         addItemLiveData.setValue(jokeDetailsItemViewModel);
                     }
 
@@ -160,10 +225,12 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                 });
     }
 
-    public NpeRepository getmodel() {
-        return model;
-    }
 
+    /**
+     * 删除评论接口
+     *
+     * @param index
+     */
     public void deleteRemark(int index) {
         Log.e("TAG", remark.get(index).getRemarkId());
         model.deleteRemark(model.getUserId(), remark.get(index).getRemarkId())
@@ -192,6 +259,69 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     }
 
     /**
+     * 添加收藏接口
+     */
+    public void addCollection() {
+        model.addCollection(model.getUserId(), entity.get(0).getData().getJokeId())
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<ResultEntity>() {
+                    @Override
+                    public void onNext(final ResultEntity response) {
+                        if (response.getCode() == 1002) {
+                            ToastUtils.showShort("您已经收藏过了");
+                            isFavorites(true);
+                        } else if (response.getCode() == 1001) {
+                            ToastUtils.showShort("收藏成功");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+
+                    }
+                });
+    }
+
+    /**
+     * 删除收藏接口
+     */
+    public void deleteCollection() {
+        model.deleteCollection(model.getUserId(), entity.get(0).getData().getJokeId())
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<ResultEntity>() {
+                    @Override
+                    public void onNext(final ResultEntity response) {
+                        ToastUtils.showShort("删除成功");
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+
+                    }
+                });
+    }
+
+    /**
      * 删除条目
      *
      * @param
@@ -200,6 +330,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         //点击确定，在 observableList 绑定中删除，界面立即刷新
         observableList.remove(jokeDetailsItemViewModel);
     }
+
     /**
      * 增加条目
      *
@@ -219,5 +350,6 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     public int getItemPosition(JokeDetailsItemViewModel jokeDetailsItemViewModel) {
         return observableList.indexOf(jokeDetailsItemViewModel);
     }
+
 
 }

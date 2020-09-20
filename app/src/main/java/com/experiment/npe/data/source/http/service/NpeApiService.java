@@ -72,4 +72,10 @@ public interface NpeApiService {
 
     @GET("remark/delete")
     Observable<ResultEntity>deleteRemark(@Query("userId")String userId,@Query("remarkId")String remarkId);
+
+    @GET("user/upload/collection")
+    Observable<ResultEntity>addCollection(@Query("userId")String userId,@Query("jokeId")String jokeId);
+
+    @GET("user/delete/collection")
+    Observable<ResultEntity>deleteCollection(@Query("userId")String userId,@Query("jokeId")String jokeId);
 }

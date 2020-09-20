@@ -87,12 +87,12 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
 
     @Override
     public Observable<ResultEntity<UserEntity>> updatePassword(String userId, String oldPassword, String newPassword) {
-        return mHttpDataSource.updatePassword(userId,oldPassword,newPassword);
+        return mHttpDataSource.updatePassword(userId, oldPassword, newPassword);
     }
 
     @Override
     public Observable<ResultEntity<UserEntity>> updateUserName(String userId, String newUserName) {
-        return mHttpDataSource.updateUserName(userId,newUserName);
+        return mHttpDataSource.updateUserName(userId, newUserName);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
 
     @Override
     public Observable<JokeEntity> deleteJoke(String jokeId, String userId) {
-        return mHttpDataSource.deleteJoke(jokeId,userId);
+        return mHttpDataSource.deleteJoke(jokeId, userId);
     }
 
     @Override
@@ -122,7 +122,17 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
 
     @Override
     public Observable<ResultEntity> deleteRemark(String userId, String remarkId) {
-        return mHttpDataSource.deleteRemark(userId,remarkId);
+        return mHttpDataSource.deleteRemark(userId, remarkId);
+    }
+
+    @Override
+    public Observable<ResultEntity> addCollection(String userId, String jokeId) {
+        return mHttpDataSource.addCollection(userId, jokeId);
+    }
+
+    @Override
+    public Observable<ResultEntity> deleteCollection(String userId, String jokeId) {
+        return mHttpDataSource.deleteCollection(userId,jokeId);
     }
 
 

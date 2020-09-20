@@ -33,7 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             binding:contentInsetStart="0dp">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="40dp"
@@ -44,6 +46,31 @@
                 android:padding="12dp"
                 android:src="@mipmap/back"
                 binding:onClickCommand="@{viewModel.backOnClick}" />
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:src="@mipmap/favorites"
+                    android:visibility="@{viewModel.favoritesVisibility}"
+                    binding:onClickCommand="@{viewModel.favoritesOnClick}" />
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:src="@mipmap/collected"
+                    android:visibility="@{viewModel.deletefavoritesVisibility}"
+                    binding:onClickCommand="@{viewModel.deleteFavoritesOnClick}" />
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
 

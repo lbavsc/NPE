@@ -68,12 +68,6 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
 
     @Override
     public void initViewObservable() {
-        viewModel.entityJsonLiveData.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                refreshLayout();
-            }
-        });
 
         viewModel.deleteItemLiveData.observe(this, new Observer<JokeDetailsItemViewModel>() {
 
