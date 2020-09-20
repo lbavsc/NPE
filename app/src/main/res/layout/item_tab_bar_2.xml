@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -7,18 +7,40 @@
 
         <variable
             name="viewModel"
-            type="com.experiment.npe.ui.main.viewmodel.TabBar2ItemViewModel" />
+            type="TabBar2ItemViewModel" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            binding:adapter="@{adapter}"
+            binding:itemBinding="@{viewModel.itemBinding1}"
+            binding:items="@{viewModel.observableList1}"
+            binding:layoutManager="@{LayoutManagers.linear()}"
+            android:visibility="@{viewModel.recyclerViewVisibility}"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="android:asfwsedfc" />
-
+            android:text="暂未开发"
+            android:gravity="center"
+            android:visibility="@{viewModel.textVisibility}"/>
     </LinearLayout>
 </layout>

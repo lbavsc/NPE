@@ -77,7 +77,7 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         }
 
         for (int i = 1; i <= 2; i++) {
-            TabBar2ItemViewModel itemViewModel = new TabBar2ItemViewModel(this);
+            TabBar2ItemViewModel itemViewModel = new TabBar2ItemViewModel(this,i);
             items.add(itemViewModel);
         }
     }
@@ -113,8 +113,6 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         @Override
         public void call() {
             requestCameraPermissions.call();
-//            upUserIcon();
-
         }
     });
 
@@ -180,6 +178,7 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
             return index;
         }
     });
+
 
 
 }

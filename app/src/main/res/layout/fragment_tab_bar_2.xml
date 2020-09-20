@@ -241,7 +241,7 @@
             android:outlineProvider="bounds"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/colorPrimary"
-            app:tabMode="scrollable"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@android:color/black" />
 
