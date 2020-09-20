@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.experiment.npe.ui.main.viewmodel.FavoritesitemViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.experiment.npe.ui.main.viewmodel.FavoritesitemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_70"
+        android:orientation="vertical"
+        binding:onClickCommand="@{viewModel.itemClick}">
+            <TextView
+                android:id="@+id/JokeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_3"
+                android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/dp_8"
+                android:lines="1"
+                android:text="@{viewModel.entity.title}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/JokeContent"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:text="@{viewModel.entity.postTime}"
+                android:textColor="#D3D3D3" />
+    </RelativeLayout>
+
+</layout>

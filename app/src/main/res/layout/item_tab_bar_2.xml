@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
     <data>
 
@@ -21,7 +21,8 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,12 +35,13 @@
             binding:itemBinding="@{viewModel.itemBinding1}"
             binding:items="@{viewModel.observableList1}"
             binding:layoutManager="@{LayoutManagers.linear()}"
-            android:visibility="@{viewModel.recyclerViewVisibility}"/>
+            android:visibility="@{viewModel.recyclerViewVisibility}"
+            binding:lineManager="@{LineManagers.horizontal()}" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="暂未开发"
+            android:text="@{viewModel.text}"
             android:gravity="center"
             android:visibility="@{viewModel.textVisibility}"/>
     </LinearLayout>

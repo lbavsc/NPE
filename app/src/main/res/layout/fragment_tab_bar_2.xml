@@ -233,6 +233,11 @@
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
+        <View
+            style="@style/ViewLineStyle"
+            android:layout_alignParentBottom="true"
+            android:layout_height="@dimen/dp_25"
+            android:background="#FFFBFCFE"/>
         <com.google.android.material.tabs.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tabs"
             android:layout_width="match_parent"

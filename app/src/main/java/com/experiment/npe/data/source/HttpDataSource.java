@@ -1,5 +1,6 @@
 package com.experiment.npe.data.source;
 
+import com.experiment.npe.entity.FavoritesEntity;
 import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
@@ -50,7 +51,7 @@ public interface HttpDataSource {
 
     Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);
 
-    Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId);
+    Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId,@Query("userId")String userId);
 
     Observable<JokeEntity.DataBean> remarkUpload(@Body JokeEntity.DataBean body);
 
@@ -59,4 +60,6 @@ public interface HttpDataSource {
     Observable<ResultEntity>addCollection(@Query("userId")String userId,@Query("jokeId")String jokeId);
 
     Observable<ResultEntity>deleteCollection(@Query("userId")String userId,@Query("jokeId")String jokeId);
+
+    Observable<FavoritesEntity>getCollection(@Query("userId")String userId);
 }

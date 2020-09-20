@@ -1,5 +1,6 @@
 package com.experiment.npe.data.source.http.service;
 
+import com.experiment.npe.entity.FavoritesEntity;
 import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
@@ -65,7 +66,7 @@ public interface NpeApiService {
     Observable<JokeEntity> deleteJoke(@Query("jokeId")String jokeId,@Query("userId")String userId);
 
     @GET("joke/select/id")
-    Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId);
+    Observable<JokeDetailsEntity> showJokeDetails(@Query("jokeId")String jokeId,@Query("userId")String userId);
 
     @POST("remark/upload")
     Observable<JokeEntity.DataBean> remarkUpload(@Body JokeEntity.DataBean body);
@@ -78,4 +79,7 @@ public interface NpeApiService {
 
     @GET("user/delete/collection")
     Observable<ResultEntity>deleteCollection(@Query("userId")String userId,@Query("jokeId")String jokeId);
+
+    @GET("joke/select/collection")
+    Observable<FavoritesEntity>getCollection(@Query("userId")String userId);
 }

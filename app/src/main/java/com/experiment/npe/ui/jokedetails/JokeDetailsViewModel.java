@@ -19,6 +19,7 @@ import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
+import com.experiment.npe.ui.main.viewmodel.TabBar2ItemViewModel;
 import com.experiment.npe.utils.RetrofitClient;
 
 import java.util.Collections;
@@ -61,7 +62,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
         Log.e("TAG", model.getUserIcon());
         userName.set(model.getUserName());
         userId.set("ID:" + model.getUserId());
-        if (model.getUserStatus()){
+        if (model.getUserStatus()) {
             if (model.getUserIcon().startsWith("img")) {
                 userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
             } else {
@@ -105,6 +106,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
             }
             isFavorites(true);
             addCollection();
+
         }
     });
 
@@ -138,7 +140,13 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
      * @param jokeId
      */
     public void JokeDetails(final String jokeId) {
-        model.showJokeDetails(jokeId)
+        String userId;
+        if (!model.getUserStatus()) {
+            userId = "0";
+        } else {
+            userId = model.getUserId();
+        }
+        model.showJokeDetails(jokeId, userId)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
@@ -157,7 +165,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                         jokeContent.set(response.getData().getContent());
                         jokeTime.set(response.getData().getPostTime());
                         jokeSource.set("\t\t来源：" + response.getData().getSource());
-
+                        isFavorites(response.getData().isCollete());
                         //评论
                         remark.addAll(response.getData().getRemarks());
                         for (JokeDetailsEntity.DataBean.RemarksBean remarksBean : remark) {
@@ -201,7 +209,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
                     @Override
                     public void onNext(final JokeEntity.DataBean response) {
                         JokeDetailsEntity.DataBean.RemarksBean remarksBean = new JokeDetailsEntity.DataBean.RemarksBean();
-                        JokeDetailsEntity.DataBean.RemarksBean.UserBean userBean=new JokeDetailsEntity.DataBean.RemarksBean.UserBean();
+                        JokeDetailsEntity.DataBean.RemarksBean.UserBean userBean = new JokeDetailsEntity.DataBean.RemarksBean.UserBean();
                         remarksBean.setContent(content);
                         remarksBean.setUserId(model.getUserId());
                         remarksBean.setJokeId(entity.get(0).getData().getJokeId());

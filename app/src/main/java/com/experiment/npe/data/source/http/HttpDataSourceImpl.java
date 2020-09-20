@@ -2,6 +2,7 @@ package com.experiment.npe.data.source.http;
 
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.http.service.NpeApiService;
+import com.experiment.npe.entity.FavoritesEntity;
 import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
@@ -109,8 +110,8 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId) {
-        return apiService.showJokeDetails(jokeId);
+    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId,String userId) {
+        return apiService.showJokeDetails(jokeId,userId);
     }
 
     @Override
@@ -131,6 +132,11 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<ResultEntity> deleteCollection(String userId, String jokeId) {
         return apiService.deleteCollection(userId,jokeId);
+    }
+
+    @Override
+    public Observable<FavoritesEntity> getCollection(String userId) {
+        return apiService.getCollection(userId);
     }
 
 

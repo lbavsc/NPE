@@ -85,6 +85,9 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             viewModel.loginVisibility.set(View.VISIBLE);
                             viewModel.visibility.set(View.GONE);
+                            viewModel.items.get(0).text.set("您当前未登录");
+                            viewModel.items.get(0).recyclerViewVisibility.set(View.GONE);
+                            viewModel.items.get(0).textVisibility.set(View.VISIBLE);
                             NpeRepository model = viewModel.getmodle();
                             model.saveUserStatus(false);
                         }
@@ -175,4 +178,6 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
         super.onDestroy();
         FileUtils.deleteAllCacheImage(this.getContext());
     }
+
+
 }

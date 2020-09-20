@@ -5,6 +5,7 @@ import androidx.annotation.VisibleForTesting;
 
 import com.experiment.npe.data.source.HttpDataSource;
 import com.experiment.npe.data.source.LocalDataSource;
+import com.experiment.npe.entity.FavoritesEntity;
 import com.experiment.npe.entity.JokeAssortEntity;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
@@ -111,8 +112,8 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
-    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId) {
-        return mHttpDataSource.showJokeDetails(jokeId);
+    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId,String userId) {
+        return mHttpDataSource.showJokeDetails(jokeId,userId);
     }
 
     @Override
@@ -133,6 +134,11 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     @Override
     public Observable<ResultEntity> deleteCollection(String userId, String jokeId) {
         return mHttpDataSource.deleteCollection(userId,jokeId);
+    }
+
+    @Override
+    public Observable<FavoritesEntity> getCollection(String userId) {
+        return mHttpDataSource.getCollection(userId);
     }
 
 

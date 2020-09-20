@@ -18,6 +18,7 @@ import android.view.View;
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
+import com.experiment.npe.entity.FavoritesEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.setting.SettingActivity;
@@ -39,6 +40,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Query;
 
 /**
  * Created by lbavsc on 20-9-15
@@ -63,7 +65,7 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
 
         if (model.getUserIcon().startsWith("img")) {
             userIcon.set(RetrofitClient.baseUrl + model.getUserIcon());
-            model.saveUserIcon(RetrofitClient.baseUrl+model.getUserIcon());
+            model.saveUserIcon(RetrofitClient.baseUrl + model.getUserIcon());
         } else {
             userIcon.set(model.getUserIcon());
         }
@@ -76,9 +78,12 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
             visibility.set(View.GONE);
         }
 
-        for (int i = 1; i <= 2; i++) {
-            TabBar2ItemViewModel itemViewModel = new TabBar2ItemViewModel(this,i);
+        for (int i = 0; i < 2; i++) {
+            TabBar2ItemViewModel itemViewModel = new TabBar2ItemViewModel(this, i);
             items.add(itemViewModel);
+            if (i == 0 && model.getUserStatus()) {
+                getCollection(itemViewModel);
+            }
         }
     }
 
@@ -162,10 +167,10 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
     public final BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel>() {
         @Override
         public CharSequence getPageTitle(int position, TabBar2ItemViewModel item) {
-            if (position==0){
+            if (position == 0) {
                 return "收藏";
-            }else if (position==1){
-                return "历史浏览";
+            } else if (position == 1) {
+                return "帖子";
             }
             return null;
         }
@@ -179,6 +184,44 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 获取收藏列表
+     */
+    public void getCollection(final TabBar2ItemViewModel itemViewModel) {
+        model.getCollection(model.getUserId())
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
+                .subscribe(new DisposableObserver<FavoritesEntity>() {
+                    @Override
+                    public void onNext(final FavoritesEntity response) {
+
+                        for (FavoritesEntity.DataBean dataBean : response.getData()) {
+                            FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(TabBar2ViewModel.this, dataBean);
+                            itemViewModel.observableList1.add(favoritesitemViewModel);
+                            Log.e(TAG, "onNext: " + response.getCode());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        //请求刷新完成收回
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showShort("头像更换完成");
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
 
 
 }
