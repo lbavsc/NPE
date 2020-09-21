@@ -11,7 +11,7 @@ import me.goldze.mvvmhabit.crash.CaocConfig;
 import me.goldze.mvvmhabit.utils.KLog;
 
 /**
- * Created by goldze on 2017/7/16.
+ * Created by lbavsc on 20-9-10
  */
 
 public class AppApplication extends BaseApplication {

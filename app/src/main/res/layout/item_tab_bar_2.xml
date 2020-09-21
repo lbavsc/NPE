@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.viewmodel.TabBar2ItemViewModel" />
+        <import type="com.experiment.npe.ui.main.viewmodel.PersonalCenterItemViewModel" />
 
         <variable
             name="viewModel"
-            type="TabBar2ItemViewModel" />
+            type="com.experiment.npe.ui.main.viewmodel.PersonalCenterItemViewModel" />
 
         <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
 

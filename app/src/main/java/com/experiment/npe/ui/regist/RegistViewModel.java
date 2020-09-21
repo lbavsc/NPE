@@ -1,9 +1,11 @@
 package com.experiment.npe.ui.regist;
 
 import android.app.Application;
+
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 import android.view.View;
 
@@ -22,23 +24,23 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
+ * 注册节目ViewModel
  * Created by lbavsc on 20-9-11
  */
 public class RegistViewModel extends BaseViewModel<NpeRepository> {
-    //手机号的绑定
-    public ObservableField<String> userPhone = new ObservableField<>("");
-    //用户名的绑定
-    public ObservableField<String> userName = new ObservableField<>("");
-    //密码的绑定
-    public ObservableField<String> password = new ObservableField<>("");
-    //用户名清除按钮的显示隐藏绑定
-    public ObservableInt clearBtnVisibility = new ObservableInt();
+
+    public ObservableField<String> userPhone = new ObservableField<>("");        //手机号的绑定
+    public ObservableField<String> userName = new ObservableField<>("");         //用户名的绑定
+    public ObservableField<String> password = new ObservableField<>("");         //密码的绑定
+    public ObservableInt clearBtnVisibility = new ObservableInt();                     //用户名清除按钮的显示隐藏绑定
 
     public RegistViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
     }
 
-    //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
+    /**
+     * 清除用户名的点击事件, 逻辑从View层转换到ViewModel层
+     */
     public BindingCommand clearUserNameOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -46,7 +48,9 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
-    //清除手机号的点击事件, 逻辑从View层转换到ViewModel层
+    /**
+     * 清除手机号的点击事件, 逻辑从View层转换到ViewModel层
+     */
     public BindingCommand clearUserPhoneOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -54,7 +58,9 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
-    //用户名输入框焦点改变的回调事件
+    /**
+     * 用户名输入框焦点改变的回调事件
+     */
     public BindingCommand<Boolean> onFocusChangeCommand = new BindingCommand<>(new BindingConsumer<Boolean>() {
         @Override
         public Integer call(Boolean hasFocus) {
@@ -67,7 +73,9 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
-    //注册按钮的点击事件
+    /**
+     * 注册按钮的点击事件
+     */
     public BindingCommand registOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -76,7 +84,7 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
     });
 
     /**
-     * 注册操作
+     * 实现注册接口
      **/
     private void login() {
         if (TextUtils.isEmpty(userName.get())) {
@@ -118,9 +126,6 @@ public class RegistViewModel extends BaseViewModel<NpeRepository> {
                                    } else {
                                        ToastUtils.showShort(result.getMsg());
                                    }
-
-                                   //关闭页面
-
                                }
                            }, new Consumer<Throwable>() {
                                @Override

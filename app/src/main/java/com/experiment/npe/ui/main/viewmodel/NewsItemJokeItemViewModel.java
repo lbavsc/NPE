@@ -19,29 +19,38 @@ import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
-public class JokeItemViewModel extends ItemViewModel<TabBar1ViewModel> {
+/**
+ * 新闻条目ViewModel
+ */
+public class NewsItemJokeItemViewModel extends ItemViewModel<NewsViewModel> {
     public ObservableField<JokeEntity.DataBean> entity = new ObservableField<>();
     public String TAG = "JokeItemViewModel";
     NpeRepository model = viewModel.getmodel();
 
-    public JokeItemViewModel(@NonNull TabBar1ViewModel viewModel, JokeEntity.DataBean entity) {
+    public NewsItemJokeItemViewModel(@NonNull NewsViewModel viewModel, JokeEntity.DataBean entity) {
         super(viewModel);
-        if (entity.getCoverImg().startsWith("img")){
+        if (entity.getCoverImg().startsWith("img")) {       //判断图片路径是否为云端路径
             entity.setCoverImg(RetrofitClient.baseUrl + entity.getCoverImg());
-        }else {
-            entity.setCoverImg(entity.getCoverImg());
+        } else {
+            entity.setCoverImg(entity.getCoverImg());       //不是则加载本地保存的头像
         }
 
         this.entity.set(entity);
     }
 
+    /**
+     * 获得条目下标
+     * @return
+     */
     public int getPosition() {
         model.saveJokeIndex(viewModel.items.get(model.getAssortIndex()).getItemPosition(this));
         return model.getJokeIndex();
     }
 
 
-    //条目的点击事件
+    /**
+     * 条目点击事件
+     */
     public BindingCommand itemClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -50,7 +59,10 @@ public class JokeItemViewModel extends ItemViewModel<TabBar1ViewModel> {
             viewModel.startActivity(JokeDetailsActivity.class, mBundle);
         }
     });
-    //条目的长按事件
+
+    /**
+     * 条目长按事件
+     */
     public BindingCommand itemLongClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -64,11 +76,15 @@ public class JokeItemViewModel extends ItemViewModel<TabBar1ViewModel> {
                 return;
             }
             if (model.getUserId().equals(entity.get().getUserId()) || model.getUserType()) {
-                viewModel.entityJsonLiveData.setValue(JokeItemViewModel.this);
+                viewModel.entityJsonLiveData.setValue(NewsItemJokeItemViewModel.this);
             }
         }
     });
 
+
+    /**
+     * 删除接口的实现
+     */
     public void deteleJoke() {
         model.deleteJoke(entity.get().getJokeId(), model.getUserId())
                 .compose(RxUtils.schedulersTransformer()) //线程调度

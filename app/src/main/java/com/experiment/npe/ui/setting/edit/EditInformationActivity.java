@@ -14,6 +14,9 @@ import com.experiment.npe.ui.setting.SettingViewModel;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.tatarka.bindingcollectionadapter2.BR;
 
+/**
+ * 修改用户名页面
+ */
 public class EditInformationActivity extends BaseActivity<ActivityEditInformationBinding, EditInformationViewModel> {
 
 

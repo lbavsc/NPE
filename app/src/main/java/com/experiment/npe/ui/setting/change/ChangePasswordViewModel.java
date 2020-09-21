@@ -20,6 +20,9 @@ import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
+/**
+ * 更改用户密码ViewModel
+ */
 public class ChangePasswordViewModel extends BaseViewModel<NpeRepository> {
     public ObservableField<String> oldpassword = new ObservableField<>("");
     public ObservableField<String> newpassword = new ObservableField<>("");
@@ -43,7 +46,10 @@ public class ChangePasswordViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
-    public BindingCommand loginOutOnClickCommand = new BindingCommand(new BindingAction() {
+    /**
+     * 确认更改密码按钮事件
+     */
+    public BindingCommand changePasswordOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             if (!model.getUserStatus()) {
@@ -71,6 +77,12 @@ public class ChangePasswordViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 实现更改密码接口
+     *
+     * @param oldpwd
+     * @param newpwd
+     */
     public void changepwd(String oldpwd, String newpwd) {
         model.updatePassword(model.getUserId(), oldpwd, newpwd)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
@@ -87,7 +99,6 @@ public class ChangePasswordViewModel extends BaseViewModel<NpeRepository> {
                         //关闭对话框
                         ToastUtils.showShort("密码更新失败");
                         dismissDialog();
-                        //请求刷新完成收回
                         if (throwable instanceof ResponseThrowable) {
                             ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }

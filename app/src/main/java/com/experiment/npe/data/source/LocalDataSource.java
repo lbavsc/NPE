@@ -93,6 +93,7 @@ public interface LocalDataSource {
 
     /**
      * 获取分类下标
+     *
      * @return
      */
     int getAssortIndex();

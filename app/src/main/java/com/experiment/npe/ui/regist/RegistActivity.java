@@ -13,6 +13,7 @@ import com.experiment.npe.databinding.ActivityLoginBinding;
 import me.goldze.mvvmhabit.base.BaseActivity;
 
 /**
+ * 注册界面
  * Created by lbavsc on 20-9-11
  */
 public class RegistActivity extends BaseActivity<ActivityLoginBinding, RegistViewModel> {

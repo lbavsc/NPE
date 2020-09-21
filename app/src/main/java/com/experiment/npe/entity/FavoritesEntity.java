@@ -2,6 +2,10 @@ package com.experiment.npe.entity;
 
 import java.util.List;
 
+/**
+ * 收藏类
+ * Created by lbavsc on 20-9-18
+ */
 public class FavoritesEntity {
 
     /**

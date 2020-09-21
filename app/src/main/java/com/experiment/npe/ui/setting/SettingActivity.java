@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -16,14 +15,15 @@ import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.ActivitySettingBinding;
 import com.experiment.npe.ui.main.activity.MainActivity;
-import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
-import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BR;
 
+/**
+ * 设置页面
+ */
 public class SettingActivity extends BaseActivity<ActivitySettingBinding, SettingViewModel> {
 
 
@@ -50,7 +50,7 @@ public class SettingActivity extends BaseActivity<ActivitySettingBinding, Settin
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 if (aBoolean) {
-                    MaterialDialogUtils.showBasicDialog(SettingActivity.this, "确认退出账号")
+                    MaterialDialogUtils.showBasicDialog(SettingActivity.this, "确认退出账号")         //弹出确认窗口
                             .onNeutral(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

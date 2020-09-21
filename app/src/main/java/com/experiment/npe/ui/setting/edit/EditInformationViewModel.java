@@ -22,6 +22,7 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
+ * 修改用户名ViewModel
  * Created by lbavsc on 20-9-17
  */
 public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
@@ -47,6 +48,9 @@ public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 确认修改用户名按钮事件
+     */
     public BindingCommand eiitOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -63,6 +67,10 @@ public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 实现修改用户名接口
+     * @param newUserName
+     */
     public void updateUserName(String newUserName) {
         model.updateUserName(model.getUserId(), newUserName)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
@@ -79,7 +87,6 @@ public class EditInformationViewModel extends BaseViewModel<NpeRepository> {
                         //关闭对话框
                         ToastUtils.showShort("用户名更新失败");
                         dismissDialog();
-                        //请求刷新完成收回
                         if (throwable instanceof ResponseThrowable) {
                             ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }

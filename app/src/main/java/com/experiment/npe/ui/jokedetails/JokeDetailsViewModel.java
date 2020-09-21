@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.Observable;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
@@ -19,14 +18,8 @@ import com.experiment.npe.entity.FavoritesEntity;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
-import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
-import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
-import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
-import com.experiment.npe.ui.main.viewmodel.TabBar2ItemViewModel;
+import com.experiment.npe.ui.main.fragment.PersonCalenterFragment;
 import com.experiment.npe.utils.RetrofitClient;
-
-import java.util.Collections;
-import java.util.Date;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -43,30 +36,30 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
 
-    public Drawable commentDrawableImg;
-    public ObservableInt favoritesVisibility = new ObservableInt();
-    public ObservableInt deletefavoritesVisibility = new ObservableInt();
-    public ObservableField<String> userId = new ObservableField<>("");
-    public ObservableField<String> jokeImg = new ObservableField<>("");
-    public ObservableField<String> jokeTime = new ObservableField<>("");
-    public ObservableField<String> JokeIcon = new ObservableField<>("");
-    public ObservableField<String> userIcon = new ObservableField<>("");
-    public ObservableField<String> userName = new ObservableField<>("");
-    public ObservableField<String> jokeTitle = new ObservableField<>("");
-    public ObservableField<String> jokeSource = new ObservableField<>("");
-    public ObservableList<JokeDetailsEntity> entity = new ObservableArrayList<>();
-    public ObservableField<String> jokeContent = new ObservableField<>("");
-    public ObservableList<JokeDetailsItemViewModel> observableList = new ObservableArrayList<>();
-    public SingleLiveEvent<JokeDetailsItemViewModel> deleteItemLiveData = new SingleLiveEvent<>();
-    public SingleLiveEvent<JokeDetailsItemViewModel> addItemLiveData = new SingleLiveEvent<>();
-    public ObservableList<JokeDetailsEntity.DataBean.RemarksBean> remark = new ObservableArrayList<>();
+    public Drawable commentDrawableImg;                                                                                           //图片占位
+    public ObservableInt favoritesVisibility = new ObservableInt();                                                               //收藏按钮可见性
+    public ObservableInt deletefavoritesVisibility = new ObservableInt();                                                         //删除按钮可见性
+    public ObservableField<String> userId = new ObservableField<>("");                                                      //作者ID
+    public ObservableField<String> jokeImg = new ObservableField<>("");                                                     //新闻图片
+    public ObservableField<String> jokeTime = new ObservableField<>("");                                                    //新闻发布时间
+    public ObservableField<String> JokeIcon = new ObservableField<>("");                                                    //作者头像
+    public ObservableField<String> userIcon = new ObservableField<>("");                                                    //登录用户头像
+    public ObservableField<String> userName = new ObservableField<>("");                                                    //作者名称
+    public ObservableField<String> jokeTitle = new ObservableField<>("");                                                   //新闻标题
+    public ObservableField<String> jokeSource = new ObservableField<>("");                                                  //新闻来源
+    public ObservableList<JokeDetailsEntity> entity = new ObservableArrayList<>();                                                //储存新闻数据
+    public ObservableField<String> jokeContent = new ObservableField<>("");                                                 //新闻内容
+    public ObservableList<JokeDetailsItemViewModel> observableList = new ObservableArrayList<>();                                 //评论列表
+    public SingleLiveEvent<JokeDetailsItemViewModel> deleteItemLiveData = new SingleLiveEvent<>();                                //删除评论监听
+    public SingleLiveEvent<JokeDetailsItemViewModel> addItemLiveData = new SingleLiveEvent<>();                                   //增加评论监听
+    public ObservableList<JokeDetailsEntity.DataBean.RemarksBean> remark = new ObservableArrayList<>();                           //储存评论列表
     public ItemBinding<JokeDetailsItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_joke_details_remark);
 
     public JokeDetailsViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
         Log.e("TAG", model.getUserIcon());
-        if (model.getUserStatus()){
-            userIcon.set(model.getUserIcon());
+        if (model.getUserStatus()) {              //判断登录状态
+            userIcon.set(model.getUserIcon());  //加载用户头像
         }
 
     }
@@ -94,7 +87,9 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     }
 
     /**
-     * 收藏按钮
+     * 收藏按钮点击事件
+     *
+     * @return
      */
     public BindingCommand favoritesOnClick = new BindingCommand(new BindingAction() {
         @Override
@@ -106,10 +101,15 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
             isFavorites(true);
             addCollection();
             FavoritesEntity.DataBean dataBean = msg();
-            Messenger.getDefault().send(dataBean, TabBar2Fragment.TOKEN_AddTabBar2Fragment_REFRESH);
+            Messenger.getDefault().send(dataBean, PersonCalenterFragment.TOKEN_AddTabBar2Fragment_REFRESH);
         }
     });
 
+    /**
+     * 创建messengr发布内容
+     *
+     * @return
+     */
     public FavoritesEntity.DataBean msg() {
         FavoritesEntity.DataBean dataBean = new FavoritesEntity.DataBean();
         dataBean.setTitle(jokeTitle.get());
@@ -121,7 +121,9 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     }
 
     /**
-     * 删除收藏按钮
+     * 删除收藏按钮点击事件
+     *
+     * @return
      */
     public BindingCommand deleteFavoritesOnClick = new BindingCommand(new BindingAction() {
         @Override
@@ -133,7 +135,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
             isFavorites(false);
             deleteCollection();
             FavoritesEntity.DataBean dataBean = msg();
-            Messenger.getDefault().send(dataBean, TabBar2Fragment.TOKEN_DeleteTabBar2Fragment_REFRESH);
+            Messenger.getDefault().send(dataBean, PersonCalenterFragment.TOKEN_DeleteTabBar2Fragment_REFRESH);
         }
     });
     /**
@@ -147,7 +149,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     });
 
     /**
-     * 关注按钮
+     * 关注按钮点击事件
      */
     public BindingCommand attentionBackOnClick = new BindingCommand(new BindingAction() {
         @Override
@@ -157,7 +159,7 @@ public class JokeDetailsViewModel extends BaseViewModel<NpeRepository> {
     });
 
     /**
-     * 获得新闻数据
+     * 获得新闻数据,实现showJokeDetails接口
      *
      * @param jokeId
      */

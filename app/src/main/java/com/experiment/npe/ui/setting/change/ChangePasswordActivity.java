@@ -13,7 +13,10 @@ import com.experiment.npe.ui.setting.edit.EditInformationViewModel;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.tatarka.bindingcollectionadapter2.BR;
 
-public class ChangePasswordActivity extends BaseActivity<ActivityChangePasswordBinding,ChangePasswordViewModel> {
+/**
+ * 更改用户密码界面
+ */
+public class ChangePasswordActivity extends BaseActivity<ActivityChangePasswordBinding, ChangePasswordViewModel> {
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class ChangePasswordActivity extends BaseActivity<ActivityChangePasswordB
     public int initVariableId() {
         return BR.viewModel;
     }
+
     @Override
     public ChangePasswordViewModel initViewModel() {
         //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法

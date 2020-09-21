@@ -4,19 +4,19 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel" />
+        <import type="com.experiment.npe.ui.main.viewmodel.NewsViewModel" />
 
         <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
 
-        <import type="com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter1" />
+        <import type="com.experiment.npe.ui.main.adapter.NewsViewPagerBindingAdapter" />
 
         <variable
             name="viewModel"
-            type="com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel" />
+            type="com.experiment.npe.ui.main.viewmodel.NewsViewModel" />
 
         <variable
             name="adapter"
-            type="com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter1" />
+            type="com.experiment.npe.ui.main.adapter.NewsViewPagerBindingAdapter" />
 
         <variable
             name="adapter2"

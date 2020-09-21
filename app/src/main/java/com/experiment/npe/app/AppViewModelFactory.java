@@ -2,6 +2,7 @@ package com.experiment.npe.app;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
@@ -10,8 +11,8 @@ import androidx.annotation.VisibleForTesting;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.jokedetails.JokeDetailsViewModel;
 import com.experiment.npe.ui.login.LoginViewModel;
-import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
-import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
+import com.experiment.npe.ui.main.viewmodel.NewsViewModel;
+import com.experiment.npe.ui.main.viewmodel.PersonalCenterViewModel;
 import com.experiment.npe.ui.regist.RegistViewModel;
 import com.experiment.npe.ui.search.SearchViewModel;
 import com.experiment.npe.ui.setting.SettingViewModel;
@@ -21,7 +22,7 @@ import com.experiment.npe.ui.uploadjoke.UploadJokeViewModel;
 
 
 /**
- * Created by goldze on 2019/3/26.
+ * Created by lbavsc on 20-9-10
  */
 public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @SuppressLint("StaticFieldLeak")
@@ -57,21 +58,21 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new RegistViewModel(mApplication, mRepository);
         } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             return (T) new LoginViewModel(mApplication, mRepository);
-        } else if (modelClass.isAssignableFrom(TabBar1ViewModel.class)) {
-            return (T) new TabBar1ViewModel(mApplication, mRepository);
+        } else if (modelClass.isAssignableFrom(NewsViewModel.class)) {
+            return (T) new NewsViewModel(mApplication, mRepository);
         } else if (modelClass.isAssignableFrom(SearchViewModel.class)) {
             return (T) new SearchViewModel(mApplication, mRepository);
-        } else if (modelClass.isAssignableFrom(TabBar2ViewModel.class)) {
-            return (T) new TabBar2ViewModel(mApplication, mRepository);
-        }else if (modelClass.isAssignableFrom(SettingViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(PersonalCenterViewModel.class)) {
+            return (T) new PersonalCenterViewModel(mApplication, mRepository);
+        } else if (modelClass.isAssignableFrom(SettingViewModel.class)) {
             return (T) new SettingViewModel(mApplication, mRepository);
-        }else if (modelClass.isAssignableFrom(EditInformationViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(EditInformationViewModel.class)) {
             return (T) new EditInformationViewModel(mApplication, mRepository);
-        }else if (modelClass.isAssignableFrom(ChangePasswordViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(ChangePasswordViewModel.class)) {
             return (T) new ChangePasswordViewModel(mApplication, mRepository);
-        }else if (modelClass.isAssignableFrom(UploadJokeViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(UploadJokeViewModel.class)) {
             return (T) new UploadJokeViewModel(mApplication, mRepository);
-        }else if (modelClass.isAssignableFrom(JokeDetailsViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(JokeDetailsViewModel.class)) {
             return (T) new JokeDetailsViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

@@ -19,7 +19,6 @@ import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.FavoritesEntity;
-import com.experiment.npe.entity.JokeEntity;
 import com.experiment.npe.entity.ResultEntity;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.setting.SettingActivity;
@@ -41,27 +40,32 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.http.Query;
 
 /**
+ * 个人中心ViewModel
  * Created by lbavsc on 20-9-15
  */
-public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
-    public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();
-    public SingleLiveEvent<FavoritesEntity.DataBean> addItemData = new SingleLiveEvent<>();
-    public SingleLiveEvent<FavoritesEntity.DataBean> deleteItemData = new SingleLiveEvent<>();
-    public SingleLiveEvent<Boolean> entityJsonLiveData = new SingleLiveEvent<>();
+public class PersonalCenterViewModel extends BaseViewModel<NpeRepository> {
+
+    public ItemBinding<PersonalCenterItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_2);    //给ViewPager添加ItemBinding
+    public SingleLiveEvent<FavoritesEntity.DataBean> deleteItemData = new SingleLiveEvent<>();                              //删除收藏条目监听
+    public ObservableList<PersonalCenterItemViewModel> items = new ObservableArrayList<>();                                 //给ViewPager添加ObservableList
+    public SingleLiveEvent<FavoritesEntity.DataBean> addItemData = new SingleLiveEvent<>();                                 //增加收藏条目监听
+    public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();                                     //更换头像监听
+    public SingleLiveEvent<Boolean> entityJsonLiveData = new SingleLiveEvent<>();                                           //登出按钮监听
     public ObservableField<String> userName = new ObservableField<>("");
     public ObservableField<String> userIcon = new ObservableField<>("");
     public ObservableField<String> userId = new ObservableField<>("");
     public ObservableInt loginVisibility = new ObservableInt();
-    public static int ITEM_POSITION=0;
     public ObservableInt visibility = new ObservableInt();
     public String TAG = "TabBar2ViewModel";
     public Drawable drawableImg;
 
 
-    public TabBar2ViewModel(@NonNull Application application, NpeRepository repository) {
+
+
+
+    public PersonalCenterViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
         //ImageView的占位图片，可以解决RecyclerView中图片错误问题
         drawableImg = ContextCompat.getDrawable(application, R.mipmap.ic_launcher);
@@ -82,19 +86,27 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
             visibility.set(View.GONE);
         }
 
-        for (int i = 0; i < 2; i++) {
-            TabBar2ItemViewModel itemViewModel = new TabBar2ItemViewModel(this, i);
+        for (int i = 0; i < 2; i++) {               //创建俩个ViewPaper
+            PersonalCenterItemViewModel itemViewModel = new PersonalCenterItemViewModel(this, i);
             items.add(itemViewModel);
-            if (i == 0 && model.getUserStatus()) {
+            if (i == 0 && model.getUserStatus()) {      //如果是收藏条目则加载收藏列表
                 getCollection(itemViewModel);
             }
         }
     }
 
+    /**
+     * 获得model
+     *
+     * @return
+     */
     public NpeRepository getmodle() {
         return model;
     }
 
+    /**
+     * 登录按钮点击事件
+     */
     public BindingCommand loginOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -104,6 +116,9 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
     });
 
 
+    /**
+     * 登出按钮点击事件
+     */
     public BindingCommand loginOutOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -111,6 +126,9 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 设置按钮点击事件
+     */
     public BindingCommand onSettingClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -118,13 +136,19 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 头像点击事件
+     */
     public BindingCommand userIconOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            requestCameraPermissions.call();
+            requestCameraPermissions.call();        //启动请求更换头像监听
         }
     });
 
+    /**
+     * 更新头像
+     */
     public void upUserIcon() {
         String userId = model.getUserId();
         String path = model.getUserIcon();
@@ -141,16 +165,15 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
                 .subscribe(new DisposableObserver<ResultEntity>() {
                     @Override
                     public void onNext(final ResultEntity response) {
-                        Log.e(TAG, "onNext: " + response.getCode());
+//                        Log.e(TAG, "onNext: " + response.getCode());
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         //关闭对话框
                         dismissDialog();
-                        //请求刷新完成收回
                         if (throwable instanceof ResponseThrowable) {
-                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);      //输出错误信息
                         }
                     }
 
@@ -163,14 +186,13 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
                 });
     }
 
-    //给ViewPager添加ObservableList
-    public ObservableList<TabBar2ItemViewModel> items = new ObservableArrayList<>();
-    //给ViewPager添加ItemBinding
-    public ItemBinding<TabBar2ItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_2);
-    //给ViewPager添加PageTitle
-    public final BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<TabBar2ItemViewModel>() {
+
+    /**
+     * 给ViewPager添加PageTitle
+     */
+    public final BindingViewPagerAdapter.PageTitles<PersonalCenterItemViewModel> pageTitles = new BindingViewPagerAdapter.PageTitles<PersonalCenterItemViewModel>() {
         @Override
-        public CharSequence getPageTitle(int position, TabBar2ItemViewModel item) {
+        public CharSequence getPageTitle(int position, PersonalCenterItemViewModel item) {
             if (position == 0) {
                 return "收藏";
             } else if (position == 1) {
@@ -179,7 +201,10 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
             return null;
         }
     };
-    //ViewPager切换监听
+
+    /**
+     * ViewPager切换监听
+     */
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
         public Integer call(Integer index) {
@@ -190,7 +215,7 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
     /**
      * 获取收藏列表
      */
-    public void getCollection(final TabBar2ItemViewModel itemViewModel) {
+    public void getCollection(final PersonalCenterItemViewModel itemViewModel) {
         model.getCollection(model.getUserId())
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
@@ -200,7 +225,7 @@ public class TabBar2ViewModel extends BaseViewModel<NpeRepository> {
                     public void onNext(final FavoritesEntity response) {
 
                         for (FavoritesEntity.DataBean dataBean : response.getData()) {
-                            FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(TabBar2ViewModel.this, dataBean);
+                            PersonalCenterFavoritesitemViewModel favoritesitemViewModel = new PersonalCenterFavoritesitemViewModel(PersonalCenterViewModel.this, dataBean);
                             itemViewModel.observableList1.add(favoritesitemViewModel);
                         }
                     }

@@ -4,17 +4,13 @@ import android.Manifest;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.databinding.ObservableField;
 
-import android.app.PictureInPictureParams;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +24,14 @@ import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.FragmentTabBar2Binding;
 import com.experiment.npe.entity.FavoritesEntity;
-import com.experiment.npe.entity.JokeEntity;
-import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter2;
-import com.experiment.npe.ui.main.viewmodel.FavoritesitemViewModel;
-import com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel;
+import com.experiment.npe.ui.main.adapter.PersonCalenterViewPagerBindingAdapter;
+import com.experiment.npe.ui.main.viewmodel.PersonalCenterFavoritesitemViewModel;
+import com.experiment.npe.ui.main.viewmodel.PersonalCenterViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.wildma.pictureselector.FileUtils;
 import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
-
-import java.util.List;
 
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseFragment;
@@ -47,12 +40,11 @@ import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
+ * 个人中心
  * Created by lbavsc on 20-9-11
  */
-public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar2ViewModel> {
+public class PersonCalenterFragment extends BaseFragment<FragmentTabBar2Binding, PersonalCenterViewModel> {
     public static final String TOKEN_AddTabBar2Fragment_REFRESH = "token_AddTabBar2Fragment_refresh";
     public static final String TOKEN_DeleteTabBar2Fragment_REFRESH = "token_DeleteTabBar2Fragment_refresh";
 
@@ -67,11 +59,11 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
     }
 
     @Override
-    public TabBar2ViewModel initViewModel() {
+    public PersonalCenterViewModel initViewModel() {
 
         //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
-        return ViewModelProviders.of(this, factory).get(TabBar2ViewModel.class);
+        return ViewModelProviders.of(this, factory).get(PersonalCenterViewModel.class);
     }
 
     @Override
@@ -81,8 +73,9 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
         //给ViewPager设置adapter
-        binding.setAdapter(new ViewPagerBindingAdapter2());
+        binding.setAdapter(new PersonCalenterViewPagerBindingAdapter());
         NpeRepository model = viewModel.getmodle();
+        //判断是否登录,来达成页面的变换
         if (model.getUserStatus()) {
             viewModel.loginVisibility.set(View.GONE);
             viewModel.visibility.set(View.VISIBLE);
@@ -91,14 +84,17 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
             viewModel.visibility.set(View.GONE);
         }
 
-        Messenger.getDefault().register(this, TabBar2Fragment.TOKEN_AddTabBar2Fragment_REFRESH, FavoritesEntity.DataBean.class, new BindingConsumer<FavoritesEntity.DataBean>() {
+        //接收收藏条目信息
+        Messenger.getDefault().register(this, PersonCalenterFragment.TOKEN_AddTabBar2Fragment_REFRESH, FavoritesEntity.DataBean.class, new BindingConsumer<FavoritesEntity.DataBean>() {
             @Override
             public Integer call(FavoritesEntity.DataBean s) {
                 viewModel.addItemData.setValue(s);
                 return null;
             }
         });
-        Messenger.getDefault().register(this, TabBar2Fragment.TOKEN_DeleteTabBar2Fragment_REFRESH, FavoritesEntity.DataBean.class, new BindingConsumer<FavoritesEntity.DataBean>() {
+
+        //接收删除收藏条目信息
+        Messenger.getDefault().register(this, PersonCalenterFragment.TOKEN_DeleteTabBar2Fragment_REFRESH, FavoritesEntity.DataBean.class, new BindingConsumer<FavoritesEntity.DataBean>() {
             @Override
             public Integer call(FavoritesEntity.DataBean s) {
                 viewModel.deleteItemData.setValue(s);
@@ -148,19 +144,21 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
 
         });
 
+        //注册监听增加收藏条目的请求
         viewModel.addItemData.observe(this, new Observer<FavoritesEntity.DataBean>() {
             @Override
             public void onChanged(FavoritesEntity.DataBean dataBean) {
-                FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(viewModel, dataBean);
+                PersonalCenterFavoritesitemViewModel favoritesitemViewModel = new PersonalCenterFavoritesitemViewModel(viewModel, dataBean);
                 viewModel.items.get(0).addItem(favoritesitemViewModel);
             }
         });
 
+        //注册监听删除收藏条目的请求
         viewModel.deleteItemData.observe(this, new Observer<FavoritesEntity.DataBean>() {
             @Override
             public void onChanged(FavoritesEntity.DataBean dataBean) {
-                FavoritesitemViewModel favoritesitemViewModel = new FavoritesitemViewModel(viewModel, dataBean);
-                for (FavoritesitemViewModel favoritesitemViewModel1 : viewModel.items.get(0).observableList1) {
+                PersonalCenterFavoritesitemViewModel favoritesitemViewModel = new PersonalCenterFavoritesitemViewModel(viewModel, dataBean);
+                for (PersonalCenterFavoritesitemViewModel favoritesitemViewModel1 : viewModel.items.get(0).observableList1) {
                     if (favoritesitemViewModel.entity.get().getJokeId().equals(favoritesitemViewModel1.entity.get().getJokeId())) {
                         viewModel.items.get(0).deleteItem(viewModel.items.get(0).getItemPosition(favoritesitemViewModel1));
                         return;
@@ -176,14 +174,14 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
      */
     private void requestCameraPermissions() {
         //请求打开相机权限
-        RxPermissions rxPermissions = new RxPermissions(TabBar2Fragment.this);
+        RxPermissions rxPermissions = new RxPermissions(PersonCalenterFragment.this);
         rxPermissions.request(Manifest.permission.CAMERA)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
                             PictureSelector
-                                    .create(TabBar2Fragment.this, PictureSelector.SELECT_REQUEST_CODE)
+                                    .create(PersonCalenterFragment.this, PictureSelector.SELECT_REQUEST_CODE)
                                     .selectPicture(true);
                         } else {
                             ToastUtils.showShort("权限被拒绝");
@@ -192,6 +190,7 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
                 });
     }
 
+    //PictureSelector回调在此获得
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -200,9 +199,9 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
             if (data != null) {
                 PictureBean pictureBean = data.getParcelableExtra(PictureSelector.PICTURE_RESULT);
                 if (pictureBean.isCut()) {
-                    model.saveUserIcon(pictureBean.getPath());
-                    viewModel.userIcon.set(pictureBean.getPath());
-                    viewModel.upUserIcon();
+                    model.saveUserIcon(pictureBean.getPath());          //本地保存用户头像
+                    viewModel.userIcon.set(pictureBean.getPath());      //设置头像展示
+                    viewModel.upUserIcon();                             //上传头像到服务器
                 } else {
                     model.saveUserIcon(pictureBean.getUri().getPath());
                     viewModel.userIcon.set(pictureBean.getUri().getPath());
@@ -215,13 +214,13 @@ public class TabBar2Fragment extends BaseFragment<FragmentTabBar2Binding, TabBar
     public void onResume() {
         super.onResume();
         NpeRepository model = viewModel.getmodle();
-        viewModel.userName.set(model.getUserName());
+        viewModel.userName.set(model.getUserName());        //为了更改名字后进行刷新,每次进入页面重新设置用户名,
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        FileUtils.deleteAllCacheImage(this.getContext());
+        FileUtils.deleteAllCacheImage(this.getContext());       //清除图片缓存
     }
 
 

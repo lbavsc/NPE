@@ -22,18 +22,31 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
+/**
+ * 搜索节目ViewModel
+ */
 public class SearchViewModel extends BaseViewModel<NpeRepository> {
+
+    public ObservableList<SearchItemViewMode> observableList = new ObservableArrayList<>();                              //给RecyclerView添加ObservableList
+    public ItemBinding<SearchItemViewMode> itemBinding = ItemBinding.of(BR.viewMode, R.layout.item_search_activity);     //给RecyclerView添加ItemBinding
 
     public SearchViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
     }
 
+    /**
+     * 返回上一页
+     */
     public BindingCommand backOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             onBackPressed();
         }
     });
+
+    /**
+     * toolbar右面按钮点击事件
+     */
     public BindingCommand rightIconOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -41,6 +54,11 @@ public class SearchViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 搜索接口实现
+     *
+     * @param string
+     */
     public void searchMain(String string) {
         model.search(string)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
@@ -63,14 +81,12 @@ public class SearchViewModel extends BaseViewModel<NpeRepository> {
                             SearchItemViewMode searchItemViewMode = new SearchItemViewMode(SearchViewModel.this, itemsEntity);
                             observableList.add(searchItemViewMode);
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         //关闭对话框
                         dismissDialog();
-                        //请求刷新完成收回
                         if (throwable instanceof ResponseThrowable) {
                             ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }
@@ -84,9 +100,5 @@ public class SearchViewModel extends BaseViewModel<NpeRepository> {
                 });
     }
 
-    //给RecyclerView添加ObservableList
-    public ObservableList<SearchItemViewMode> observableList = new ObservableArrayList<>();
-    //给RecyclerView添加ItemBinding
-    public ItemBinding<SearchItemViewMode> itemBinding = ItemBinding.of(BR.viewMode, R.layout.item_search_activity);
 
 }

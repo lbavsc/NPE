@@ -1,6 +1,7 @@
 package com.experiment.npe.entity;
 
 /**
+ * 接受返回数据类
  * Created by lbavsc on 20-9-14
  */
 public class ResultEntity<T> {

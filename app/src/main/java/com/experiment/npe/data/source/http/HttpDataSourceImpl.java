@@ -19,6 +19,7 @@ import okhttp3.RequestBody;
 
 /**
  * Created by lbavsc on 20-9-14
+ * 网络仓库
  */
 public class HttpDataSourceImpl implements HttpDataSource {
     private NpeApiService apiService;
@@ -43,12 +44,6 @@ public class HttpDataSourceImpl implements HttpDataSource {
         this.apiService = apiService;
     }
 
-//    @Override
-//    public Observable<Object> login() {
-//        return Observable.just(new Object()).delay(3, TimeUnit.SECONDS); //延迟3秒
-//    }
-
-
     @Override
     public Observable<ResultEntity<UserEntity>> login(String phone, String password, boolean status) {
         return apiService.login(phone, password, true);
@@ -66,16 +61,6 @@ public class HttpDataSourceImpl implements HttpDataSource {
 
 
     @Override
-    public Observable<BaseResponse<UserEntity>> demoGet() {
-        return apiService.demoGet();
-    }
-
-    @Override
-    public Observable<BaseResponse<UserEntity>> demoPost(String catalog) {
-        return apiService.demoPost(catalog);
-    }
-
-    @Override
     public Observable<JokeEntity> search(String searchString) {
         return apiService.search(searchString);
     }
@@ -87,12 +72,12 @@ public class HttpDataSourceImpl implements HttpDataSource {
 
     @Override
     public Observable<ResultEntity<UserEntity>> updatePassword(String userId, String oldPassword, String newPassword) {
-        return apiService.updatePassword(userId,oldPassword,newPassword);
+        return apiService.updatePassword(userId, oldPassword, newPassword);
     }
 
     @Override
     public Observable<ResultEntity<UserEntity>> updateUserName(String userId, String newUserName) {
-        return apiService.updateUserName(userId,newUserName);
+        return apiService.updateUserName(userId, newUserName);
     }
 
     @Override
@@ -107,12 +92,12 @@ public class HttpDataSourceImpl implements HttpDataSource {
 
     @Override
     public Observable<JokeEntity> deleteJoke(String jokeId, String userId) {
-        return apiService.deleteJoke(jokeId,userId);
+        return apiService.deleteJoke(jokeId, userId);
     }
 
     @Override
-    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId,String userId) {
-        return apiService.showJokeDetails(jokeId,userId);
+    public Observable<JokeDetailsEntity> showJokeDetails(String jokeId, String userId) {
+        return apiService.showJokeDetails(jokeId, userId);
     }
 
     @Override
@@ -122,17 +107,17 @@ public class HttpDataSourceImpl implements HttpDataSource {
 
     @Override
     public Observable<ResultEntity> deleteRemark(String userId, String remarkId) {
-        return apiService.deleteRemark(userId,remarkId);
+        return apiService.deleteRemark(userId, remarkId);
     }
 
     @Override
     public Observable<ResultEntity> addCollection(String userId, String jokeId) {
-        return apiService.addCollection(userId,jokeId);
+        return apiService.addCollection(userId, jokeId);
     }
 
     @Override
     public Observable<ResultEntity> deleteCollection(String userId, String jokeId) {
-        return apiService.deleteCollection(userId,jokeId);
+        return apiService.deleteCollection(userId, jokeId);
     }
 
     @Override

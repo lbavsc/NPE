@@ -1,10 +1,11 @@
 package com.experiment.npe.ui.main.adapter;
 
 import androidx.databinding.ViewDataBinding;
+
 import android.view.ViewGroup;
 
 import com.experiment.npe.databinding.ItemTabBar1Binding;
-import com.experiment.npe.ui.main.viewmodel.TabBar1temViewModel;
+import com.experiment.npe.ui.main.viewmodel.NewsItemViewModel;
 
 import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 
@@ -12,14 +13,13 @@ import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 /**
  * Created by lbavsc on 20-9-11
  */
-public class ViewPagerBindingAdapter1 extends BindingViewPagerAdapter<TabBar1temViewModel> {
+public class NewsViewPagerBindingAdapter extends BindingViewPagerAdapter<NewsItemViewModel> {
 
     @Override
-    public void onBindBinding(final ViewDataBinding binding, int variableId, int layoutRes, final int position, TabBar1temViewModel item) {
+    public void onBindBinding(final ViewDataBinding binding, int variableId, int layoutRes, final int position, NewsItemViewModel item) {
         super.onBindBinding(binding, variableId, layoutRes, position, item);
         //这里可以强转成ViewPagerItemViewModel对应的ViewDataBinding，
-//        ItemViewpagerBinding _binding = (ItemViewpagerBinding) binding;
-        ItemTabBar1Binding _binding=(ItemTabBar1Binding) binding;
+        ItemTabBar1Binding _binding = (ItemTabBar1Binding) binding;
     }
 
     @Override

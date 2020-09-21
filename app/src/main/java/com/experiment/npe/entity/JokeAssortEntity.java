@@ -3,6 +3,7 @@ package com.experiment.npe.entity;
 import java.util.List;
 
 /**
+ * 新闻分类类
  * Created by lbavsc on 20-9-14
  */
 public class JokeAssortEntity {

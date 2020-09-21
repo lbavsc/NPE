@@ -4,16 +4,16 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.viewmodel.TabBar2ViewModel" />
+        <import type="com.experiment.npe.ui.main.viewmodel.PersonalCenterViewModel" />
 
         <variable
             name="viewModel"
-            type="TabBar2ViewModel" />
+            type="com.experiment.npe.ui.main.viewmodel.PersonalCenterViewModel" />
         
-        <import type="com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter2"/>
+        <import type="com.experiment.npe.ui.main.adapter.PersonCalenterViewPagerBindingAdapter"/>
         <variable
             name="adapter"
-            type="ViewPagerBindingAdapter2" />
+            type="com.experiment.npe.ui.main.adapter.PersonCalenterViewPagerBindingAdapter" />
     </data>
 
     <LinearLayout

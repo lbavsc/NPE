@@ -1,6 +1,5 @@
 package com.experiment.npe.ui.main.viewmodel;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,24 +15,26 @@ import com.experiment.npe.data.NpeRepository;
 import me.goldze.mvvmhabit.base.ItemViewModel;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
-public class TabBar2ItemViewModel extends ItemViewModel<TabBar2ViewModel> {
-    NpeRepository model = viewModel.getmodle();
+/**
+ * 收藏/浏览记录页面ViewModel
+ */
+public class PersonalCenterItemViewModel extends ItemViewModel<PersonalCenterViewModel> {
     public int index;
-    public ObservableInt recyclerViewVisibility = new ObservableInt();
+    private NpeRepository model = viewModel.getmodle();
     public ObservableInt textVisibility = new ObservableInt();
     public ObservableField<String> text = new ObservableField<>();
-    //给ViewPager添加ObservableList
-    public ObservableList<FavoritesitemViewModel> observableList1 = new ObservableArrayList<>();
-    //给ViewPager添加ItemBinding
-    public ItemBinding<FavoritesitemViewModel> itemBinding1 = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_2_list);
+    public ObservableInt recyclerViewVisibility = new ObservableInt();
+    public ObservableList<PersonalCenterFavoritesitemViewModel> observableList1 = new ObservableArrayList<>();    //给ViewPager添加ObservableList
+    public ItemBinding<PersonalCenterFavoritesitemViewModel> itemBinding1 = ItemBinding.of(BR.viewModel, R.layout.item_tab_bar_2_list);    //给ViewPager添加ItemBinding
 
-    public TabBar2ItemViewModel(@NonNull TabBar2ViewModel viewModel, int index) {
+    public PersonalCenterItemViewModel(@NonNull PersonalCenterViewModel viewModel, int index) {
         super(viewModel);
         this.index = index;
         init();
 
     }
 
+    //初始化展示信息
     public void init() {
         if (index == 0 && model.getUserStatus()) {
             recyclerViewVisibility.set(View.VISIBLE);
@@ -48,7 +49,13 @@ public class TabBar2ItemViewModel extends ItemViewModel<TabBar2ViewModel> {
         }
     }
 
-    public int getItemPosition(FavoritesitemViewModel favoritesitemViewModel) {
+    /**
+     * 获得条目下标
+     *
+     * @param favoritesitemViewModel
+     * @return
+     */
+    public int getItemPosition(PersonalCenterFavoritesitemViewModel favoritesitemViewModel) {
         return observableList1.indexOf(favoritesitemViewModel);
     }
 
@@ -57,7 +64,7 @@ public class TabBar2ItemViewModel extends ItemViewModel<TabBar2ViewModel> {
      *
      * @param
      */
-    public void deleteItem(FavoritesitemViewModel favoritesitemViewModel) {
+    public void deleteItem(PersonalCenterFavoritesitemViewModel favoritesitemViewModel) {
         observableList1.remove(favoritesitemViewModel);
     }
 
@@ -70,7 +77,7 @@ public class TabBar2ItemViewModel extends ItemViewModel<TabBar2ViewModel> {
      *
      * @param
      */
-    public void addItem(FavoritesitemViewModel favoritesitemViewModel) {
+    public void addItem(PersonalCenterFavoritesitemViewModel favoritesitemViewModel) {
         observableList1.add(0, favoritesitemViewModel);
     }
 

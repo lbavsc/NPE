@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.viewmodel.TabBar1temViewModel" />
+        <import type="com.experiment.npe.ui.main.viewmodel.NewsItemViewModel" />
 
         <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
 
@@ -17,7 +17,7 @@
 
         <variable
             name="viewModel"
-            type="com.experiment.npe.ui.main.viewmodel.TabBar1temViewModel" />
+            type="com.experiment.npe.ui.main.viewmodel.NewsItemViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

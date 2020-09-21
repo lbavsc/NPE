@@ -15,7 +15,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeEntity;
-import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
+import com.experiment.npe.ui.main.adapter.NewsViewPagerBindingAdapter;
+import com.experiment.npe.ui.main.viewmodel.NewsItemJokeItemViewModel;
+import com.experiment.npe.ui.main.viewmodel.NewsViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import android.util.Log;
@@ -29,8 +31,6 @@ import com.experiment.npe.BR;
 import com.experiment.npe.R;
 import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.databinding.FragmentTabBar1Binding;
-import com.experiment.npe.ui.main.adapter.ViewPagerBindingAdapter1;
-import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
@@ -39,9 +39,10 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
+ * 新闻页面
  * Created by lbavsc on 20-9-11
  */
-public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar1ViewModel> {
+public class NewsFragment extends BaseFragment<FragmentTabBar1Binding, NewsViewModel> {
     public static final String TOKEN_TabBar1Fragment_REFRESH = "token_tabbar1fragment_refresh";
 
     @Override
@@ -62,7 +63,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
         //给ViewPager设置adapter
-        binding.setAdapter(new ViewPagerBindingAdapter1());
+        binding.setAdapter(new NewsViewPagerBindingAdapter());
 
         //监听键盘回车事件
         binding.searchText.setOnKeyListener(new View.OnKeyListener() {
@@ -96,7 +97,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
 
         });
         viewModel.getAssort();
-        Messenger.getDefault().register(this, TabBar1Fragment.TOKEN_TabBar1Fragment_REFRESH, JokeEntity.DataBean.class, new BindingConsumer<JokeEntity.DataBean>() {
+        Messenger.getDefault().register(this, NewsFragment.TOKEN_TabBar1Fragment_REFRESH, JokeEntity.DataBean.class, new BindingConsumer<JokeEntity.DataBean>() {
             @Override
             public Integer call(JokeEntity.DataBean s) {
                 Log.e("TAG", s.toString());
@@ -107,9 +108,9 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
     }
 
     @Override
-    public TabBar1ViewModel initViewModel() {
+    public NewsViewModel initViewModel() {
         AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
-        return ViewModelProviders.of(this, factory).get(TabBar1ViewModel.class);
+        return ViewModelProviders.of(this, factory).get(NewsViewModel.class);
     }
 
     @Override
@@ -125,9 +126,9 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
 
         final NpeRepository model = viewModel.getmodel();
 
-        viewModel.entityJsonLiveData.observe(this, new Observer<JokeItemViewModel>() {
+        viewModel.entityJsonLiveData.observe(this, new Observer<NewsItemJokeItemViewModel>() {
             @Override
-            public void onChanged(final JokeItemViewModel jokeItemViewModel) {
+            public void onChanged(final NewsItemJokeItemViewModel jokeItemViewModel) {
                 MaterialDialogUtils.showBasicDialog(getContext(), "确认删除此条新闻")
                         .onNeutral(new MaterialDialog.SingleButtonCallback() {
                             @Override
@@ -137,8 +138,8 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
                         }).onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        viewModel.items.get(model.getAssortIndex()).observableList1.get(model.getJokeIndex()).deteleJoke();
-                        viewModel.items.get(model.getAssortIndex()).deleteItem(jokeItemViewModel);
+                        viewModel.items.get(model.getAssortIndex()).observableList1.get(model.getJokeIndex()).deteleJoke();     //服务器端删除
+                        viewModel.items.get(model.getAssortIndex()).deleteItem(jokeItemViewModel);                              //本地删除条目并刷新页面
 
                     }
                 }).show();
@@ -148,7 +149,7 @@ public class TabBar1Fragment extends BaseFragment<FragmentTabBar1Binding, TabBar
         viewModel.addItemData.observe(this, new Observer<JokeEntity.DataBean>() {
             @Override
             public void onChanged(JokeEntity.DataBean dataBean) {
-                JokeItemViewModel jokeItemViewModel = new JokeItemViewModel(viewModel, dataBean);
+                NewsItemJokeItemViewModel jokeItemViewModel = new NewsItemJokeItemViewModel(viewModel, dataBean);
                 viewModel.items.get(model.getAssortIndex()).addItem(jokeItemViewModel);
             }
         });

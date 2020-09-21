@@ -1,8 +1,6 @@
 package com.experiment.npe.ui.uploadjoke;
 
 import android.app.Application;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,13 +12,7 @@ import androidx.databinding.ObservableInt;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.entity.JokeDetailsEntity;
 import com.experiment.npe.entity.JokeEntity;
-import com.experiment.npe.ui.jokedetails.JokeDetailsActivity;
-import com.experiment.npe.ui.jokedetails.JokeDetailsViewModel;
-import com.experiment.npe.ui.main.activity.MainActivity;
-import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
-import com.experiment.npe.ui.main.viewmodel.JokeItemViewModel;
-import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
-import com.experiment.npe.utils.RetrofitClient;
+import com.experiment.npe.ui.main.fragment.NewsFragment;
 import com.experiment.npe.utils.SpinnerItemData;
 
 import java.io.File;
@@ -43,17 +35,22 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+/**
+ * 上传新闻ViewModel
+ */
 public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
-    public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();
+
     public JokeEntity.DataBean entity;
     public List<IKeyAndValue> assortDatas;
-    public ObservableField<String> imgUrl = new ObservableField<>("");
-    public ObservableInt uploadImgButtonVisibility = new ObservableInt();
-    public ObservableInt uploadImgVisibility = new ObservableInt();
-    public ObservableField<String> jokeTitle = new ObservableField<>("");
-    public ObservableField<String> jokeContent = new ObservableField<>("");
-    public ObservableField<String> jokeSource = new ObservableField<>("");
     public String TAG = "UploadJokeViewModel";
+    public ObservableInt uploadImgVisibility = new ObservableInt();
+    public ObservableInt uploadImgButtonVisibility = new ObservableInt();
+    public ObservableField<String> imgUrl = new ObservableField<>("");
+    public ObservableField<String> jokeTitle = new ObservableField<>("");
+    public ObservableField<String> jokeSource = new ObservableField<>("");
+    public ObservableField<String> jokeContent = new ObservableField<>("");
+    public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();
+
 
     public UploadJokeViewModel(@NonNull Application application, NpeRepository model) {
         super(application, model);
@@ -82,7 +79,19 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
         }
     }
 
-    //分类选择的监听
+
+    /**
+     * 获得model
+     *
+     * @return
+     */
+    public NpeRepository getmodle() {
+        return model;
+    }
+
+    /**
+     * 分类选择的监听
+     */
     public BindingCommand<IKeyAndValue> onAssortCommand = new BindingCommand<>(new BindingConsumer<IKeyAndValue>() {
         @Override
         public Integer call(IKeyAndValue iKeyAndValue) {
@@ -90,12 +99,20 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
             return null;
         }
     });
+
+    /**
+     * 返回上一页
+     */
     public BindingCommand backOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             onBackPressed();
         }
     });
+
+    /**
+     * toolbar右按钮点击事件
+     */
     public BindingCommand rightIconOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -103,6 +120,9 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 选择图片按钮点击事件
+     */
     public BindingCommand uploadImgButtonOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -110,6 +130,9 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 上传新闻按钮点击事件
+     */
     public BindingCommand uploadJokeOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -117,6 +140,9 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 实现新闻上次接口
+     */
     public void uploadJoke() {
         if (!model.getUserStatus()) {
             ToastUtils.showShort("您当前未登录");
@@ -162,7 +188,6 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
                 .addFormDataPart("postTime", String.valueOf(timeStamp))
                 .addFormDataPart("cover", file.getName(), fileRQ)
                 .build();
-        Log.e("TAG", body.toString());
         model.uploadJoke(body)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
@@ -185,15 +210,17 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
 
                     @Override
                     public void onComplete() {
+                        //封装数据并传递给NewsFragment
                         JokeEntity.DataBean dataBean = new JokeEntity.DataBean();
                         dataBean.setCoverImg(entity.getCoverImg());
-
                         dataBean.setTitle(jokeTitle.get());
                         dataBean.setContent(jokeContent.get());
                         dataBean.setPostTime(String.valueOf(new Timestamp(System.currentTimeMillis())));
                         dataBean.setCoverImg(entity.getCoverImg());
                         dataBean.setJokeId(entity.getJokeId());
-                        Messenger.getDefault().send(dataBean, TabBar1Fragment.TOKEN_TabBar1Fragment_REFRESH);
+                        Messenger.getDefault().send(dataBean, NewsFragment.TOKEN_TabBar1Fragment_REFRESH);
+
+                        //上传完成后,输入内容设置为空,以免手动删除
                         jokeTitle.set("");
                         jokeContent.set("");
                         jokeSource.set("");
@@ -207,13 +234,6 @@ public class UploadJokeViewModel extends BaseViewModel<NpeRepository> {
                 });
     }
 
-    public NpeRepository getmodle() {
-        return model;
-    }
-
-    public void addJoke() {
-
-    }
 
     @Override
     public void onDestroy() {

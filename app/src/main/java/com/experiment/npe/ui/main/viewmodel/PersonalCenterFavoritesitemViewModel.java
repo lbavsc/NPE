@@ -12,14 +12,20 @@ import me.goldze.mvvmhabit.base.ItemViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
-public class FavoritesitemViewModel extends ItemViewModel<TabBar2ViewModel> {
-    public ObservableField<FavoritesEntity.DataBean> entity = new ObservableField<>();
+/**
+ * 收藏条目ViewModel
+ */
+public class PersonalCenterFavoritesitemViewModel extends ItemViewModel<PersonalCenterViewModel> {
+    public ObservableField<FavoritesEntity.DataBean> entity = new ObservableField<>();      //条目信息
 
-    public FavoritesitemViewModel(@NonNull TabBar2ViewModel viewModel, FavoritesEntity.DataBean entity) {
+    public PersonalCenterFavoritesitemViewModel(@NonNull PersonalCenterViewModel viewModel, FavoritesEntity.DataBean entity) {
         super(viewModel);
         this.entity.set(entity);
     }
 
+    /**
+     * 条目点击事件
+     */
     public BindingCommand itemClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {

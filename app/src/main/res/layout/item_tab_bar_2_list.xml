@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.experiment.npe.ui.main.viewmodel.FavoritesitemViewModel" />
+        <import type="com.experiment.npe.ui.main.viewmodel.PersonalCenterFavoritesitemViewModel" />
 
         <variable
             name="viewModel"
-            type="com.experiment.npe.ui.main.viewmodel.FavoritesitemViewModel" />
+            type="com.experiment.npe.ui.main.viewmodel.PersonalCenterFavoritesitemViewModel" />
     </data>
 
     <RelativeLayout

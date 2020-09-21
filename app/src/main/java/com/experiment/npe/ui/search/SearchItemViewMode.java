@@ -18,18 +18,24 @@ import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 /**
+ * 搜索展示条目ViewModel
  * Created by lbavsc on 20-9-18
  */
 public class SearchItemViewMode extends ItemViewModel<SearchViewModel> {
+
     public ObservableField<JokeEntity.DataBean> entity = new ObservableField<>();
     public String TAG = "SearchItemViewMode";
+
     public SearchItemViewMode(@NonNull SearchViewModel viewModel, JokeEntity.DataBean entity) {
         super(viewModel);
         entity.setCoverImg(RetrofitClient.baseUrl + entity.getCoverImg());
         this.entity.set(entity);
     }
 
-    public BindingCommand onClickCommand=new BindingCommand(new BindingAction() {
+    /**
+     * 条目点击事件
+     */
+    public BindingCommand onClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             Bundle mBundle = new Bundle();

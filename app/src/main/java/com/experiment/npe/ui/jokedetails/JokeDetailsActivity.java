@@ -28,10 +28,14 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BR;
 
+/**
+ * 新闻详情view层
+ */
 public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding, JokeDetailsViewModel> implements DialogFragmentDataCallback {
     private String jokeId;
-    public static final String TOKEN_JokeDetailsActivity_REFRESH = "token_jokedetailsactivity_refresh";
+    public static final String TOKEN_JokeDetailsActivity_REFRESH = "token_jokedetailsactivity_refresh"; //Messenger传输token
     public ObservableList<JokeDetailsEntity.DataBean> entity = new ObservableArrayList<>();
+
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_joke_details;
@@ -49,6 +53,7 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
         return ViewModelProviders.of(this, factory).get(JokeDetailsViewModel.class);
     }
 
+    //初始化数据
     @Override
     public void initData() {
         viewModel.JokeDetails(jokeId);
@@ -77,6 +82,7 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
 
     }
 
+    //初始化监听
     @Override
     public void initViewObservable() {
 
@@ -120,6 +126,7 @@ public class JokeDetailsActivity extends BaseActivity<ActivityJokeDetailsBinding
         }
     }
 
+    //获得评论输入框内容
     @Override
     public String getCommentText() {
         return binding.tvCommentFakeButton.getText().toString();

@@ -12,9 +12,12 @@ import com.experiment.npe.databinding.ActivitySearchBinding;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 
+/**
+ * 搜索页面
+ */
 public class SearchActivity extends BaseActivity<ActivitySearchBinding, SearchViewModel> {
 
-    public String SearchString;
+    public String SearchString;         //搜索关键词
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class SearchActivity extends BaseActivity<ActivitySearchBinding, SearchVi
     }
 
     @Override
-    public void initParam() {
+    public void initParam() {                           //获得上一页面传输过来的Bundle
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
             SearchString = bundle.getString("SearchString");

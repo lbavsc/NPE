@@ -12,7 +12,7 @@ android {
     }
     signingConfigs {
         config {
-            storeFile file('J://Android Studio project/NPE/app/lbavsc.jks')
+            storeFile file('/home/lbavsc/AndroidStudioProjects/NPE/app/lbavsc.jks')
             storePassword 'qbzsqywes'
             keyAlias = 'lbavsc'
             keyPassword = 'asdf123456'

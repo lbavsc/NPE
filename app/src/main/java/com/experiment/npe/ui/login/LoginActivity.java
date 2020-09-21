@@ -15,7 +15,7 @@ import com.experiment.npe.databinding.ActivityLoginBinding;
 import me.goldze.mvvmhabit.base.BaseActivity;
 
 /**
- * 一个MVVM模式的登陆界面
+ * 登录界面
  * Created by lbavsc on 20-9-11
  */
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {

@@ -1,7 +1,6 @@
 package com.experiment.npe.ui.uploadjoke;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -15,8 +14,6 @@ import com.experiment.npe.app.AppViewModelFactory;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.ActivityUploadJokeBinding;
 import com.experiment.npe.entity.JokeEntity;
-import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
-import com.experiment.npe.ui.search.SearchViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
@@ -26,6 +23,9 @@ import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BR;
 
+/**
+ * 上传新闻页面
+ */
 public class UploadJokeActivity extends BaseActivity<ActivityUploadJokeBinding, UploadJokeViewModel> {
 
     @Override

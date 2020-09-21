@@ -4,28 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.experiment.npe.BR;
 import com.experiment.npe.R;
-import com.experiment.npe.app.AppApplication;
-import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.databinding.ActivityMainBinding;
-import com.experiment.npe.ui.main.fragment.TabBar1Fragment;
-import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
-import com.experiment.npe.ui.main.viewmodel.TabBar1ViewModel;
+import com.experiment.npe.ui.main.fragment.NewsFragment;
+import com.experiment.npe.ui.main.fragment.PersonCalenterFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,23 +23,18 @@ import java.util.List;
 import me.goldze.mvvmhabit.base.AppManager;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 /**
+ * 主页
  * Created by lbavsc on 20-9-11
  */
 public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewModel> {
-    private static List<Fragment> mFragments;
+    private static List<Fragment> mFragments;       //Fragment列表
 
-    public UIChangeObservable uc = new UIChangeObservable();
-
-    public class UIChangeObservable {
-
-    }
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_main;
@@ -72,8 +57,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, BaseViewMode
 
     private void initFragment() {
         mFragments = new ArrayList<>();
-        mFragments.add(new TabBar1Fragment());
-        mFragments.add(new TabBar2Fragment());
+        mFragments.add(new NewsFragment());
+        mFragments.add(new PersonCalenterFragment());
         //默认选中第一个
         commitAllowingStateLoss(0);
     }

@@ -68,16 +68,6 @@ public class NpeRepository extends BaseModel implements HttpDataSource, LocalDat
     }
 
     @Override
-    public Observable<BaseResponse<UserEntity>> demoGet() {
-        return mHttpDataSource.demoGet();
-    }
-
-    @Override
-    public Observable<BaseResponse<UserEntity>> demoPost(String catalog) {
-        return mHttpDataSource.demoPost(catalog);
-    }
-
-    @Override
     public Observable<JokeEntity> search(String searchString) {
         return mHttpDataSource.search(searchString);
     }

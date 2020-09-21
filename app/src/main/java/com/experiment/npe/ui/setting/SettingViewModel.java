@@ -10,17 +10,18 @@ import androidx.databinding.ObservableInt;
 import com.experiment.npe.data.NpeRepository;
 import com.experiment.npe.ui.login.LoginActivity;
 import com.experiment.npe.ui.main.activity.MainActivity;
-import com.experiment.npe.ui.main.fragment.TabBar2Fragment;
 import com.experiment.npe.ui.setting.change.ChangePasswordActivity;
 import com.experiment.npe.ui.setting.edit.EditInformationActivity;
 
-import me.goldze.mvvmhabit.base.AppManager;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
+/**
+ * 设置页面ViewModel
+ */
 public class SettingViewModel extends BaseViewModel<NpeRepository> {
     public ObservableInt loginVisibility = new ObservableInt();
     public ObservableInt logOutinVisibility = new ObservableInt();
@@ -28,7 +29,7 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
 
     public SettingViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
-        if (model.getUserStatus()) {
+        if (model.getUserStatus()) {        //判断用户登录状态,显示不同的元素
             loginVisibility.set(View.GONE);
             logOutinVisibility.set(View.VISIBLE);
         } else {
@@ -38,16 +39,28 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
 
     }
 
+    /**
+     * 获得model
+     *
+     * @return
+     */
     public NpeRepository getmodle() {
         return model;
     }
 
+    /**
+     * 返回上一页面
+     */
     public BindingCommand backOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             onBackPressed();
         }
     });
+
+    /**
+     * toolbar右面按钮点击事件
+     */
     public BindingCommand rightIconOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -55,17 +68,23 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 个人信息按钮点击事件
+     */
     public BindingCommand accountInformationOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             Bundle bundle = new Bundle();
-            bundle.putInt("num", 1);
+            bundle.putInt("num", 1);        //启动MainActivity的第2个Fargement
             startActivity(MainActivity.class, bundle);
             finish();
 
         }
     });
 
+    /**
+     * 资料编辑点击事件
+     */
     public BindingCommand editInformationOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -84,6 +103,9 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 登出按钮点击事件
+     */
     public BindingCommand loginOutOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
@@ -91,6 +113,9 @@ public class SettingViewModel extends BaseViewModel<NpeRepository> {
         }
     });
 
+    /**
+     * 修改密码点击事件
+     */
     public BindingCommand changePasswordOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {

@@ -1,9 +1,11 @@
 package com.experiment.npe.ui.login;
 
 import android.app.Application;
+
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 import android.view.View;
 
@@ -44,7 +46,6 @@ public class LoginViewModel extends BaseViewModel<NpeRepository> {
     public LoginViewModel(@NonNull Application application, NpeRepository repository) {
         super(application, repository);
         //从本地取得数据绑定到View层
-
         userPhone.set(model.getUserPhone());
         password.set(model.getPassword());
     }
@@ -107,50 +108,40 @@ public class LoginViewModel extends BaseViewModel<NpeRepository> {
 
         //RaJava模拟登录
         addSubscribe(model.login(userPhone.get(), password.get(), true)
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showDialog();
-                    }
-                })
-                .subscribe(new Consumer<ResultEntity<UserEntity>>() {
-                    @Override
-                    public void accept(ResultEntity<UserEntity> result) throws Exception {
-                        dismissDialog();
-                        //保存账号密码
-                        //进入DemoActivity页面
-                        if (result.getCode() == 1001) {
-                            model.savaUserPhone(result.getData().getPhone());
-                            model.savePassword(result.getData().getPassword());
-                            model.saveUserName(result.getData().getName());
-                            model.saveUserIcon(result.getData().getIcon());
-                            model.saveUserId(result.getData().getUserId());
-                            model.saveUserType(result.getData().isType());
-                            model.saveUserStatus(result.getData().isStatus());
-//                            Log.e("TAG", "userId:"+model.getUserId());
-//                            Log.e("TAG", "\nphone:"+model.getUserPhone());
-//                            Log.e("TAG", "\nname:"+model.getUserName());
-//                            Log.e("TAG", "\npassword:"+model.getPassword());
-//                            Log.e("TAG", "\nicon:"+model.getUserIcon());
-//                            Log.e("TAG", "\ntype:"+model.getUserType());
-//                            Log.e("TAG", "\nstatus:"+model.getUserStatus());
-                            ToastUtils.showShort(result.getMsg());
-                            startActivity(MainActivity.class);
-//                            startActivity(ViewPagerActivity.class);
-                            //关闭页面
-                            finish();
-                        } else {
-                            ToastUtils.showShort(result.getMsg());
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        dismissDialog();
-                        ToastUtils.showShort("数据发生错误");
-                    }
-                })
+                        .compose(RxUtils.schedulersTransformer()) //线程调度
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                showDialog();
+                            }
+                        })
+                        .subscribe(new Consumer<ResultEntity<UserEntity>>() {
+                            @Override
+                            public void accept(ResultEntity<UserEntity> result) throws Exception {
+                                dismissDialog();
+                                //保存用户信息
+                                if (result.getCode() == 1001) {
+                                    model.savaUserPhone(result.getData().getPhone());
+                                    model.savePassword(result.getData().getPassword());
+                                    model.saveUserName(result.getData().getName());
+                                    model.saveUserIcon(result.getData().getIcon());
+                                    model.saveUserId(result.getData().getUserId());
+                                    model.saveUserType(result.getData().isType());
+                                    model.saveUserStatus(result.getData().isStatus());
+                                    ToastUtils.showShort(result.getMsg());
+                                    startActivity(MainActivity.class);
+                                    finish();
+                                } else {
+                                    ToastUtils.showShort(result.getMsg());
+                                }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                dismissDialog();
+                                ToastUtils.showShort("数据发生错误");
+                            }
+                        })
         );
 
     }
